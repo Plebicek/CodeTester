@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model answer_stats {
+  answer_stat_id Int @id @default(autoincrement())
+  fails          Int
+  pass           Int
+  answer_id      Int
+
+  @@index([answer_id], map: "answer_id")
+}
+
+model answers {
+  answer_id Int   @id @default(autoincrement())
+  task_id   Int
+  user_id   Int
+  tasks     tasks @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
+  users     users @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
+
+  @@index([task_id], map: "task_id")
+  @@index([user_id], map: "user_id")
+}
+
+model grade_bridges {
+  grade_bridge_id Int    @id @default(autoincrement())
+  grade_id        Int
+  group_id        Int
+  grades          grades @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "grade_bridges_ibfk_1")
+  groups          groups @relation(fields: [group_id], references: [group_id], onUpdate: Restrict, map: "grade_bridges_ibfk_2")
+
+  @@index([grade_id], map: "grade_id")
+  @@index([group_id], map: "group_id")
+}
+
+model grades {
+  grade_id      Int             @id @default(autoincrement())
+  grade_name    String          @db.VarChar(64)
+  grade_bridges grade_bridges[]
+  topics        topics[]
+}
+
+model group_bridges {
+  group_bridge_id Int    @id @default(autoincrement())
+  user_id         Int
+  group_id        Int
+  users           users  @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "group_bridges_ibfk_1")
+  groups          groups @relation(fields: [group_id], references: [group_id], onUpdate: Restrict, map: "group_bridges_ibfk_2")
+
+  @@index([group_id], map: "group_id")
+  @@index([user_id], map: "user_id")
+}
+
+model groups {
+  group_id      Int             @id @default(autoincrement())
+  group_name    String          @db.VarChar(32)
+  grade_bridges grade_bridges[]
+  group_bridges group_bridges[]
+}
+
+model tasks {
+  task_id          Int       @id @default(autoincrement())
+  topic_id         Int
+  task_description String    @db.Text
+  task_due         DateTime  @db.Date
+  task_title       String    @db.VarChar(64)
+  answers          answers[]
+  topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
+  tests            tests[]
+
+  @@index([topic_id], map: "topic_id")
+}
+
+model tests {
+  test_id   Int    @id @default(autoincrement())
+  test_path String @db.Text
+  task_id   Int
+  tasks     tasks  @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "tests_ibfk_1")
+
+  @@index([task_id], map: "task_id")
+}
+
+model topics {
+  topic_id   Int     @id @default(autoincrement())
+  topic_name String  @db.VarChar(64)
+  grade_id   Int
+  tasks      tasks[]
+  grades     grades  @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "topics_ibfk_1")
+
+  @@index([grade_id], map: "grade_id")
+}
+
+model users {
+  user_id       Int             @id @default(autoincrement())
+  user_name     String          @db.VarChar(255)
+  user_hash     String          @db.VarChar(255)
+  answers       answers[]
+  group_bridges group_bridges[]
+}
