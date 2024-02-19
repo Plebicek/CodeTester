@@ -1,17 +1,19 @@
 import { readdir} from "node:fs/promises"
 import multer from "multer";
-import { Parse } from "unzipper";
+import path from 'path';
+import decompress from "decompress";
+
 
 let storage = multer.diskStorage({
     destination : function (req,file,cb) {
-        cb(null, '/java/')
+        cb(null, path.join(process.cwd(), "/src/java/"))
     },
     filename : function (req,file, cb) {
-        cb(null, file.fieldname)
+        cb(null, file.originalname)
     }
 })
 
-let upload = multer({storage : storage})
+export let upload = multer({storage : storage})
 
 const javaPath = "/root/repos/CodeTester/src/java"
 
@@ -34,5 +36,8 @@ export function viewUploadSolution(req,res) {
 }
 
 export function uploadSolution(req,res) {
+    console.log(req.file)
+    decompress(path.join(process.cwd(), "/src/java/" + req.file.originalname), "./src/java/")
     res.status(200).json('File was successfully uploaded')
 }
+
