@@ -32,7 +32,7 @@ export async function loginUser(req,res) {
             const isSame = await bcrypt.compare(password, isUser.user_hash)
             if (isSame) {
                 let jwt_token = jwt.sign({id : isUser.user_id},process.env.JWT_TOKEN, {expiresIn : "1h"})
-                res.cookie("jwt", jwt_token)
+                res.cookie("auth", jwt_token, {httpOnly: true, maxAge : 7200000})
                 return res.status(201).json('logged in')
             }
         }
@@ -44,7 +44,8 @@ export async function loginUser(req,res) {
 }
 
 export async function logoutUser(req,res) {
-    console.log('logout')
+    res.clearCookie("auth")
+    res.send('Logged out')
 }
  
 export function viewLogin(req,res) {

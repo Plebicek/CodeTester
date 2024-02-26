@@ -32,7 +32,6 @@ export async function ViewAllTests(req,res,next) {
 }
 
 export function viewUploadSolution(req,res) {
-    console.log(process.cwd())
     res.render('upload')
 }
 

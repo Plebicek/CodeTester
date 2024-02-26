@@ -3,9 +3,11 @@ import testRouter from './testRouter.js'
 import userRouter from './userRouter.js'
 import taskRouter from "./taskRouter.js"
 
+import jwtAuth from "../middlewares/jwtAuth.js";
+
 const router = Router()
-    router.use(testRouter)
     router.use(userRouter)
+    router.use( testRouter)
     router.use(taskRouter)
 
 export default router
