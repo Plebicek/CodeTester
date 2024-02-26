@@ -1,12 +1,54 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import  jwt  from "jsonwebtoken"
+import { getUserByName, createUser } from "../models/user.js"
+import dotenv from "dotenv"
+import bcrypt from 'bcrypt'
+dotenv.config({path : "../.env"})
 
-export default async function viewAllUsers(req,res) {
-    try {
-        const users = await prisma.users.findMany()
-        res.status(200).json(users)
-    } catch (err) {
-        console.log("Users error: " + err)
-        res.status(500).json("Users server error")
+export async function registerUser(req,res) {
+  try {
+    const { username, password } = req.body;
+    const hash = await bcrypt.hash(password, 10);
+    const isCreated = await createUser(username, hash)
+    if (isCreated) {
+      return res.status(200).json("User was created");
+    } else {
+      return res.status(301).json("Failed to create user");
     }
-    } 
+  } catch (error) {
+    console.error("Error during registration:", error);
+    return res.status(500).json("Internal server error");
+  }
+}
+
+export function viewRegisterUser(req,res) {
+    res.render('auth/register')
+}
+
+export async function loginUser(req,res) {
+    try {
+        const { username, password } = req.body;
+        const isUser = await getUserByName(username)
+        if (isUser) {
+            const isSame = await bcrypt.compare(password, isUser.user_hash)
+            if (isSame) {
+                let jwt_token = jwt.sign({id : isUser.user_id},process.env.JWT_TOKEN, {expiresIn : "1h"})
+                res.cookie("jwt", jwt_token)
+                return res.status(201).json('logged in')
+            }
+        }
+        res.status(301).json('wrong credentials')
+    } catch (err) {
+        console.log(err)
+        res.status(500).json("internal Server error")
+    }
+}
+
+export async function logoutUser(req,res) {
+    console.log('logout')
+}
+ 
+export function viewLogin(req,res) {
+    res.render('auth/login')
+}
+
+
