@@ -1,13 +1,11 @@
 import { Router } from "express";
-import testRouter from './testRouter.js'
 import userRouter from './userRouter.js'
-import taskRouter from "./taskRouter.js"
+import indexRouter from "./indexRouter.js"
+import jwtAuth from "../middlewares/jwtAuth.js"
 
-import jwtAuth from "../middlewares/jwtAuth.js";
 
 const router = Router()
-    router.use(userRouter)
-    router.use( testRouter)
-    router.use(taskRouter)
+    router.use("/", userRouter)
+    router.use("/", jwtAuth, indexRouter)
 
 export default router

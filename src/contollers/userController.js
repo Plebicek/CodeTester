@@ -5,6 +5,12 @@ import bcrypt from 'bcrypt'
 dotenv.config({path : "../.env"})
 
 export async function registerUser(req,res) {
+  if (req.cookies.auth) {
+    return res.redirect("/")
+  }
+  if (req.method == "GET") {
+    return res.render("auth/register")
+  }
   try {
     const { username, password } = req.body;
     const hash = await bcrypt.hash(password, 10);
@@ -20,11 +26,13 @@ export async function registerUser(req,res) {
   }
 }
 
-export function viewRegisterUser(req,res) {
-    res.render('auth/register')
-}
-
 export async function loginUser(req,res) {
+    if (req.cookies.auth) {
+      return res.redirect("/")
+    }
+    if (req.method == "GET") {
+      return res.render("auth/login")
+    }
     try {
         const { username, password } = req.body;
         const isUser = await getUserByName(username)
@@ -33,7 +41,7 @@ export async function loginUser(req,res) {
             if (isSame) {
                 let jwt_token = jwt.sign({id : isUser.user_id},process.env.JWT_TOKEN, {expiresIn : "1h"})
                 res.cookie("auth", jwt_token, {httpOnly: true, maxAge : 7200000})
-                return res.status(201).json('logged in')
+                return res.redirect("/")
             }
         }
         res.status(301).json('wrong credentials')

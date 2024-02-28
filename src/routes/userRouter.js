@@ -1,10 +1,10 @@
-import {loginUser, logoutUser, registerUser, viewLogin, viewRegisterUser} from "../contollers/userController.js"
+import {loginUser, logoutUser, registerUser} from "../contollers/userController.js"
 import {Router} from 'express'
 const router = Router()
 
+router.get("/login", loginUser)
 router.post("/login", loginUser)
-router.get("/login", viewLogin)
-router.get("/signup", viewRegisterUser)
+router.get("/signup", registerUser)
 router.post("/signup", registerUser)
 router.get('/logout', logoutUser)
 export default router
