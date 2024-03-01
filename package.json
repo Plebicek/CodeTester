@@ -5,9 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index",
-    "lint": "eslint index.js"
+    "dev-server": "nodemon index",
+    "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
+    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\""
   },
   "author": "",
   "license": "ISC",
@@ -26,8 +26,15 @@
     "unzipper": "^0.10.14"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "connect-livereload": "^0.6.1",
     "eslint": "^8.56.0",
-    "nodemon": "^3.0.3",
-    "prisma": "^5.9.1"
+    "livereload": "^0.9.3",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "prisma": "^5.9.1",
+    "tailwindcss": "^3.4.1"
   }
 }
