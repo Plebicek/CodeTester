@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <h1 class="text-3xl">text ha</h1>
- <%
-    
- %> 
+    <h1 class="text-3xl mx-auto">Grades</h1>
+    <ul>
+        <% grades.forEach(function(grade) { %>
+             <li><a href="/grade/<%= grade.grades.grade_id %>">Ročník <%= grade.grades.grade_name %></a></li>
+        <% }); %>
+    </ul>
 </body>
 </html>

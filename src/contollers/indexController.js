@@ -1,8 +1,7 @@
-import getClasses from "../models/task.js";
+import { getGradesByUser} from "../models/grade.js";
 
-export async function homepage(req,res) {
-    const classesQuery = await getClasses(req.user.id)
-    let classes =  classesQuery.group_bridges[0].groups.grade_bridges
-    console.log(classesQuery.group_bridges[0].groups.grade_bridges)
-    res.render("index", classes)
+export async function homepage(req,res) {   
+    const gradeQuery = await getGradesByUser(req.user.id) //ToDo needs reduce sql select
+    let grades =  gradeQuery.group_bridges[0].groups.grade_bridges
+    res.render("index", {"grades" : grades})
 }

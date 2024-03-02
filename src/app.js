@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import router from './routes/index.js'
-import path from 'path';
+import path from 'path'; 
 import livereload from 'livereload';
 import liveReloadServer from 'connect-livereload';
 
@@ -33,7 +33,7 @@ app.use(router)
 
 app.use(function(req,res) {
     console.log(res.errorMessage)
-    res.status(404).send('err')
+    res.status(404).send('page not found')
 })
 
 

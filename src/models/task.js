@@ -1,38 +1,47 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export default async function getClasses(userId) {
-    if (!userId) {
-        return null 
-    }
+
+export async function getTopicsTasks(topicId) {
     try {
-        let classes = prisma.users.findFirst({
+        let tasks = await prisma.topics.findFirst({
             where : {
-                user_id : userId
+                topic_id : topicId
             },
-           include: {
-            group_bridges: {
-                select: {
-                    groups: {
-                        include: {
-                            grade_bridges: {
-                                include: {
-                                            grades: {
-                                                select : {
-                                                    grade_id : true,
-                                                    grade_name :true
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            select : {
+                topic_name : true,
+                tasks : {
+                    where : {
+                        topic_id : topicId
+                    },
+                    select : {
+                        task_title : true,
+                        task_id: true,
+                    }
                 }
             }
         })
-        return classes
+        return tasks
     } catch (err) {
-        return new Error("The SQL query for getClasses failed")
+       return new Error("The getTopicsTasks query failed") 
+    }
+}
+
+export async function getTaskById(taskId) {
+    try {
+        let task = await prisma.tasks.findFirst({
+            where : {
+                task_id :  taskId
+            },
+            select : {
+                task_title: true,
+                task_description : true,
+                task_due : true,
+                task_id : true
+            }
+        })
+        return task
+    } catch (err) {
+       return new Error("The getTaskById query failed") 
     }
 }

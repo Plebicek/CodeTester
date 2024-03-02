@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Grade <%= grade.grade_name %></h1> 
+    <h1>topics</h1>
+    <ul>
+        <% if (topics.length > 0) { %>
+            <% topics.forEach(topic => { %>
+                <li><a href="<%= path %>/topic/<%= topic.topic_id %>"><%= topic.topic_name %></a></li>
+            <% }) %> 
+        <% } else { %>
+            <li>No topics assigned</li>
+        <% } %>
+    </ul>
+</body>
+</html>
