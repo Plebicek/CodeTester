@@ -5,13 +5,16 @@ import path from "path";
 import decompress from "decompress";
 import { createAnswer } from "../models/answer.js";
 
-const JAVA_PATH = path.join(process.cwd(), "/java/");
+const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
+const JAVA_TEST = path.join(process.cwd(), "/java/tests/"); 
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, JAVA_PATH);
+    //check requirements
+    cb(null, JAVA_UPLOAD);
   },
   filename: function (req, file, cb) {
+    //rename by id 
     cb(null, file.originalname);
   },
 });
@@ -44,7 +47,6 @@ export async function viewTask(req, res) {
   try {
     let task = await getTaskById(taskId);
     console.log(task);
-    console.log(req.originalUrl);
     res.render("task", { task: task, path: req.originalUrl });
   } catch (err) {
     res.status(500).redirect("/");
@@ -52,8 +54,17 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
-  console.log(req.file);
-  let { taskId } = req.params;
+    console.log(req.file);
+    let taskId  =  parseInt(req.params.taskId);
+    let userId = parseInt(req.user.id);
+    let userAnswer  =  await createAnswer(taskId, userId)
+    if (userAnswer instanceof Error) {
+        return res.status(500).json("While sending an asnwer error has occured")
+    }
+    
+
+    
+  
 
   //create answer record to db
   //Needs:

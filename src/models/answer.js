@@ -9,8 +9,9 @@ export async function createAnswer(taskId, userId) {
         user_id: userId,
       },
     });
+    return answer
   } catch (err) {
-    return new Error("Error occured in createAnswer");
+    return new Error("Error occured in createAnswer " + err);
   }
 }
 
