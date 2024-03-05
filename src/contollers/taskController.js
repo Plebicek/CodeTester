@@ -4,6 +4,7 @@ import multer from "multer";
 import path from "path";
 import decompress from "decompress";
 import { createAnswer } from "../models/answer.js";
+import { copyFile } from "node:fs";
 
 const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
 const JAVA_TEST = path.join(process.cwd(), "/java/tests/"); 
@@ -61,7 +62,7 @@ export async function uploadSolution(req, res) {
     if (userAnswer instanceof Error) {
         return res.status(500).json("While sending an asnwer error has occured")
     }
-    
+    copyFile(JAVA_TEST+req.file)
 
     
   
