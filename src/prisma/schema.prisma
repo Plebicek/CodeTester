@@ -17,11 +17,12 @@ model answer_stats {
 }
 
 model answers {
-  answer_id Int   @id @default(autoincrement())
-  task_id   Int
-  user_id   Int
-  tasks     tasks @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
-  users     users @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
+  answer_id      Int     @id @default(autoincrement())
+  task_id        Int
+  user_id        Int
+  answer_inQueue Boolean @default(false)
+  tasks          tasks   @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
+  users          users   @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
 
   @@index([task_id], map: "task_id")
   @@index([user_id], map: "user_id")
