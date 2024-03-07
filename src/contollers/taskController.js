@@ -7,7 +7,7 @@ import { createAnswer } from "../models/answer.js";
 import { copyFile } from "node:fs";
 
 const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
-const JAVA_TEST = path.join(process.cwd(), "/java/tests/"); 
+const JAVA_TEST = path.join(process.cwd(), "/java/tests"); 
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
