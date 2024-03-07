@@ -13,14 +13,20 @@ export async function initTaskQueue() {
   }
 }
 
-async function processTask(job) {
+async function processTask(job, done) {
+  //set asnwer to inqueue
+  //start testing the task asnwer
+  //done()
   console.log(`${job.jobId}`);
 }
 
 taskQueue.process(processTask);
 
-taskQueue.on("completed", async () => {});
+taskQueue.on("completed", async () => {
+  //sql to db that processed finished inqueue false
+  //redis remove from db
+});
 
 export async function addTaskToQueue() {
-  await taskQueue.add({ jobId: 1, foo: "bar 1" });
+  await taskQueue.add({ jobId: 1, foo: "task 1" });
 }
