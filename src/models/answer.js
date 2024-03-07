@@ -9,20 +9,19 @@ export async function createAnswer(taskId, userId) {
         user_id: userId,
       },
     });
-    return answer
   } catch (err) {
-    return new Error("Error occured in createAnswer " + err);
+    return new Error("Error occured in createAnswer");
   }
 }
 
-export async function setAnswerToQueue(answerId) {
+export async function setAnswerToQueue(answerId, queueId) {
   try {
     let answer = await prisma.answers.update({
       where: {
         answer_id: answerId,
       },
       data: {
-        answer_inQueue: 1,
+        answer_inQueue: queueId,
       },
     });
   } catch (err) {
@@ -37,7 +36,7 @@ export async function removeAnswerFromQueue(answerId) {
         answer_id: answerId,
       },
       data: {
-        answer_inQueue: 0,
+        answer_inQueue: null,
       },
     });
   } catch (err) {
