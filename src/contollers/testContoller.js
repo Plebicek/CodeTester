@@ -46,6 +46,7 @@ export function uploadSolution(req, res) {
   //rename file to uuid
 
   //task user.id task.id answer.id
+
   console.log(req.file);
 
   decompress(path.join(JAVA_PATH + req.file.originalname), JAVA_PATH);

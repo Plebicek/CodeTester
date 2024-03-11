@@ -77,7 +77,6 @@ export async function initTaskQueue() {
   });
 }
 
-
 export async function addTaskToQueue(object) {
   await taskQueue.add(object);
 }
