@@ -23,15 +23,14 @@ export async function initTaskQueue() {
     console.log(job)
 
     let testId = await getTest(job.data.task_id)
-    if (!testId.test_id) {
+    if (!testId) {
       console.log("While processing queue, test id doesnt exists in with task id" + job.data.task_id)
-      done()
+      return done()
     }
 
     let userInputPath = `${JAVA_UPLOAD+job.data.answer_id}.zip`
     let javaTestPath = `${JAVA_TEST+testId.test_id}/src/`
     let childPath = process.cwd()+`/java/tests/${testId.test_id}/`
-    console.log(javaTestPath)
 
     copyFile(userInputPath, javaTestPath+job.data.answer_id+".zip",  (err) => { //PODMINKA uzivatel musi odevzdat main.zip
       if (err) console.log(err)   //ToDo set to delayed queue 
@@ -45,7 +44,7 @@ export async function initTaskQueue() {
     rename(javaTestPath+job.data.answer_id+".zip", javaTestPath+"main.zip", (err) => {
       if (err) {
         console.log("Error when renaming id to main.zip" + err)
-        done()
+        return done()
       }
     })
 
@@ -54,17 +53,25 @@ export async function initTaskQueue() {
     }
     ).catch(err => {
       console.log(err)
-      done()
+      return done()
     })
 
     rmSync(javaTestPath+"main.zip")
 
-    let test = exec("mvn test",{cwd: childPath})
-    test.on("data", (data)=> {
-      console.log("data: " +data)
+    let test = exec("mvn -q test",{cwd: childPath})
+    let data = ""
+
+    test.stdout.on("data", (chunks)=> {
+      data += chunks
     }) 
+
+    test.on("error", (err) => {
+      console.log("test.on error: " +err)
+    })
     test.on("exit", () => {
-      done()
+      let json =  JSON.parse(data)
+      console.log(json.total)
+      return done()
     })
   });
 

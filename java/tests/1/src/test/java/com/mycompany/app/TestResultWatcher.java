@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.TestWatcher;
 
 import java.net.HttpURLConnection;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 
 import org.json.*;
@@ -36,6 +35,13 @@ public class TestResultWatcher implements TestWatcher, AfterAllCallback {
         if (runnedTestsNumber > 0 || passedTests > 0) {
             runnedSuccesfullPercentage = (passedTests / runnedTestsNumber) * 100;
         }
+        JSONObject jo = new JSONObject();
+        jo.put("passed", passedTests);
+        jo.put("failed", failedTests);
+        jo.put("total", runnedTestsNumber);
+
+        System.out.println(jo.toString());
+       /*  System.out.println("{}");
         System.out.println("failed tests " + failedTests);
         System.out.println("passed tests " + passedTests);
         System.out.println("Total tests: " + runnedTestsNumber);
@@ -65,9 +71,9 @@ public class TestResultWatcher implements TestWatcher, AfterAllCallback {
             System.out.println(con.getResponseCode());
 
          } catch (Exception err) {
-            /* Send to connection failure endpoint */
+            /* Send to connection failure endpoint 
             System.out.println(err);
-        }
+        } */
       
     }
 
