@@ -10,7 +10,6 @@ export async function viewGrade(req,res) {
         if (!grade) {
             return res.redirect("/")
         }
-        console.log(grade)
         return res.render("grade", { grade : grade, "topics" : grade.topics, "path" : req.path})
     } catch (err) {
         return res.status(500).redirect("/")

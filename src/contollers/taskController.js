@@ -2,12 +2,12 @@ import { getTaskById, getTopicsTasks } from "../models/task.js";
 import { readdir } from "node:fs/promises";
 import multer from "multer";
 import path from "path";
-import decompress from "decompress";
-import { createAnswer } from "../models/answer.js";
-import { copyFile } from "node:fs";
+import {createAnswer } from "../models/answer.js";
+import { rename } from "node:fs";
+import { addTaskToQueue } from "../utils/taskQueue.js";
 
-const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
-const JAVA_TEST = path.join(process.cwd(), "/java/tests"); 
+export const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
+export const JAVA_TEST = path.join(process.cwd(), "/java/tests/"); 
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,9 +27,8 @@ export async function viewTasks(req, res) {
   if (isNaN(topicId)) {
     return res.redirect("/");
   }
-  try {
+  try {     
     let topic = await getTopicsTasks(topicId);
-    console.log(topic);
     res.render("tasks", {
       topic: topic.topic_name,
       tasks: topic.tasks,
@@ -47,7 +46,6 @@ export async function viewTask(req, res) {
   }
   try {
     let task = await getTaskById(taskId);
-    console.log(task);
     res.render("task", { task: task, path: req.originalUrl });
   } catch (err) {
     res.status(500).redirect("/");
@@ -59,10 +57,16 @@ export async function uploadSolution(req, res) {
     let taskId  =  parseInt(req.params.taskId);
     let userId = parseInt(req.user.id);
     let userAnswer  =  await createAnswer(taskId, userId)
-    if (userAnswer instanceof Error) {
-        return res.status(500).json("While sending an asnwer error has occured")
+    console.log(userAnswer)
+    if (userAnswer instanceof Error) return res.status(500).json("While sending an asnwer error has occured")
+    if (userAnswer?.exists) {
+      return res.json("file has been uploaded")
     }
-    copyFile(JAVA_TEST+req.file)
+    /* copyFile(JAVA_TEST+req.file, )  */
+    rename(JAVA_UPLOAD + req.file.originalname, JAVA_UPLOAD + userAnswer.answer_id + ".zip", (err) => {
+      if (err) console.log(err)
+    })
+    await addTaskToQueue(userAnswer)
 
     
   

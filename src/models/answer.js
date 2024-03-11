@@ -1,7 +1,33 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+export async function checkExistingAnswer(taskId, userId) {
+  try {
+    let isAnswer = await prisma.answers.findFirst({
+      where : {
+        user_id : userId,
+        task_id : taskId
+      },
+      select : {
+        answer_id: true
+      }
+    })
+    if (isAnswer) {
+      isAnswer.exists = true
+      return isAnswer
+    } else {
+      return 0
+    }
+     
+  } catch (err) {
+   return new Error("Error occured in CheckExistsingAnswer") 
+  }
+}
+
 export async function createAnswer(taskId, userId) {
+  let isAnswer = await checkExistingAnswer(taskId, userId)
+  if (isAnswer) return isAnswer
+
   try {
     let answer = await prisma.answers.create({
       data: {
@@ -17,7 +43,7 @@ export async function createAnswer(taskId, userId) {
 
 export async function setAnswerToQueue(answerId) {
   try {
-    let answer = await prisma.answers.update({
+    await prisma.answers.update({
       where: {
         answer_id: answerId,
       },
@@ -25,6 +51,7 @@ export async function setAnswerToQueue(answerId) {
         answer_inQueue: 1,
       },
     });
+    return 1
   } catch (err) {
     return new Error("Error occured in setAnswerToQueue");
   }
@@ -32,7 +59,7 @@ export async function setAnswerToQueue(answerId) {
 
 export async function removeAnswerFromQueue(answerId) {
   try {
-    let answer = await prisma.answers.update({
+    await prisma.answers.update({
       where: {
         answer_id: answerId,
       },
@@ -40,7 +67,23 @@ export async function removeAnswerFromQueue(answerId) {
         answer_inQueue: 0,
       },
     });
+    return 1
   } catch (err) {
     return new Error("Error occured in removeAnswerFromQueue");
+  }
+}
+
+export async function remoteIdFromQueue(answerId) {
+  try{ 
+    await prisma.answers.update({
+      where: {
+        answer_id : answerId
+      },
+      data : {
+        answer_inQueue : null
+      }
+    })
+  } catch(err) {
+    return new Error("Error has occured in remoteIdFromQueue")
   }
 }
