@@ -36,8 +36,8 @@ public class TestResultWatcher implements TestWatcher, AfterAllCallback {
             runnedSuccesfullPercentage = (passedTests / runnedTestsNumber) * 100;
         }
         JSONObject jo = new JSONObject();
-        jo.put("passed", passedTests);
-        jo.put("failed", failedTests);
+        jo.put("pass", passedTests);
+        jo.put("fail", failedTests);
         jo.put("total", runnedTestsNumber);
 
         System.out.println(jo.toString());
