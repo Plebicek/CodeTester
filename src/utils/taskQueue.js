@@ -19,8 +19,6 @@ export async function initTaskQueue() {
   }
 
   taskQueue.process(2, async (job, done) => {
-    console.log(job);
-
     let testId = await getTest(job.data.task_id);
     if (!testId) {
       console.log(
@@ -38,7 +36,6 @@ export async function initTaskQueue() {
       userInputPath,
       javaTestPath + job.data.answer_id + ".zip",
       (err) => {
-        //PODMINKA uzivatel musi odevzdat main.zip
         if (err) console.log(err); //ToDo set to delayed queue
         try {
           rmSync(userInputPath);

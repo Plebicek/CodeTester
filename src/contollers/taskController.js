@@ -53,21 +53,18 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
-    console.log(req.file);
     let taskId  =  parseInt(req.params.taskId);
     let userId = parseInt(req.user.id);
     let userAnswer  =  await createAnswer(taskId, userId)
-    console.log(userAnswer)
     if (userAnswer instanceof Error) return res.status(500).json("While sending an asnwer error has occured")
     if (userAnswer?.exists) {
       return res.json("file has been uploaded")
     }
-    /* copyFile(JAVA_TEST+req.file, )  */
     rename(JAVA_UPLOAD + req.file.originalname, JAVA_UPLOAD + userAnswer.answer_id + ".zip", (err) => {
       if (err) console.log(err)
     })
     await addTaskToQueue(userAnswer)
-
+    res.redirect(req.path)
     
   
 
@@ -81,7 +78,7 @@ export async function uploadSolution(req, res) {
 
   //task user.id task.id answer.id
   /* decompress(path.join(JAVA_PATH + req.file.originalname), JAVA_PATH) */
-  res.status(200).json("File was successfully uploaded");
+  /* res.status(200).json("File was successfully uploaded"); */
 }
 
 export function viewUpload(req, res) {
