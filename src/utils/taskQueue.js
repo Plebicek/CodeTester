@@ -2,7 +2,7 @@ import Bull from "bull";
 import { redisClient } from "./../../index.js";
 import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
 import { copyFile, rename, rmSync, rm } from "node:fs";
-import { remoteIdFromQueue } from "../models/answer.js";
+import { remoteIdFromQueue, setAnswerStats } from "../models/answer.js";
 import getTest from "../models/test.js";
 import decompress from "decompress";
 import { exec } from "node:child_process";
@@ -85,9 +85,11 @@ export async function initTaskQueue() {
     test.on("error", (err) => {
       console.log("test.on error: " + err);
     });
-    test.on("exit", () => {
-      let json = JSON.parse(data);
-      console.log(json.total);
+    test.on("exit", async () => {
+      let jsonData = JSON.parse(data);
+      jsonData.answer_id = job.data.answer_id;
+      console.log(jsonData);
+      await setAnswerStats(jsonData);
       return done();
     });
   });
