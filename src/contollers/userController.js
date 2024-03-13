@@ -2,8 +2,13 @@ import jwt from "jsonwebtoken";
 import { getUserByName, createUser } from "../models/user.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+/* import {Strategy} from "passport-microsoft"
+import {Passport} from "passport" */
 dotenv.config({ path: "../.env" });
 
+/* export async function loginMicrosoftOauth(req,res) {
+  Passport.use()
+} */
 export async function registerUser(req, res) {
   if (req.cookies.auth) {
     return res.redirect("/");

@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-
 export  async function getUserByName(username) {
     const filtered_user = await prisma.users.findUnique({
         where : {
