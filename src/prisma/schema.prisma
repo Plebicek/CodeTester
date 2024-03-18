@@ -70,6 +70,7 @@ model tasks {
   task_description String    @db.Text
   task_due         DateTime  @db.Date
   task_title       String    @db.VarChar(64)
+  task_lock        Boolean   @default(true)
   answers          answers[]
   topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
   tests            tests[]

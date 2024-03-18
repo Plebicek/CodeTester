@@ -12,7 +12,7 @@
         <!-- <p>Otev5ene skupinz</p> -->
         <% grades.forEach(function(grade) { %>
             <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center justify-between lg:w-61-87 lg:h-5rem lg:px-22px lg:py-4 bg-bg-third-light rounded-main cursor-pointer">
-                <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací 1.I - 2021/2022</p>
+                <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
                 <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
             </a>
         <% }); %>
