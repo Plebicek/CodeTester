@@ -4,18 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <%- include('./partials/head.ejs') %>  
 </head>
-<body>
-    <h1>Grade <%= grade.grade_name %></h1> 
-    <h1>topics</h1>
-    <ul>
+<body class="<%- include('./partials/body') %>">
+    <%- include("./partials/navbar.ejs") %>
+
+    <main class="flex flex-col gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
+        <h1 class="lg:mb-5 text-center font-black text-4xl text-white">Programování a vývoj aplikací 1.I - 2021/2022</h1>
         <% if (topics.length > 0) { %>
             <% topics.forEach(topic => { %>
-                <li><a href="<%= path %>/topic/<%= topic.topic_id %>"><%= topic.topic_name %></a></li>
+                <a href="<%= path %>/topic/<%= topic.topic_id %>">
+                    <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0 after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-61-87 lg:h-5rem lg:px-22px lg:py-4">
+                        <p class="font-black text-32px text-center text-white"><%= topic.topic_name %></p>
+                        <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                    </div>
+                </a>
+                <a href="" class="mx-5 mt-3 flex gap-4 flex-col">
+                    <div class="rounded-main border-main-dark border-6">
+                        <div class="flex lg:px-10px lg:py-4 justify-between items-center">
+                            <p class="lg:text-2xl text-main-dark font-black">Použití správných datových typů</p>
+                            <img src="/images/checkmark.svg" class="" alt="">
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="mx-5 mt-3 flex gap-4 flex-col">
+                    <div class="rounded-main border-main border-6">
+                        <div class="flex lg:px-10px lg:py-4 justify-between items-center">
+                            <p class="lg:text-2xl text-main font-black">Použití správných datových typů</p>
+                        </div>
+                    </div>
+                </a>
             <% }) %> 
         <% } else { %>
-            <li>No topics assigned</li>
+            <li>Žádné úkoly nebyly přidány</li>
         <% } %>
-    </ul>
+    </main>
+
 </body>
 </html>

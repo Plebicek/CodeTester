@@ -4,8 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <%- include('./partials/head.ejs') %>
   </head>
-  <body>
+  <body class="<%- include('./partials/body') %>">
+    <%- include("./partials/navbar.ejs") %>
+    <main class="flex justify-between items-center lg:mx-5-68 lg:mt-36">
+      <div class="lg:w-793 lg:h-788 bg-bg-second rounded-main">
+
+      </div>
+      <div class="flex justify-center items-center bg-bg-second lg:w-377 lg:h-491 lg:mr-20 rounded-main">
+        <div class="flex justify-center lg:w-350 lg:h-467  bg-bg-second border-main-border border-5 rounded-main">
+          <img src="/images/upload.svg" class="" alt="Šipka znázorňující směr">
+        </div> 
+      </div>
+    
+    </main>
+
+
+
     <h1>Task <%= task.task_title %></h1>
     <%= task.task_description %> 
     <% if (msg) { %><p><%= msg.errUpload %></p><% } %> 
