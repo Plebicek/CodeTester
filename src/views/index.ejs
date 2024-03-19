@@ -9,9 +9,13 @@
 <body>
     <h1 class="text-3xl mx-auto">Grades</h1>
     <ul>
+    <% if (grades) { %>
         <% grades.forEach(function(grade) { %>
              <li><a href="/grade/<%= grade.grades.grade_id %>">Ročník <%= grade.grades.grade_name %></a></li>
-        <% }); %>
+        <% }); %> 
+    <% } else { %>
+        <p>no groups assigned</p>
+    <% } %>
     </ul>
 </body>
 </html>

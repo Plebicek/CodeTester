@@ -30,3 +30,34 @@ export async function createUser(username, hash) {
         })
     })
 }
+
+export async function findUserByOAuth(oauth_id) {
+   try {
+    let result = prisma.users.findFirst({
+        where : {
+            user_oauth : oauth_id
+        },
+        select : {
+            user_id : true,
+            user_oauth : true
+        }
+    })
+    return result
+   } catch(err) {
+    console.log("while searching for user in findUserByOAuth err " + err)
+    return false
+   }
+}
+
+export async function createUserByOAuth(user_data) {
+    try {
+        return await prisma.users.create({
+            data : {
+                ...user_data
+            }
+        })
+    } catch (err) {
+        console.log("while creating user by oauth err occured " + err )
+        return err
+    }
+}

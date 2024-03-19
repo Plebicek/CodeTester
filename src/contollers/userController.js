@@ -1,14 +1,43 @@
 import jwt from "jsonwebtoken";
-import { getUserByName, createUser } from "../models/user.js";
+import { getUserByName, createUser, findUserByOAuth } from "../models/user.js";
+import { createUserByOAuth as user} from "../models/user.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+
 /* import {Strategy} from "passport-microsoft"
 import {Passport} from "passport" */
 dotenv.config({ path: "../.env" });
-
 /* export async function loginMicrosoftOauth(req,res) {
   Passport.use()
 } */
+export async function createOrFindByOAuth(req,res) {
+  let {id, displayName} = req.user
+    let {mail, jobTitle, } = req.user._json
+    if (req.isAuthenticated()) {
+        let isUser = await findUserByOAuth(id)
+        console.log("req isuser " + isUser.user_id)
+        if (isUser) {
+            let jwt_token = jwt.sign({id:isUser.user_id}, process.env.JWT_TOKEN, {expiresIn : "1h"})
+            res.cookie("auth", jwt_token, { httpOnly: true, maxAge: 3600000 })
+        } else {
+            let createUser = await user({
+                user_oauth : id,
+                user_email : mail, 
+                user_name : displayName,
+                user_job_title : jobTitle,
+            })
+            if (typeof createUser == Error) {
+                console.log("while creating user in oauth error occured")
+                return res.redirect("/login/oauth")
+            }
+            let jwt_token = jwt.sign({id:createUser.user_id}, process.env.JWT_TOKEN, {expiresIn : "1h"})
+            res.cookie("auth", jwt_token, { httpOnly: true, maxAge: 3600000 })
+        }
+        return res.redirect("/")
+    }
+    res.redirect("/login/oauth")
+}
+
 export async function registerUser(req, res) {
   if (req.cookies.auth) {
     return res.redirect("/");
