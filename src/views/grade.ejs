@@ -8,45 +8,28 @@
 </head>
 <body class="<%- include('./partials/body') %>">
     <%- include("./partials/navbar.ejs") %>
-
+  
+    
     <main class="flex flex-col gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
         <h1 class="lg:mb-5 text-center font-black text-4xl text-white"><%- grade.grade_name  %></h1>
-        <% if (topics.length > 0) { %>
-            <% topics.forEach(topic => { %>
-                <a href="<%= path %>/topic/<%= topic.topic_id %>">
-                    <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0 after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-61-87 lg:h-5rem lg:px-22px lg:py-4">
-                        <p class="font-black text-32px text-center text-white"><%= topic.topic_name %></p>
+            <% grade.topics.forEach(topic => { %>     
+                <% topic.tasks.forEach(task => { %>
+                <a href="<%= path %>/topic/<%= task.task_id %>">
+                    <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0 after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-full lg:h-5rem lg:px-22px lg:py-4">
+                        <p class="font-black text-32px text-center text-white"><%= topic.topic_title %></p>
                         <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
                     </div>
                 </a>
-                <% task_order.forEach(order => { %>
-                    <% tasks.forEach(task => { %>
-                        <% if (task.topic_id == order) { %>
-                            <a href="" class="mx-5 mt-3 flex gap-4 flex-col">
-                                <div class="rounded-main border-main-dark border-6">
-                                    <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                                        <p class="lg:text-2xl text-main-dark font-black"><%- order + " " +task.topic_id  %></p>
-                                        <img src="/images/checkmark.svg" class="" alt="">
-                                    </div>
-                                </div>
-                            </a>         
-                        <% } %>
-
-
-                    <% }) %>
-                <% }) %>
-                
+                <% }) %> 
                 <a href="" class="mx-5 mt-3 flex gap-4 flex-col">
-                    <div class="rounded-main border-main border-6">
+                    <div class="rounded-main border-main-dark border-6">
                         <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                            <p class="lg:text-2xl text-main font-black">Použití správných datových typů</p>
+                            <p class="lg:text-2xl text-main-dark font-black"><%- //order + " " +task.topic_id  %></p>
+                            <img src="/images/checkmark.svg" class="" alt="">
                         </div>
                     </div>
-                </a>
-            <% }) %> 
-        <% } else { %>
-            <li>Žádné úkoly nebyly přidány</li>
-        <% } %>
+                </a> 
+            <% }) %>
     </main>
     
 </body>
