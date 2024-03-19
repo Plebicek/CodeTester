@@ -6,7 +6,7 @@ export async function getGradesByUser(userId) {
         return null 
     }
     try {
-        let grades = prisma.users.findFirst({
+        let grades = await prisma.users.findFirst({
             where : {
                 user_id : userId
             },
