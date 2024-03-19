@@ -1,5 +1,4 @@
 import { getGradeAndTopicsById } from "../models/grade.js";
-import { getTasksByTopicIds, getTopicsWithTasks } from "../models/topic.js";
 
 export async function viewGrade(req, res) {
   let gradeId = parseInt(req.params.gradeId);
@@ -7,13 +6,19 @@ export async function viewGrade(req, res) {
     return res.redirect("/");
   }
   try {
-    let result = await getGradeAndTopicsById(gradeId);
+    let result = await getGradeAndTopicsById(gradeId,parseInt(req.user.id));
+    console.log(result)
     if (result instanceof Error || !result) {
       return res.redirect("/");
     }
-    console.log(result);
-    console.log(result.topics);
-    console.log(result.topics[0].tasks);
+    result.topics.forEach(topic  => {
+      topic.tasks.forEach(task => {
+        console.log(`topic id ${topic.topic_id + " " + topic.topic_name}, task ${task.task_id}`)
+        if(task.answers) {
+          console.log(task.answers.length)
+        }
+      })
+    }) 
     return res.render("grade", {
       grade: result,
       path: req.path,

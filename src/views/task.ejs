@@ -9,15 +9,43 @@
   <body class="<%- include('./partials/body') %>">
     <%- include("./partials/navbar.ejs") %>
     <main class="flex justify-between items-center lg:mx-5-68 lg:mt-36">
-      <div class="lg:w-793 lg:h-788 bg-bg-second rounded-main">
-
-      </div>
-      <div class="flex justify-center items-center bg-bg-second lg:w-377 lg:h-491 lg:mr-20 rounded-main">
-        <div class="flex justify-center lg:w-350 lg:h-467  bg-bg-second border-main-border border-5 rounded-main">
-          <img src="/images/upload.svg" class="" alt="Šipka znázorňující směr">
-        </div> 
-      </div>
+      <div class="lg:w-793 lg:h-788  bg-bg-second rounded-main">
+        <div class="flex flex-col w-full h-full lg:px-8 lg:py-7">
+          <p class="text-main font-black text-3xl"><%= "Použití správných datových typů" %></p>
+          <div class="flex flex-col lg:gap-9 lg:mt-9">
+            <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
+              <p class="lg:mb-1 text-lg font-black text-main">Termíny</p>
+              <div>
+                <p class="font-bold text-lg text-white">Otevřené od : <span class="text-main"><%= "Pondělí, 12. února 2024" %></span></p> 
+                <p class="font-bold text-lg text-white">Otevřené do : <span class="text-main"><%= "Pondělí, 14. února 2024" %></span></p>
+              </div>
+            </div>
+            <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
+              <p class="text-2xl lg:mb-2 font-black text-main">Zadání</p>
+              <div>
+                <p class="font-bold text-xl text-white">Vytvořte 100% pokrytí testy pro funkci selectionSort. Využij metod assertEquals(), assertArrayEquals(), assertThrows(), assertTrue() a assertFalse(). Daný program pokryje i test stability algoritmu a minimální a maximální hodnoty. Zároveň vhodně napsaným testem určete, při jakém počtu prvků dojde k přetížení algoritmu (doba výpočtu delší než 500 ms).</p> 
     
+              </div>
+            </div>
+            <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
+              <p class="lg:mb-2 text-xl font-black text-main">Soubory</p>
+              <div>
+                <p class="font-bold text-xl text-white">Za každé odevzdání mínusové body maximálně dvě odpovědi</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <form class="flex relative justify-center items-center bg-task-submit lg:w-377 lg:h-491 lg:mr-20 rounded-main" action="<%= path %>/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" class="absolute z-50 lg:w-full lg:h-full" hidden>
+        <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-task-submit border-main-border border-5 rounded-main">
+          <img src="/images/upload.svg" class="lg:h-10rem lg:mt-16 " alt="Šipka znázorňující směr">
+          <p class="text-xl lg:w-17.188rem lg:mt-12 font-bold text-white text-center"><span class="text-main">Drag</span> & <span class="text-main">Drop</span> or <span class="text-main">Choose file</span> to upload</p>
+          <p class="lg:w-64 text-gray font-bold text-md text-center lg:mt-10">Only *.zip file</p>
+        </div> 
+      </form>
     </main>
 
 

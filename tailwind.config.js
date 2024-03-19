@@ -16,6 +16,7 @@ export default {
       "bg-third-dark" : "#333643",
       "text-second" : "#5C6178",
       "login-submit" : "#5E637B",
+      "task-submit" : "#303238",
       "gray" : "#7E7E7E",
       "main-light" : "#9A9FB1",
       "bg-third-light" : "#484B54", 
@@ -39,6 +40,7 @@ export default {
         "467" : "467px",
         "491" : "491px",
         "788" : "788px",
+        "10rem" : "10.125rem",
       },
       width : {
         "33" : "33rem",
@@ -48,6 +50,7 @@ export default {
         "350" : "350px",
         "377" : "377px",
         "793" : "793px",
+        "17.188rem" : "17.188rem",
       },
       borderRadius : {
         main : "0.938rem"

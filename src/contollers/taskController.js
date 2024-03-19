@@ -1,5 +1,4 @@
 import { getTaskById, getTopicsTasks } from "../models/task.js";
-import { readdir } from "node:fs/promises";
 import multer from "multer";
 import path from "path";
 import { createAnswer } from "../models/answer.js";
