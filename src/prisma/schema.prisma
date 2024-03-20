@@ -71,6 +71,8 @@ model tasks {
   task_due         DateTime  @db.Date
   task_title       String    @db.VarChar(64)
   task_lock        Boolean   @default(true)
+  task_finish_date DateTime  @db.Date
+  task_begin_date  DateTime  @db.Date
   answers          answers[]
   topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
   tests            tests[]
@@ -98,9 +100,12 @@ model topics {
 }
 
 model users {
-  user_id       Int             @id @default(autoincrement())
-  user_name     String          @unique(map: "user_name") @db.VarChar(255)
-  user_hash     String          @db.VarChar(255)
-  answers       answers[]
-  group_bridges group_bridges[]
+  user_id        Int             @id @default(autoincrement())
+  user_name      String          @unique(map: "user_name") @db.VarChar(255)
+  user_hash      String?         @db.VarChar(255)
+  user_oauth     String          @db.Text
+  user_email     String          @db.Text
+  user_job_title String          @db.Text
+  answers        answers[]
+  group_bridges  group_bridges[]
 }
