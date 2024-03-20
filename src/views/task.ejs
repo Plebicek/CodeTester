@@ -24,7 +24,6 @@
               <p class="text-2xl lg:mb-2 font-black text-main">Zadání</p>
               <div>
                 <p class="font-bold text-xl text-white">Vytvořte 100% pokrytí testy pro funkci selectionSort. Využij metod assertEquals(), assertArrayEquals(), assertThrows(), assertTrue() a assertFalse(). Daný program pokryje i test stability algoritmu a minimální a maximální hodnoty. Zároveň vhodně napsaným testem určete, při jakém počtu prvků dojde k přetížení algoritmu (doba výpočtu delší než 500 ms).</p> 
-    
               </div>
             </div>
             <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
@@ -37,9 +36,10 @@
         </div>
       </div>
 
-
       <form class="flex relative justify-center items-center bg-task-submit lg:w-377 lg:h-491 lg:mr-20 rounded-main" action="<%= path %>/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" class="absolute z-50 lg:w-full lg:h-full" hidden>
+        <label for="drag-input" class="absolute z-50 w-full h-full">
+          <input type="file" id="drag-input" class="hidden">
+        </label>
         <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-task-submit border-main-border border-5 rounded-main">
           <img src="/images/upload.svg" class="lg:h-10rem lg:mt-16 " alt="Šipka znázorňující směr">
           <p class="text-xl lg:w-17.188rem lg:mt-12 font-bold text-white text-center"><span class="text-main">Drag</span> & <span class="text-main">Drop</span> or <span class="text-main">Choose file</span> to upload</p>
@@ -47,12 +47,5 @@
         </div> 
       </form>
     </main>
-
-
-
-    <h1>Task <%= task.task_title %></h1>
-    <%= task.task_description %> 
-    <% if (msg) { %><p><%= msg.errUpload %></p><% } %> 
-    <%- include('upload'); %>
   </body>
 </html>

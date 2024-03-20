@@ -7,7 +7,8 @@
   "scripts": {
     "dev-server": "nodemon index",
     "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
-    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\""
+    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
+    "fetch-db": "./src/ npx prisma db pull  & ./src/ npx prisma generate "
   },
   "author": "",
   "license": "ISC",
