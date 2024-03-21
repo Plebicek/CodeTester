@@ -21,6 +21,10 @@ export default {
       "main-light" : "#9A9FB1",
       "bg-third-light" : "#484B54", 
       "white" : "#FAFAFA",
+      "task" : "#8A8ECC",
+      "answer" : "#9FA4FF",
+      "green" : "#80FC94",
+      "red" : "#FC8080"
     },
     extend: {
       margin : {

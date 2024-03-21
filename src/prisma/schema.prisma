@@ -17,12 +17,13 @@ model answer_stats {
 }
 
 model answers {
-  answer_id      Int     @id @default(autoincrement())
+  answer_id      Int       @id @default(autoincrement())
   task_id        Int
   user_id        Int
-  answer_inQueue Boolean @default(false)
-  tasks          tasks   @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
-  users          users   @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
+  answer_inQueue Boolean   @default(false)
+  answer_tested  DateTime? @db.Date
+  tasks          tasks     @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
+  users          users     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
 
   @@index([task_id], map: "task_id")
   @@index([user_id], map: "user_id")
@@ -68,11 +69,10 @@ model tasks {
   task_id          Int       @id @default(autoincrement())
   topic_id         Int
   task_description String    @db.Text
-  task_due         DateTime  @db.Date
+  task_due         DateTime  @db.DateTime(0)
   task_title       String    @db.VarChar(64)
   task_lock        Boolean   @default(true)
-  task_finish_date DateTime  @db.Date
-  task_begin_date  DateTime  @db.Date
+  task_begin_date  DateTime? @db.DateTime(0)
   answers          answers[]
   topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
   tests            tests[]
@@ -106,6 +106,7 @@ model users {
   user_oauth     String          @db.Text
   user_email     String          @db.Text
   user_job_title String          @db.Text
+  user_role      String          @default("user") @db.Text
   answers        answers[]
   group_bridges  group_bridges[]
 }
