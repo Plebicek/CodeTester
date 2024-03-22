@@ -4,7 +4,13 @@
             <img src="/images/ssmg.svg" class="lg:h-75px" alt="logo školy SŠMG">
         </div>
         <div class="flex gap-2 items-center lg:m-22px">
-            <p class="w-full text-center text-gray text-nowrap">Odhlásit se</p>
+            <div class="flex w-full items-center gap-2 text-center text-gray text-nowrap">
+                <% if (user.role == "admin") { %>
+                    <a href="/admin/dashboard" class="text-main text-center">Admin dashboard</a>
+                    <div class="lg:w-1 lg:h-10 bg-login-submit"></div>
+                    <% } %> 
+                <a href="/logout" class="w-full text-center text-gray text-nowrap">Odhlásit se</a>
+            </div>
             <img src="/images/user-profile.svg" class="w-full h-full object-cover" alt="logo školy SŠMG">
         </div>
     </nav>
