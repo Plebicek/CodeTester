@@ -733,72 +733,89 @@ video {
   -moz-osx-font-smoothing: grayscale;
 }
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 .placeholder\:text-text-second::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(92 97 120 / var(--tw-text-opacity));
 }
+
 .placeholder\:text-text-second::placeholder {
   --tw-text-opacity: 1;
   color: rgb(92 97 120 / var(--tw-text-opacity));
 }
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
 }
+
 .after\:inset-x-0::after {
   content: var(--tw-content);
   left: 0px;
   right: 0px;
 }
+
 .after\:bottom-0::after {
   content: var(--tw-content);
   bottom: 0px;
 }
+
 .after\:block::after {
   content: var(--tw-content);
   display: block;
 }
+
 .after\:h-6px::after {
   content: var(--tw-content);
   height: 6px;
 }
+
 .after\:w-full::after {
   content: var(--tw-content);
   width: 100%;
 }
+
 .after\:rounded::after {
   content: var(--tw-content);
   border-radius: 0.25rem;
 }
+
 .after\:bg-gradient-to-r::after {
   content: var(--tw-content);
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
+
 .after\:from-bg-grad-text::after {
   content: var(--tw-content);
   --tw-gradient-from: #6F7DA8 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(111 125 168 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
+
 .after\:to-bg-grad-gray::after {
   content: var(--tw-content);
   --tw-gradient-to: #2B3142 var(--tw-gradient-to-position);
 }
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
+
 .hover\:bg-bg-third-dark:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 54 67 / var(--tw-bg-opacity));
 }
+
 .hover\:bg-login-submit:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(94 99 123 / var(--tw-bg-opacity));
 }
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
 @media (min-width: 1024px) {
 
   .lg\:m-22px {
@@ -921,6 +938,14 @@ video {
     height: 100%;
   }
 
+  .lg\:h-4\/5 {
+    height: 80%;
+  }
+
+  .lg\:h-2 {
+    height: 0.5rem;
+  }
+
   .lg\:w-17\.188rem {
     width: 17.188rem;
   }
@@ -955,6 +980,10 @@ video {
 
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:w-1 {
+    width: 0.25rem;
   }
 
   .lg\:gap-9 {
