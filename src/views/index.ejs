@@ -6,19 +6,6 @@
     <title>Document</title>
     <%- include('./partials/head.ejs') %>
 </head>
-<<<<<<< HEAD
-<body>
-    <h1 class="text-3xl mx-auto">Grades</h1>
-    <ul>
-    <% if (grades) { %>
-        <% grades.forEach(function(grade) { %>
-             <li><a href="/grade/<%= grade.grades.grade_id %>">Ročník <%= grade.grades.grade_name %></a></li>
-        <% }); %> 
-    <% } else { %>
-        <p>no groups assigned</p>
-    <% } %>
-    </ul>
-=======
 <body class="<%- include('./partials/body') %>">
     <%- include("./partials/navbar.ejs") %>
     <main class="flex flex-col items-center gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:py-50px lg:mt-36 bg-bg-second rounded-main">
@@ -42,6 +29,5 @@
             </a>    
         <% }); %>
     </main>
->>>>>>> ui
 </body>
 </html>

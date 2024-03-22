@@ -72,10 +72,7 @@ model tasks {
   task_due         DateTime  @db.DateTime(0)
   task_title       String    @db.VarChar(64)
   task_lock        Boolean   @default(true)
-<<<<<<< HEAD
-=======
   task_begin_date  DateTime? @db.DateTime(0)
->>>>>>> ui
   answers          answers[]
   topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
   tests            tests[]
@@ -109,10 +106,7 @@ model users {
   user_oauth     String          @db.Text
   user_email     String          @db.Text
   user_job_title String          @db.Text
-<<<<<<< HEAD
-=======
   user_role      String          @default("user") @db.Text
->>>>>>> ui
   answers        answers[]
   group_bridges  group_bridges[]
 }
