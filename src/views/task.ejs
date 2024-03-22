@@ -4,11 +4,69 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <%- include('./partials/head.ejs') %>
+    <script src="/scripts/autoSubmit.js" defer></script>
   </head>
-  <body>
-    <h1>Task <%= task.task_title %></h1>
-    <%= task.task_description %> 
-    <% if (msg) { %><p><%= msg.errUpload %></p><% } %> 
-    <%- include('upload'); %>
+  <body class="<%- include('./partials/body') %>">
+    <%- include("./partials/navbar.ejs") %>
+    <main class="flex justify-between items-center lg:mx-5-68 lg:mt-36">
+      <div class="lg:w-793 lg:h-788  bg-bg-second rounded-main">
+        <div class="flex flex-col w-full h-full lg:px-8 lg:py-7">
+          <p class="text-main font-black text-3xl"><%= "Použití správných datových typů" %></p>
+          <div class="flex flex-col lg:gap-9 lg:mt-9">
+            <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
+              <p class="lg:mb-1 text-lg font-black text-main">Termíny</p>
+              <div>
+                <p class="font-bold text-lg text-white">Otevřené od : <span class="text-main"><%= task.task_begin_date %></span></p> 
+                <p class="font-bold text-lg text-white">Otevřené do : <span class="text-main"><%= task.task_due %></span></p>
+              </div>
+            </div>
+            <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
+              <p class="text-2xl lg:mb-2 font-black text-main">Zadání</p>
+              <div>
+                <p class="font-bold text-xl text-white"><%= task.task_description  %></p> 
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <% if (stats) { %>
+        <div class="flex relative justify-center items-center bg-bg-second lg:w-377 lg:h-491 lg:mr-20 rounded-main">
+          <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-bg-second border-main-border border-5 rounded-main">
+              <p class="lg:text-4xl font-bold text-main lg:my-3">Výsledky testu</p>
+              <p class="relative lg:text-6xl font-black text-answer lg:my-5"><%= stats.percentage %><span class="absolute text-3xl top-6">%</span></p>
+              <div class="flex flex-col items-center w-full lg:px-7 lg:mt-11">
+                <div class="flex justify-between lg:w-full">
+                  <p class="lg:text-3xl text-task font-bold">Úspěšných</p>
+                  <p class="lg:text-4xl font-bold text-green"><%= stats.pass %></p>
+                </div>
+                 <div class="flex justify-between lg:w-full lg:mt-8">
+                  <p class="lg:text-3xl text-task font-bold">Chyb</p>
+                  <p class="lg:text-4xl font-bold text-red"><%= stats.fails %></p>
+                </div>
+                 <div class="flex justify-between lg:w-full lg:mt-8">
+                  <p class="lg:text-3xl text-task font-bold">Celkem</p>
+                  <p class="lg:text-4xl font-bold text-main"><%= stats.total %></p>
+
+                </div>
+              </div>
+          </div>
+        </div>
+      <% } else { %>
+      <form class="flex relative justify-center items-center bg-task-submit lg:w-377 lg:h-491 lg:mr-20 rounded-main" action="<%= path %>/upload" method="POST" enctype="multipart/form-data">
+        <label for="drag-input" class="absolute z-50 w-full h-full">
+          <% if (!task.task_lock) { %>
+          <input type="file" id="drag-input" name="file" onchange="form.submit()" class="hidden">
+          <% } %>
+        </label>
+        <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-task-submit border-main-border border-5 rounded-main">
+          <img src="/images/upload.svg" class="lg:h-10rem lg:mt-16 " alt="Šipka znázorňující směr">
+          <p class="text-xl lg:w-17.188rem lg:mt-12 font-bold text-white text-center"><span class="text-main">Drag</span> & <span class="text-main">Drop</span> or <span class="text-main">Choose file</span> to upload</p>
+          <p class="lg:w-64 text-gray font-bold text-md text-center lg:mt-10">Only *.zip file</p>
+        </div> 
+      </form>
+      <% } %>
+    </main>
   </body>
 </html>

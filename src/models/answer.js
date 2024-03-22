@@ -104,3 +104,27 @@ export async function remoteIdFromQueue(answerId) {
     return new Error("Error has occured in remoteIdFromQueue");
   }
 }
+
+export async function getAnswerStatsByAnswerId(id) { 
+  if (!id) {
+    return null
+  }
+  let answerId = parseInt(id)
+  try {
+    let answer = await prisma.answer_stats.findFirst({
+      where : {
+        answer_id : answerId
+      },
+      select : {
+        pass : true,
+        fails : true,
+        answer_id : true,
+        answer_stat_id : true
+      }
+    })
+    return answer
+  } catch (err) {
+    console.log("get getAnswerStats error occured " + err)
+    return err
+  }
+}

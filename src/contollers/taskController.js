@@ -1,10 +1,10 @@
 import { getTaskById, getTopicsTasks } from "../models/task.js";
-import { readdir } from "node:fs/promises";
 import multer from "multer";
 import path from "path";
 import { createAnswer } from "../models/answer.js";
 import { rename } from "node:fs";
 import { addTaskToQueue } from "../utils/taskQueue.js";
+import dayjs from "dayjs";
 
 export const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
 export const JAVA_TEST = path.join(process.cwd(), "/java/tests/");
@@ -40,13 +40,22 @@ export async function viewTasks(req, res) {
 }
 
 export async function viewTask(req, res) {
+  console.log(req.user.role)
   let taskId = parseInt(req.params.taskId);
   if (isNaN(taskId)) {
     return res.redirect("/");
   }
   try {
     let task = await getTaskById(taskId);
+    task.task_due = dayjs(task.task_due).format("DD/MM/YYYY HH:mm:ss")
+    console.log(task)
+    if (task?.stats) {
+      let stats = task.stats
+      stats.percentage = (stats.pass / (stats.pass + stats.fails))*100
+      stats.total = stats.pass + stats.fails
+    }
     res.render("task", {
+      stats : task?.stats,
       task: task,
       path: `${req.baseUrl}${req.path}`,
       msg: { errUpload: req.query.msgUpload },
@@ -57,6 +66,7 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
+  console.log(req.file)
   let taskId = parseInt(req.params.taskId);
   let userId = parseInt(req.user.id);
   let userAnswer = await createAnswer(taskId, userId);
@@ -72,7 +82,7 @@ export async function uploadSolution(req, res) {
     }
   );
   await addTaskToQueue(userAnswer);
-  res.redirect(req.path);
+  res.redirect(`${req.baseUrl}/topic/${req.params.topicId}/task/${taskId}`);
 
   //create answer record to db
   //Needs:
