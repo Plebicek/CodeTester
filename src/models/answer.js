@@ -1,16 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function setAnswerStats(stats) {
+export async function setAnswerStats(stats, answerId) {
   if (!stats) {
     return; //
   }
   try {
-    return prisma.answer_stats.create({
+    return prisma.answers.update({
+      where : {
+        answer_id : answerId
+      },
       data: {
         fails: parseInt(stats?.fail),
         pass: parseInt(stats?.pass),
-        answer_id: parseInt(stats.answer_id),
       },
     });
   } catch (err) {
@@ -54,6 +56,7 @@ export async function createAnswer(taskId, userId) {
     });
     return answer;
   } catch (err) {
+    console.log(err)
     return new Error("Error occured in createAnswer");
   }
 }

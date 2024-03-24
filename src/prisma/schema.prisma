@@ -1,19 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-model answer_stats {
-  answer_stat_id Int @id @default(autoincrement())
-  fails          Int
-  pass           Int
-  answer_id      Int
-
-  @@index([answer_id], map: "answer_id")
 }
 
 model answers {
@@ -22,6 +14,8 @@ model answers {
   user_id        Int
   answer_inQueue Boolean   @default(false)
   answer_tested  DateTime? @db.Date
+  fails          Int?      @default(0)
+  pass           Int?      @default(0)
   tasks          tasks     @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
   users          users     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
 

@@ -24,7 +24,11 @@ export default {
       "task" : "#8A8ECC",
       "answer" : "#9FA4FF",
       "green" : "#80FC94",
-      "red" : "#FC8080"
+      "red" : "#FC8080",
+      "delete" : "#B68181",
+      "line" : "#373A42",
+      "user-grad-from" : "#333C55",
+      "user-grad-to" : "#2B3142",
     },
     extend: {
       margin : {
@@ -35,26 +39,34 @@ export default {
         "50px" : "3.125rem",
         "3rem" : "3rem",
         "22px" : "1.375rem",
-        "10px" : "10px"
+        "10px" : "0.625rem"
       },
       height : {
+        "59px" : "3.688rem",
         "75px" : "4.688rem",
         "5rem" : "5rem",
-        "6px" : "6px",
-        "467" : "467px",
-        "491" : "491px",
-        "788" : "788px",
+        "6px" : "0.375rem",
+        "467" : "29.18rem",
+        "491" : "30.68rem",
+        "788" : "49.25rem",
         "10rem" : "10.125rem",
+        "95per" : "95%"
       },
       width : {
+        "24px" : "1.5rem",
+        "37.88" : "2.368rem",
+        "55px" : "3.438rem", 
         "33" : "33rem",
         "65-5" : "65.5rem",
         "88-12" : "88.125rem", // 67.75rem 84.688rem
         "61-87" : "61.875rem",
-        "350" : "350px",
-        "377" : "377px",
-        "793" : "793px",
+        "350" : "21.87rem",
+        "377" : "23.56rem",
+        "500" : "31.25rem",
+        "650"  : "40.625rem",
+        "793" : "49.56rem",
         "17.188rem" : "17.188rem",
+        "83per" : "83%",
       },
       borderRadius : {
         main : "0.938rem"
@@ -64,11 +76,14 @@ export default {
         "32px" : "2rem"
       },
       borderWidth : {
-        6 : "6px",
-        5 : "5px"
+        6 : "0.375rem",
+        5 : "0.313rem"
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ],
 }
 

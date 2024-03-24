@@ -10,7 +10,7 @@
     <%- include("./partials/navbar.ejs") %>
     <main class="flex flex-col items-center gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:py-50px lg:mt-36 bg-bg-second rounded-main">
         <!-- <p>Otev5ene skupinz</p> -->
-        
+        <% if (grades.length > 0) { %> 
         <% grades.forEach(function(grade) { %>
              <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-light rounded-main ">
                <div class="mx-5 w-full flex justify-between items-center">
@@ -28,6 +28,7 @@
                </div> 
             </a>    
         <% }); %>
+        <% } %>
     </main>
 </body>
 </html>

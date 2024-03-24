@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include('./../partials/head.ejs') %>
+</head>
+<body class="<%- include('./../partials/body') %>">
+    <%- include("./../partials/navbar.ejs") %>
+    <main class=" lg:gap-11 flex items-start mx-auto lg:w-88-12 lg:mt-36 min-h-96 bg-bg-second rounded-main relative after:bg-line after:rounded-main  after:block after:absolute after:left-56 after:w-1 after:h-95per ">
+        <%- include ("./../partials/scroll", {sideNav}) %>
+
+        <div class="flex flex-col w-full lg:min-h-96 lg:mt-20 lg:mr-7">
+            <% for( let index = 0; index < 2; index++ ) { %>
+            <div class="flex flex-col justify-center items-center w-full h-full  rounded-main">
+                <div class="flex justify-center items-center lg:w-793 bg-bg-third-light lg:h-14 rounded-main lg:mb-5">
+                    <p class="font-semibold text-4xl  text-white">Datové typy</p>
+                </div>
+                <div class="flex justify-center items-center flex-col lg:mx-20 gap-5 lg:mb-7">
+                    <div class="flex justify-center items-center w-33 h-14 border-main border-4 rounded-main">
+                        <p class="w-full text-center text-main text-3xl">Rozšíření vyšších dat</p>
+                    </div>
+                    <div class="flex justify-center items-center w-33 h-14 border-main border-4 rounded-main">
+                        <p class="w-full text-center text-main text-3xl">Rozšíření vyšších dat</p>
+                    </div>
+                    <div class="flex justify-center items-center w-33 h-14 border-main border-4 rounded-main">
+                        <p class="w-full text-center text-main text-3xl">Rozšíření vyšších dat</p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+       </div>
+    </main>
+</body>
+</html> 

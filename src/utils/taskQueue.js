@@ -86,7 +86,7 @@ export async function initTaskQueue() {
       let jsonData = JSON.parse(data);
       jsonData.answer_id = job.data.answer_id;
       console.log(jsonData);
-      await setAnswerStats(jsonData);
+      await setAnswerStats(jsonData, parseInt(job.data.answer_id));
       return done();
     });
   });

@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { getAnswerStatsByAnswerId } from "./answer.js";
 const prisma = new PrismaClient();
 
 export async function getTopicsTasks(topicId) {
@@ -46,16 +45,14 @@ export async function getTaskById(taskId) {
           },
           select : {
             answer_id : true,
+            pass : true,
+            fails : true
           }
         }
       },
     });
     console.log(task)
     if(task.answers[0]?.answer_id) {
-      let stats = await getAnswerStatsByAnswerId(task.answers[0].answer_id) 
-      console.log(stats)
-      task.stats = stats
-      console.log(task)
       return task
     }
     return task;

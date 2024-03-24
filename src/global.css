@@ -8,3 +8,7 @@
     font-family: "Inter", system-ui sans-serif;
   }
 }
+
+.admin-target {
+  filter: invert(71%) sepia(24%) saturate(428%) hue-rotate(202deg) brightness(94%) contrast(82%);
+}
