@@ -40,7 +40,6 @@ export async function viewTasks(req, res) {
 }
 
 export async function viewTask(req, res) {
-  console.log(req.user.role)
   let taskId = parseInt(req.params.taskId);
   if (isNaN(taskId)) {
     return res.redirect("/");
@@ -48,19 +47,19 @@ export async function viewTask(req, res) {
   try {
     let task = await getTaskById(taskId);
     task.task_due = dayjs(task.task_due).format("DD/MM/YYYY HH:mm:ss")
-    console.log(task)
-    if (task?.stats) {
-      let stats = task.stats
+    if (task?.answers[0]) {
+      let stats = task.answers[0]
       stats.percentage = (stats.pass / (stats.pass + stats.fails))*100
       stats.total = stats.pass + stats.fails
     }
     res.render("task", {
-      stats : task?.stats,
+      stats : task?.answers,
       task: task,
       path: `${req.baseUrl}${req.path}`,
       msg: { errUpload: req.query.msgUpload },
     });
   } catch (err) {
+    console.log(err)
     res.status(500).redirect("/");
   }
 }

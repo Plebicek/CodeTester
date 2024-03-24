@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include('./../partials/head.ejs') %>
+</head>
+<body class="<%- include('./../partials/body') %>">
+    <%- include("./../partials/navbar.ejs") %>
+    <main class="flex items-start lg:gap-11 mx-auto lg:w-88-12 lg:mt-36 min-h-96 bg-bg-second rounded-main relative after:bg-line after:rounded-main  after:block after:absolute after:left-56 after:w-1 after:h-95per ">
+        <%- include ("./../partials/scroll", {sideNav}) %>
+
+        <div class="flex flex-col items-center w-full lg:min-h-96 lg:mt-5 lg:mr-11">
+            <p class="text-center text-main text-4xl font-semibold">Seznam tématů</p>
+            <% topics.forEach(topic => { %>
+                <a href="<%- path+"/topic/"+ topic.topic_id %>" class="flex items-center w-650 h-16 bg-bg-third-dark rounded-main lg:mt-5">
+                    <p class="w-full text-center font-semibold text-white text-4xl "><%= topic.topic_name %></p>
+                </a>
+            <% }) %>
+            </div>
+    </main>
+</body>
+</html> 
