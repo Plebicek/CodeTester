@@ -1,96 +1,95 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
-
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 // === USERS ===
 export async function getAllUsers() {
-    try {
-        return await prisma.users.findMany({
-            select : {
-                user_id : true,
-                user_job_title : true,
-                user_name : true,
-            }
-        })
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+  try {
+    return await prisma.users.findMany({
+      select: {
+        user_id: true,
+        user_job_title: true,
+        user_name: true,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
 }
 
 async function searchUserById(id) {
-    return await prisma.users.findFirst({
-        where : {
-            user_id : id
-        },
-        select : {
-            user_id : true,
-            user_job_title : true,
-            user_name : true,
-        }
-    })
+  return await prisma.users.findFirst({
+    where: {
+      user_id: id,
+    },
+    select: {
+      user_id: true,
+      user_job_title: true,
+      user_name: true,
+    },
+  });
 }
 
 export async function searchUsers(user) {
-    try {
-        if (!isNaN(parseInt(user))) {
-            return await searchUserById(parseInt(user))
-        }
-        if (!user) {
-            return await getAllUsers()
-        }
-        return await prisma.users.findMany({
-            where: {
-                user_name : {contains : user}
-            },
-            select : {
-                user_id : true,
-                user_job_title : true,
-                user_name : true
-            }
-       })
-    } catch (err) {
-        return err
+  try {
+    if (!isNaN(parseInt(user))) {
+      return await searchUserById(parseInt(user));
     }
+    if (!user) {
+      return await getAllUsers();
+    }
+    return await prisma.users.findMany({
+      where: {
+        user_name: { contains: user },
+      },
+      select: {
+        user_id: true,
+        user_job_title: true,
+        user_name: true,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 // === GRADES ===
 export async function getGrades() {
-    try {
-        return await prisma.grades.findMany({
-            select : {
-                grade_id : true,
-                grade_name : true,
-            }
-        })    
-    } catch (err)  { 
-        return err
-    }
+  try {
+    return await prisma.grades.findMany({
+      select: {
+        grade_id: true,
+        grade_name: true,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 
 // === GROUPS ===
 export async function getGroups() {
-    try {
-        return await prisma.groups.findMany({
-            select : {
-                group_id : true,
-                group_name : true,
-            }
-        })    
-    } catch (err)  { 
-        return err
-    }
+  try {
+    return await prisma.groups.findMany({
+      select: {
+        group_id: true,
+        group_name: true,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 
 export async function setGroup(name) {
-    try {
-        return await prisma.groups.findMany({
-            data : {
-                group_name : name,
-            }
-        })    
-    } catch (err)  { 
-        return err
-    }
+  try {
+    return await prisma.groups.findMany({
+      data: {
+        group_name: name,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 
 /* export async function setUserToGroup(groupId, user) {
@@ -110,54 +109,59 @@ export async function setGroup(name) {
 
 // === TOPICS ===
 export async function getTopics(gradeId) {
-    try {
-        return await prisma.topics.findMany({
-            where : {
-                grade_id : gradeId
-            },
-            select : {
-                topic_id: true,
-                topic_name : true,
-            }
-        })    
-    } catch (err)  { 
-        return err
-    }
+  try {
+    return await prisma.topics.findMany({
+      where: {
+        grade_id: gradeId,
+      },
+      select: {
+        topic_id: true,
+        topic_name: true,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 // === TASKS ===
 export async function getTasks(topicId) {
-    try {
-        return await prisma.tasks.findMany({
-            where : {
-                topic_id : topicId
-            },
-            select : {
-                task_id : true,
-                task_title : true
-            }
-        })    
-    } catch (err)  { 
-        return err
-    }
+  try {
+    return await prisma.tasks.findMany({
+      where: {
+        topic_id: topicId,
+      },
+      select: {
+        task_id: true,
+        task_title: true,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
 }
 // === TESTS ===
 
 // === ANSWERS ===
 export async function getAnswers(taskId) {
-    try {
-        const answers = await prisma.answers.findMany({
-            where: {
-                task_id: taskId
-            },
-            select : {
-                pass: true,
-                fails : true,
-                users : true
-            }
-        });
+  try {
+    const answers = await prisma.answers.findMany({
+      where: {
+        task_id: taskId,
+      },
+      select: {
+        pass: true,
+        fails: true,
+        users: {
+          select: {
+            user_id: true,
+            user_name: true,
+          },
+        },
+      },
+    });
 
-        return answers;
-    } catch (error) {
-        return error;
-    }
+    return answers;
+  } catch (error) {
+    return error;
+  }
 }
