@@ -13,50 +13,34 @@
 
         <div class="flex flex-col items-center w-full lg:min-h-96 lg:mt-5 lg:mr-11">
             <p class="text-center text-main text-4xl font-semibold">Výsledky žáků</p>
-            <div class="w-full flex pl-20 mt-10 justify-between">
-                <div class="flex lg:gap-6">
-                    <p class="text-text-second text-xl font-bold">Student</p>
-                    <p class="text-text-second text-xl font-bold">Skupina</p>
-                    <p class="text-text-second text-xl font-bold">Tema</p>
-                    <p class="text-text-second text-xl font-bold">Ukol</p>
+            <div class="w-full flex pl-20 pr-5 mt-10 justify-between">
+                <div class="flex lg:gap-5">
+                    <p class="text-text-second text-xl font-bold w-52">Student</p>
+                    <p class="text-text-second text-xl font-bold">ID</p>
                 </div>
-                <div class="flex lg:gap-6">
-                    <p class="text-text-second text-xl font-bold">Student</p>
-                    <p class="text-text-second text-xl font-bold">Skupina</p>
-                    <p class="text-text-second text-xl font-bold">Tema</p>
-                    <p class="text-text-second text-xl font-bold">Ukol</p>
-                    <p class="text-text-second text-xl font-bold">Smazat</p>
+                <div class="flex lg:gap-8">
+                    <p class="text-text-second text-xl font-bold">Prošlo</p>
+                    <p class="text-text-second text-xl font-bold">Špatně</p>
+                    <p class="text-text-second text-xl font-bold text-center w-6">%</p>
+                    <p class="text-delete text-xl font-bold">Smazat</p>
                 </div>
             </div>
             <% answers.forEach(user => { %>
             <div class="flex flex-col lg:gap-2 mt-2 w-full lg:mb-5">
-                <div class="w-full flex pl-5 justify-between">
+                <div class="w-full flex px-5 justify-between">
                     <div class="flex lg:gap-6">
-                        <p class="text-main-light text-xl flex-1 font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl flex-1 font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl  font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                    </div>
+                        <img src="/images/user-icon.svg"  alt="">
+                        <p class="text-main-light text-xl flex-1 font-semibold w-52"><%= user.users.user_name %></p>
+                        <p class="text-main-light text-xl font-semibold "><%= user.users.user_id %></p>
+                   </div>
                     <div class="flex lg:gap-6">
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p>
+                        <p class="text-main-light text-xl font-semibold text-center lg:w-14"><%= user.pass %></p>
+                        <p class="text-main-light text-xl font-semibold text-center lg:w-14"><%= user.fails %></p>
+                        <p class="text-main-light text-xl font-semibold  text-center lg:w-14"><%= user.percentage %></p>
+                        <p class=" text-xl font-semibold text-center lg:w-16 text-delete">X</p>
                     </div>
                 </div>
                 <div class="w-full h-6px bg-gradient-to-r from-user-grad-from to-user-grad-to rounded-main "></div>
-                <% }) %>
-                <% answers.forEach(user => { %>
-                <div class="flex flex-col ">
-                    <div class="flex lg:gap-5">
-                        
-                        <p class="text-main-light text-xl font-semibold"><%= user.pass %></p> 
-                        <p><%= user.users.user_name %></p>
-                    </div>
-                <div class="w-full h-6px bg-gradient-to-r from-user-grad-from to-user-grad-to rounded-main "></div>
-                </div>
                 <% }) %>
             </div>
             </div>
