@@ -77,8 +77,8 @@ model tasks {
 model tests {
   test_id   Int    @id @default(autoincrement())
   test_path String @db.Text
-  task_id   Int
-  tasks     tasks  @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "tests_ibfk_1")
+  task_id   Int?
+  tasks     tasks? @relation(fields: [task_id], references: [task_id], onDelete: Restrict, onUpdate: Restrict, map: "tests_ibfk_1")
 
   @@index([task_id], map: "task_id")
 }

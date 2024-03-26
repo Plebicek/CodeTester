@@ -10,6 +10,7 @@ import {
   dashTest,
   dashTestUpload,
 } from "../contollers/adminController.js";
+import {upload} from "../contollers/taskController.js";
 let router = Router();
 
 // === USERS ===
@@ -32,7 +33,8 @@ router.route("/groups/:groupId/grade/:gradeId/topic/:topicId").get(dashTask);
 // === TESTS ===
 router.route("/tests").get(dashTest);
 
-router.route("/tests/:taskId").get(dashTestUpload);
+router.route("/tests/:taskId").get(dashTestUpload)
+  .post(upload.single("file"), dashTestUpload); 
 // === ANSWERS ===
 router
   .route("/groups/:groupId/grade/:gradeId/topic/:topicId/task/:taskId")
