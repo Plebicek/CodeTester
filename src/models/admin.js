@@ -147,23 +147,36 @@ add test to queue
 decrompise 
 rename to id as test id 
 */
-export async function updateTask(taskId) {
+export async function createTest() {
   try {
-    let testId = await prisma.tests.create({
-      data: {
-        test_path: "path",
-      },
-    });
-    return await prisma.tasks.update({
-      where: {
-        test_id: taskId,
-      },
-      data: {
-        test_id: testId.test_id,
-      },
-    });
+    return await prisma.tests.create({
+      data : {
+        test_path : "path",
+        
+      }
+    })
   } catch (err) {
-    return err;
+  console.log(err)
+  return err 
+  }
+}
+
+export async function updateTest(testId,taskId) {
+  if (!testId || !taskId) {
+    return null
+  }
+  try {
+    return await prisma.tests.update({
+      where : {
+        test_id : parseInt(testId)
+      },
+      data : {
+        task_id : parseInt(taskId)
+      }
+    })
+  } catch (err) {
+  console.log(err)
+  return err 
   }
 }
 

@@ -7,9 +7,14 @@ import {
   getTasks,
   getAnswers,
   getTestsAndTopics,
-  updateTask,
+  createTest,
 } from "../models/admin.js";
+import { JAVA_TEST, JAVA_UPLOAD } from "./taskController.js";
 import { navigation } from "../utils/dashUtils.js";
+import multer from "multer"
+import { addTestToQueue } from "../utils/testQueue.js";
+import path from "path";
+import {rename} from "node:fs"
 
 /* export async function dashboard(req,res) {
     let {dashId} = req.params
@@ -123,13 +128,26 @@ export async function dashTest(req, res) {
 }
 
 export async function dashTestUpload(req, res) {
+  const path = `${req.baseUrl}${req.path}`
   const current = "Tests";
   let taskId = req.params.taskId;
-  let test = await updateTask(parseInt(taskId));
-  res.render("admin/pr-upload", {
+  if (req.method == "POST") {
+    let test = await createTest()
+    console.log(test)
+    rename(
+      JAVA_UPLOAD + req.file.originalname,
+      JAVA_UPLOAD + "test_"+test.test_id + ".zip",
+      (err) => {
+        if (err) console.log(err);
+      }
+    ); 
+    await addTestToQueue({test_id : test.test_id, task_id : parseInt(taskId) })
+    return res.redirect(`${req.baseUrl}/tests`)
+  }
+  res.render("admin/pre-upload", {
     sideNav: navigation,
     current: current,
-    test,
+    path
   });
 }
 // === ANSWERS ===

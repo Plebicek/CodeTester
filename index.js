@@ -3,6 +3,7 @@ import app from "./src/app.js";
 import dotenv from "dotenv";
 import { createClient } from "redis";
 import { initTaskQueue } from "./src/utils/taskQueue.js";
+import { initTestQueue } from "./src/utils/testQueue.js";
 
 export let redisClient;
 
@@ -16,6 +17,7 @@ async function appInit() {
   try {
     redisClient = await redisServer.connect();
     await initTaskQueue()
+    await initTestQueue()
     console.log("queue init")
     if (redisClient) {
       console.log("redis connected");
