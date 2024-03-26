@@ -140,7 +140,56 @@ export async function getTasks(topicId) {
   }
 }
 // === TESTS ===
+/*
+uplod file
+update task.test_id -> testid
+add test to queue
+decrompise 
+rename to id as test id 
+*/
+export async function updateTask(taskId) {
+  try {
+    let testId = await prisma.tests.create({
+      data: {
+        test_path: "path",
+      },
+    });
+    return await prisma.tasks.update({
+      where: {
+        test_id: taskId,
+      },
+      data: {
+        test_id: testId.test_id,
+      },
+    });
+  } catch (err) {
+    return err;
+  }
+}
 
+export async function getTestsAndTopics() {
+  try {
+    return await prisma.topics.findMany({
+      select: {
+        topic_name: true,
+        tasks: {
+          select: {
+            task_title: true,
+            task_id: true,
+            tests: {
+              select: {
+                test_id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
 // === ANSWERS ===
 export async function getAnswers(taskId) {
   try {
