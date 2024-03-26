@@ -6,6 +6,8 @@ import {
   getTopics,
   getTasks,
   getAnswers,
+  getTestsAndTopics,
+  updateTask,
 } from "../models/admin.js";
 import { navigation } from "../utils/dashUtils.js";
 
@@ -69,7 +71,7 @@ export async function dashGrade(req, res) {
   grades.sort((a, b) => {
     let num1 = parseInt(a.grade_name.split(".")[0]);
     let num2 = parseInt(b.grade_name.split(".")[0]);
-    return num1 - num2;
+    return num2 - num1;
   });
   res.render("admin/grades", {
     sideNav: navigation,
@@ -110,16 +112,37 @@ export async function dashTask(req, res) {
 }
 
 // === TESTS ===
+export async function dashTest(req, res) {
+  const current = "Tests";
+  let topics = await getTestsAndTopics();
+  res.render("admin/test", {
+    sideNav: navigation,
+    current: current,
+    topics,
+  });
+}
 
+export async function dashTestUpload(req, res) {
+  const current = "Tests";
+  let taskId = req.params.taskId;
+  let test = await updateTask(parseInt(taskId));
+  res.render("admin/pr-upload", {
+    sideNav: navigation,
+    current: current,
+    test,
+  });
+}
 // === ANSWERS ===
 export async function dashAnswer(req, res) {
   let { taskId } = req.params;
   const current = "Answers";
   let answers = await getAnswers(parseInt(taskId));
-  answers.forEach(answer => {
-    answer.percentage = Math.round((answer.pass / (answer.fails + answer.pass)) * 100 ) 
-  })
-    console.log(answers);
+  answers.forEach((answer) => {
+    answer.percentage = Math.round(
+      (answer.pass / (answer.fails + answer.pass)) * 100
+    );
+  });
+  console.log(answers);
   res.render("admin/answers", {
     sideNav: navigation,
     current: current,
