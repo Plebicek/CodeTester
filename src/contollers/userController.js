@@ -34,6 +34,10 @@ export async function createOrFindByOAuth(req, res) {
         console.log("while creating user in oauth error occured");
         return res.redirect("/login/oauth");
       }
+      let checkGroup = await checkGroup(createUser.user_id, jobTitle);
+      if (!checkGroup) {
+        console.log("err createing group" + checkGroup);
+      }
       let jwt_token = jwt.sign(
         { id: createUser.user_id, role: createUser.user_role },
         process.env.JWT_TOKEN,

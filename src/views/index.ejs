@@ -10,24 +10,32 @@
     <%- include("./partials/navbar.ejs") %>
     <main class="flex flex-col items-center gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:py-50px lg:mt-36 bg-bg-second rounded-main">
         <!-- <p>Otev5ene skupinz</p> -->
-        <% if (grades.length > 0) { %> 
-        <% grades.forEach(function(grade) { %>
-             <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-light rounded-main ">
+        <% if (grades.length > 0) { %>
+            <% grades.forEach(function(grade) { %>
+                <% if(grade.grades.grade_show) { %>
+                    <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-light rounded-main ">
+                        <div class="mx-5 w-full flex justify-between items-center">
+                            <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
+                            <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                        </div> 
+                    </a>    
+                <% } else { %>
+                    <!-- <p>zavrene skupinz</p> -->
+                    <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-dark rounded-main ">
+                        <div class="mx-5 w-full flex justify-between items-center">
+                            <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
+                            <img src="/images/input-lock.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                        </div> 
+                    </a>
+                <% } %> 
+            <% }) %>
+        <% } else { %>
+            <a href="/" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-dark rounded-main ">
                <div class="mx-5 w-full flex justify-between items-center">
-                    <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
-                    <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
-               </div> 
-            </a>    
-        <% }); %>
-        <!-- <p>zavrene skupinz</p> -->
-        <% grades.forEach(function(grade) { %>
-             <a href="/grade/<%= grade.grades.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-dark rounded-main ">
-               <div class="mx-5 w-full flex justify-between items-center">
-                    <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
+                    <p class="font-black text-32px text-center text-main">Zadny rocnik byl pridelen</p>
                     <img src="/images/input-lock.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
                </div> 
-            </a>    
-        <% }); %>
+            </a> 
         <% } %>
     </main>
 </body>

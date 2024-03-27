@@ -21,6 +21,7 @@ export async function getGradesByUser(userId) {
                       select: {
                         grade_id: true,
                         grade_name: true,
+                        grade_show: true,
                       },
                     },
                   },
@@ -75,4 +76,20 @@ export async function getGradeAndTopicsById(gradeId, userId) {
   } catch (err) {
     return new Error("The getGradeById error occured");
   }
+}
+
+export async function getGrades(groupId) {
+  return await prisma.grade_bridges.findMany({
+    where: {
+      group_id: parseInt(groupId),
+    },
+    select: {
+      grade_id: true,
+      grades: {
+        select: {
+          grade_name: true,
+        },
+      },
+    },
+  });
 }

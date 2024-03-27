@@ -37,6 +37,7 @@ model grade_bridges {
 model grades {
   grade_id      Int             @id @default(autoincrement())
   grade_name    String          @db.VarChar(64)
+  grade_show    Boolean         @default(false)
   grade_bridges grade_bridges[]
   topics        topics[]
 }
