@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%- include('./../partials/head.ejs') %>
+</head>
+<body class="<%- include('./../partials/body') %>">
+    <%- include("./../partials/navbar.ejs") %>
+    <main class=" lg:gap-11 flex items-start mx-auto lg:w-88-12 lg:mt-36 min-h-96 bg-bg-second rounded-main relative after:bg-line after:rounded-main  after:block after:absolute after:left-56 after:w-1 after:h-95per ">
+        <%- include ("./../partials/scroll", {sideNav}) %>
+
+        <div class="flex items-center flex-col w-full lg:min-h-96 lg:mt-5 lg:mr-7">
+            <p class="font-semibold text-4xl w-full text-center text-main">Nahrání testu</p>
+            <form class="flex relative justify-center items-center bg-task-submit lg:mt-10  lg:w-377 lg:h-491 lg:mb-10 rounded-main" action="<%= path %>" method="POST" enctype="multipart/form-data">
+                <label for="drag-input" class="absolute z-50 w-full h-full">
+                    <input type="file" id="drag-input" name="file" onchange="form.submit()" class="hidden">
+                </label>
+                <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-task-submit border-main-border border-5 rounded-main">
+                    <img src="/images/upload.svg" class="lg:h-10rem lg:mt-16 " alt="Šipka znázorňující směr">
+                    <p class="text-xl lg:w-17.188rem lg:mt-12 font-bold text-white text-center"><span class="text-main">Drag</span> & <span class="text-main">Drop</span> or <span class="text-main">Choose file</span> to upload</p>
+                    <p class="lg:w-64 text-gray font-bold text-md text-center lg:mt-10">Only *.zip file</p>
+                </div> 
+            </form>
+        </div>
+    </main>
+</body>
+</html> 

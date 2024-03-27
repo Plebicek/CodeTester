@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -7,22 +8,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model answer_stats {
-  answer_stat_id Int @id @default(autoincrement())
-  fails          Int
-  pass           Int
-  answer_id      Int
-
-  @@index([answer_id], map: "answer_id")
-}
-
 model answers {
-  answer_id      Int     @id @default(autoincrement())
+  answer_id      Int       @id @default(autoincrement())
   task_id        Int
   user_id        Int
-  answer_inQueue Boolean @default(false)
-  tasks          tasks   @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
-  users          users   @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
+  answer_inQueue Boolean   @default(false)
+  answer_tested  DateTime? @db.Date
+  fails          Int?      @default(0)
+  pass           Int?      @default(0)
+  tasks          tasks     @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
+  users          users     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
 
   @@index([task_id], map: "task_id")
   @@index([user_id], map: "user_id")
@@ -42,6 +37,7 @@ model grade_bridges {
 model grades {
   grade_id      Int             @id @default(autoincrement())
   grade_name    String          @db.VarChar(64)
+  grade_show    Boolean         @default(false)
   grade_bridges grade_bridges[]
   topics        topics[]
 }
@@ -68,9 +64,10 @@ model tasks {
   task_id          Int       @id @default(autoincrement())
   topic_id         Int
   task_description String    @db.Text
-  task_due         DateTime  @db.Date
+  task_due         DateTime  @db.DateTime(0)
   task_title       String    @db.VarChar(64)
   task_lock        Boolean   @default(true)
+  task_begin_date  DateTime? @db.DateTime(0)
   answers          answers[]
   topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
   tests            tests[]
@@ -81,8 +78,8 @@ model tasks {
 model tests {
   test_id   Int    @id @default(autoincrement())
   test_path String @db.Text
-  task_id   Int
-  tasks     tasks  @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "tests_ibfk_1")
+  task_id   Int?
+  tasks     tasks? @relation(fields: [task_id], references: [task_id], onDelete: Restrict, onUpdate: Restrict, map: "tests_ibfk_1")
 
   @@index([task_id], map: "task_id")
 }
@@ -104,6 +101,7 @@ model users {
   user_oauth     String          @db.Text
   user_email     String          @db.Text
   user_job_title String          @db.Text
+  user_role      String          @default("user") @db.Text
   answers        answers[]
   group_bridges  group_bridges[]
 }
