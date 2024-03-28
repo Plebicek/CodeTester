@@ -1137,6 +1137,10 @@ video {
     min-height: 24rem;
   }
 
+  .lg\:min-h-467 {
+    min-height: 29.18rem;
+  }
+
   .lg\:w-1 {
     width: 0.25rem;
   }

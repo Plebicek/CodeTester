@@ -45,15 +45,16 @@ export async function viewTask(req, res) {
     return res.redirect("/");
   }
   try {
-    let task = await getTaskById(taskId);
+    let task = await getTaskById(taskId, req.user.id);
     task.task_due = dayjs(task.task_due).format("DD/MM/YYYY HH:mm:ss")
     if (task?.answers[0]) {
       let stats = task.answers[0]
       stats.percentage = (stats.pass / (stats.pass + stats.fails))*100
       stats.total = stats.pass + stats.fails
     }
+    console.log(task?.answers[0])
     res.render("task", {
-      stats : task?.answers,
+      stats : task?.answers[0],
       task: task,
       path: `${req.baseUrl}${req.path}`,
       msg: { errUpload: req.query.msgUpload },

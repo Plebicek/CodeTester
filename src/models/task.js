@@ -26,7 +26,7 @@ export async function getTopicsTasks(topicId) {
   }
 }
 
-export async function getTaskById(taskId) {
+export async function getTaskById(taskId, userId) {
   try {
     let task = await prisma.tasks.findFirst({
       where: {
@@ -41,7 +41,8 @@ export async function getTaskById(taskId) {
         task_lock: true,
         answers : {
           where : {
-            task_id : taskId
+            task_id : parseInt(taskId),
+            user_id : parseInt(userId)
           },
           select : {
             answer_id : true,

@@ -82,6 +82,9 @@ export default {
         6: "0.375rem",
         5: "0.313rem",
       },
+      minHeight: {
+        '467': '29.18rem',
+      },
     },
   },
   plugins: [require("tailwindcss"), require("autoprefixer")],

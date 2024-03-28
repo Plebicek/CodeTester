@@ -1,40 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function getGradesByUser(userId) {
-  if (!userId) {
-    return null;
-  }
+
+export async function checkGrade(gradeId) {
   try {
-    let grades = prisma.users.findFirst({
-      where: {
-        user_id: userId,
+    return await prisma.grades.findFirst({
+      where : {
+        grade_id : parseInt(gradeId)
       },
-      include: {
-        group_bridges: {
-          select: {
-            groups: {
-              include: {
-                grade_bridges: {
-                  include: {
-                    grades: {
-                      select: {
-                        grade_id: true,
-                        grade_name: true,
-                        grade_show: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-    return grades;
-  } catch (err) {
-    return new Error("The SQL query for getGrades failed");
+      select : {
+        grade_id : true,
+        grade_show : true
+      }
+    })
+  } catch (err) { 
+    console.log(err)
+    return err
+    
   }
 }
 
@@ -88,6 +70,7 @@ export async function getGrades(groupId) {
       grades: {
         select: {
           grade_name: true,
+          grade_show : true
         },
       },
     },

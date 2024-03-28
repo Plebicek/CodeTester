@@ -8,38 +8,43 @@
 </head>
 <body class="<%- include('./partials/body') %>">
     <%- include("./partials/navbar.ejs") %>
-  
-    
     <main class="flex flex-col gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
         <h1 class="lg:mb-5 text-center font-black text-4xl text-white"><%- grade.grade_name  %></h1>
-            <% grade.topics.forEach(topic => { %>
+            <% if (grade.topics.length > 0) { %>
+                <% grade.topics.forEach(topic => { %>
+                    <a href="">
+                        <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0  after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-full lg:h-5rem lg:px-22px lg:py-4">
+                            <p class="font-black text-32px text-center text-white"><%- topic.topic_name %></p>
+                        </div>
+                    </a>
+                    <% topic.tasks.forEach(task => { %>
+                        <% if (task.answers.length > 0) { %>
+                            <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
+                                <div class="rounded-main border-main-dark border-6">
+                                    <div class="flex lg:px-10px lg:py-4 justify-between items-center">
+                                        <p class="lg:text-2xl text-main-dark font-black"><%= task.task_title  %></p>
+                                        <img src="/images/checkmark.svg" class="" alt="">
+                                    </div>
+                                </div>
+                            </a> 
+                        <% } else { %>
+                            <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
+                                <div class="rounded-main border-main border-6">
+                                    <div class="flex lg:px-10px lg:py-4 justify-between items-center">
+                                        <p class="lg:text-2xl text-main font-black"><%= task.task_title %></p>
+                                    </div>
+                                </div>
+                            </a> 
+                        <% } %>
+                    <% }) %>
+                <% }) %>
+            <% } else { %>
                 <a href="">
                     <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0  after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-full lg:h-5rem lg:px-22px lg:py-4">
-                        <p class="font-black text-32px text-center text-white"><%- topic.topic_name %></p>
-                        <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                        <p class="font-black text-32px text-center text-white">žádné úkoly nejsou přidané</p>
                     </div>
                 </a>
-                <% topic.tasks.forEach(task => { %>
-                    <% if (task.answers.length >= 1) { %>
-                        <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
-                            <div class="rounded-main border-main-dark border-6">
-                                <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                                    <p class="lg:text-2xl text-main-dark font-black"><%- task.task_title  %></p>
-                                    <img src="/images/checkmark.svg" class="" alt="">
-                                </div>
-                            </div>
-                        </a> 
-                    <% } else { %>
-                        <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
-                            <div class="rounded-main border-main border-6">
-                                <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                                    <p class="lg:text-2xl text-main font-black"><%- task.task_title  %></p>
-                                </div>
-                            </div>
-                        </a> 
-                    <% } %>
-                <% }) %>
-            <% }) %>
+            <% } %>
     </main>
     
 </body>
