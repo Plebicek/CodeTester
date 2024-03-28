@@ -15,7 +15,7 @@
             <p class="font-semibold text-4xl w-full text-center text-main">Nahrání testu</p>
             <form class="flex relative justify-center items-center bg-task-submit lg:mt-10  lg:w-377 lg:h-491 lg:mb-10 rounded-main" action="<%= path %>" method="POST" enctype="multipart/form-data">
                 <label for="drag-input" class="absolute z-50 w-full h-full">
-                    <input type="file" id="drag-input" name="file" onchange="form.submit()" class="hidden">
+                    <input type="file" id="drag-input" name="file" onchange="form.submit()" accept=".zip" class="hidden">
                 </label>
                 <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-task-submit border-main-border border-5 rounded-main">
                     <img src="/images/upload.svg" class="lg:h-10rem lg:mt-16 " alt="Šipka znázorňující směr">

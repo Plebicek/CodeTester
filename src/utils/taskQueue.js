@@ -64,7 +64,7 @@ export async function initTaskQueue() {
         console.log("decompressed");
       })
       .catch((err) => {
-        console.log(err);
+        console.log("decompresd err " +err);
         return done();
       });
 
@@ -87,7 +87,10 @@ export async function initTaskQueue() {
       jsonData.answer_id = job.data.answer_id;
       console.log(jsonData);
       await setAnswerStats(jsonData, parseInt(job.data.answer_id));
-      return done();
+      rm(javaTestPath + "main", {recursive : true, force : true},(err) => {
+        if (err) console.log("while removing tested main file " + err)
+        return done();
+      })
     });
   });
 

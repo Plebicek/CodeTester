@@ -20,7 +20,7 @@ let storage = multer.diskStorage({
   },
 });
 
-export let upload = multer({ storage: storage });
+export let upload = multer({ storage: storage , limits :1024 * 1024 * 10 });
 
 export async function viewTasks(req, res) {
   let topicId = parseInt(req.params.topicId);

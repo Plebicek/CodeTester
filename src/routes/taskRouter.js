@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer";
 import {
   upload,
   uploadSolution,
@@ -18,4 +19,14 @@ router.post(
   upload.single("file"),
   uploadSolution
 );
+
+router.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).send('File size is too large');
+        }
+    }
+    next(err)
+});
+
 export default router;
