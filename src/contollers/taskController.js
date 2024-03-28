@@ -1,7 +1,7 @@
-import { getTaskById, getTopicsTasks } from "../models/task.js";
+import { getPureTask, getTaskById, getTopicsTasks } from "../models/task.js";
 import multer from "multer";
 import path from "path";
-import { createAnswer } from "../models/answer.js";
+import { createAnswer, createOverTimeAnswer } from "../models/answer.js";
 import { rename } from "node:fs";
 import { addTaskToQueue } from "../utils/taskQueue.js";
 import dayjs from "dayjs";
@@ -40,27 +40,17 @@ export async function viewTasks(req, res) {
 }
 
 export async function viewTask(req, res) {
-  let taskId = parseInt(req.params.taskId);
-  if (isNaN(taskId)) {
-    return res.redirect("/");
-  }
   try {
-    let task = await getTaskById(taskId, req.user.id);
-    task.task_due = dayjs(task.task_due).format("DD/MM/YYYY HH:mm:ss")
-    if (task?.answers[0]) {
-      let stats = task.answers[0]
-      stats.percentage = (stats.pass / (stats.pass + stats.fails))*100
-      stats.total = stats.pass + stats.fails
-    }
-    console.log(task?.answers[0])
+    let task = await getPureTask(req.params.taskId)
+
     res.render("task", {
-      stats : task?.answers[0],
+      stats : req.stats,
       task: task,
       path: `${req.baseUrl}${req.path}`,
       msg: { errUpload: req.query.msgUpload },
     });
   } catch (err) {
-    console.log(err)
+    console.log("View task contoller ", err)
     res.status(500).redirect("/");
   }
 }

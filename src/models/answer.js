@@ -52,12 +52,30 @@ export async function createAnswer(taskId, userId) {
       data: {
         task_id: taskId,
         user_id: userId,
+
       },
     });
     return answer;
   } catch (err) {
     console.log(err)
     return new Error("Error occured in createAnswer");
+  }
+}
+
+export async function createOverTimeAnswer(userId, taskId) {
+  try {
+    return await prisma.answers.create({
+      data : {
+        task_id : parseInt(taskId),
+        user_id : parseInt(userId),
+        pass : 0,
+        fails : 1,
+        answer_overtime : true,
+      }
+    })  
+  } catch (err) {
+    console.log(err)
+    return err
   }
 }
 
@@ -122,7 +140,8 @@ export async function getAnswerStatsByAnswerId(id) {
         pass : true,
         fails : true,
         answer_id : true,
-        answer_stat_id : true
+        answer_stat_id : true,
+        answer_overtime : true,
       }
     })
     return answer

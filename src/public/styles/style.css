@@ -1133,12 +1133,12 @@ video {
     max-height: 12rem;
   }
 
-  .lg\:min-h-96 {
-    min-height: 24rem;
-  }
-
   .lg\:min-h-467 {
     min-height: 29.18rem;
+  }
+
+  .lg\:min-h-96 {
+    min-height: 24rem;
   }
 
   .lg\:w-1 {

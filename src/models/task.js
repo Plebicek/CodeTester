@@ -30,14 +30,13 @@ export async function getTaskById(taskId, userId) {
   try {
     let task = await prisma.tasks.findFirst({
       where: {
-        task_id: taskId,
+        task_id: parseInt(taskId),
       },
       select: {
         task_title: true,
         task_description: true,
         task_due: true,
         task_id: true,
-        task_begin_date: true,
         task_lock: true,
         answers : {
           where : {
@@ -47,17 +46,37 @@ export async function getTaskById(taskId, userId) {
           select : {
             answer_id : true,
             pass : true,
-            fails : true
+            fails : true,
+            answer_overtime : true
           }
         }
       },
     });
-    console.log(task)
     if(task.answers[0]?.answer_id) {
       return task
     }
     return task;
   } catch (err) {
     return new Error("The getTaskById query failed" + err);
+  }
+}
+
+export async function getPureTask(taskId) {
+  try {
+    return await prisma.tasks.findFirst({
+      where : {
+        task_id : parseInt(taskId)
+      },
+      select : {
+        task_description : true,
+        task_due : true,
+        task_title : true,
+        task_lock : true
+      }
+    })
+  } catch (err) {
+    console.log("Pure task err " , err)
+    return err
+    
   }
 }
