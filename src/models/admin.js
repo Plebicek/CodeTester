@@ -213,6 +213,7 @@ export async function getAnswers(taskId) {
       select: {
         pass: true,
         fails: true,
+        answer_overtime : true,
         users: {
           select: {
             user_id: true,

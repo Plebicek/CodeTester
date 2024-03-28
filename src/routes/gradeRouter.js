@@ -5,7 +5,7 @@ import { isGrade } from "../middlewares/checkGrade.js";
 
 const router = Router()
 
-//router.use("/grade/:gradeId", isGrade)
+router.use("/grade/:gradeId", isGrade)
 
 router.get("/grade/:gradeId",  viewGrade)
 /* router.get('/upload',viewUploadSolution)

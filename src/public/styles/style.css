@@ -1157,6 +1157,10 @@ video {
     width: 17.188rem;
   }
 
+  .lg\:w-24 {
+    width: 6rem;
+  }
+
   .lg\:w-24px {
     width: 1.5rem;
   }

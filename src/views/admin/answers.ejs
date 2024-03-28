@@ -22,6 +22,7 @@
                     <p class="text-text-second text-xl font-bold">Prošlo</p>
                     <p class="text-text-second text-xl font-bold">Špatně</p>
                     <p class="text-text-second text-xl font-bold text-center w-6">%</p>
+                      <p class="text-text-second text-xl font-bold text-center">Odevzdal</p>
                     <p class="text-delete text-xl font-bold">Smazat</p>
                 </div>
             </div>
@@ -37,6 +38,11 @@
                         <p class="text-main-light text-xl font-semibold text-center lg:w-14"><%= user.pass %></p>
                         <p class="text-main-light text-xl font-semibold text-center lg:w-14"><%= user.fails %></p>
                         <p class="text-main-light text-xl font-semibold  text-center lg:w-14"><%= user.percentage %></p>
+                        <% if(user.answer_overtime) { %>
+                            <p class="text-red text-xl font-semibold  text-center lg:w-24">Ne</p>
+                        <% } else { %>
+                            <p class="text-main-light text-xl font-semibold  text-center lg:w-24">Ano</p>
+                        <% } %>
                         <p class=" text-xl font-semibold text-center lg:w-16 text-delete">X</p>
                     </div>
                 </div>

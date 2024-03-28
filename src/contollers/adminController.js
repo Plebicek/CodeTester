@@ -156,9 +156,7 @@ export async function dashAnswer(req, res) {
   const current = "Answers";
   let answers = await getAnswers(parseInt(taskId));
   answers.forEach((answer) => {
-    answer.percentage = Math.round(
-      (answer.pass / (answer.fails + answer.pass)) * 100
-    );
+    answer.percentage = Math.round((answer.pass / (answer.fails + answer.pass)) * 100);
   });
   console.log(answers);
   res.render("admin/answers", {

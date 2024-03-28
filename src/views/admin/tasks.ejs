@@ -12,7 +12,7 @@
         <%- include ("./../partials/scroll", {sideNav}) %>
 
         <div class="flex flex-col items-center w-full lg:min-h-96 lg:mt-5 lg:mr-11">
-            <p class="text-center text-main text-4xl font-semibold">Seznam úkoů</p>
+            <p class="text-center text-main text-4xl font-semibold">Seznam úkolů</p>
             <% tasks.forEach(task => { %>
                 <a href="<%- path+"/task/"+ task.task_id %>" class="flex items-center w-650 h-16 bg-bg-third-dark rounded-main lg:mt-5">
                     <p class="w-full text-center font-semibold text-white text-4xl "><%= task.task_title %></p>
