@@ -76,11 +76,13 @@ export async function initTaskQueue() {
       let jsonData = JSON.parse(data);
       jsonData.answer_id = job.data.answer_id;
       await setAnswerStats(jsonData, parseInt(job.data.answer_id));
-      rm(javaTestPath + "main", {recursive : true, force : true},(err) => {
+      /*rm(javaTestPath + "main", {recursive : true, force : true},(err) => {
         console.log("removing files")
         if (err) console.log("while removing tested main file " + err)
         return done();
       })
+      */
+     return done()
     });
   });
 

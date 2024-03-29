@@ -140,19 +140,24 @@ export async function getTasks(topicId) {
   }
 }
 // === TESTS ===
-/*
-uplod file
-update task.test_id -> testid
-add test to queue
-decrompise 
-rename to id as test id 
-*/
+export async function removeTestUpload(testId){
+  try {
+    return await prisma.tests.delete({
+      where : {
+        test_id : parseInt(testId)
+      }
+    })
+  } catch (err) {
+    console.log("Delete test error ", err)
+    return err
+  }
+}
+
 export async function createTest() {
   try {
     return await prisma.tests.create({
       data : {
         test_path : "path",
-        
       }
     })
   } catch (err) {

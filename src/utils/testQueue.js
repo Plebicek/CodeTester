@@ -1,9 +1,11 @@
 import Bull from "bull";
 import { redisClient } from "./../../index.js";
 import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
-import { copyFile, rename, rmSync, rm } from "node:fs";
 import decompress from "decompress";
-import { updateTest } from "../models/admin.js";
+import { removeTestUpload, updateTest } from "../models/admin.js";
+import path from "path"
+import { copyFileSync, rmSync } from "fs";
+import { copyFile, mkdir, readdir, stat } from "fs/promises";
 
 export let testQueue;
 
@@ -17,41 +19,43 @@ export async function initTestQueue() {
   }
 
   testQueue.process(2, async (job, done) => {
-    let testId = job.data.test_id;
-    let javaTestPath = JAVA_TEST + `test_${testId}.zip`;
-    const javaUploadPath = JAVA_UPLOAD + `test_${testId}.zip`;
-    copyFile(javaUploadPath, javaTestPath, (err) => {
-      if (err) console.log("Error occured when copying files" + err);
-      try {
-        rmSync(javaUploadPath);
-      } catch (err) {
-        console.log(
-          `While removing the file ${testId} error has occured ` + err
-        ); //ToDo set to delayed queue
-        return done();
-      }
-    });
-    rename(javaTestPath, JAVA_TEST + `${testId}.zip`, (err) => {
-      if (err) {
-        console.log("Error when renaming id to main.zip" + err);
-        return done();
-      }
-    });
-    javaTestPath = JAVA_TEST + `${testId}.zip`;
-    decompress(javaTestPath, JAVA_TEST + `${testId}`)
-      .then((files) => {
-        console.log("decompressed");
+    const testId = job.data.test_id;
+    const sourceFolder = `./java/tests/${testId}/project`;
+    const destinationFolder =  `./java/tests/${testId}/`;
+    const projectZip = path.join(process.cwd()+"/java/project.zip")
+    const javaProject = JAVA_TEST + `project.zip`
+
+  try {
+    copyFileSync(projectZip, javaProject);
+
+    await decompress(javaProject , JAVA_TEST + `${testId}`);
+
+    await copyFolder(sourceFolder, destinationFolder,testId)
+      .then(() => {
+        rmSync(JAVA_TEST + `${testId}/project`, {force : true, recursive : true})
       })
-      .catch((err) => {
-        console.log("Error when decomprising " + err);
-        return done();
-      });
-    rm(javaTestPath, (err) => {
-      if (err) console.log("Error when removing file " + err);
-    });
-    await new Promise((resolve) =>
-      setTimeout(async () => await updateTest(testId, job.data.task_id), 5000)
-    );
+      .catch((err) => console.error(err));
+
+    rmSync(javaProject)
+
+    copyFileSync(JAVA_UPLOAD + `test_${testId}.zip`, JAVA_TEST + `${testId}/src/test.zip`)
+
+    decompress(JAVA_TEST + `${testId}/src/test.zip`, JAVA_TEST + `${testId}/src/test`)
+
+    rmSync(JAVA_TEST + `${testId}/src/test.zip`)
+    rmSync(JAVA_UPLOAD + `test_${testId}.zip`)
+    
+    await updateTest(testId, job.data.task_id)  
+
+    return done() 
+
+  } catch (err) {
+    console.log(err)
+    await removeTestUpload(testId)
+    return done() 
+  }
+
+    
   });
 
   testQueue.on("completed", async (job) => {
@@ -61,4 +65,25 @@ export async function initTestQueue() {
 
 export async function addTestToQueue(object) {
   await testQueue.add(object);
+}
+
+async function copyFolder(source, destination,testId) {
+  try {
+    const files = await readdir(source);
+    for (let file of files) {
+      const sourcePath = path.join(source, file); 
+      const destPath = path.join(destination, file);
+      const stats = await stat(sourcePath);
+
+      if (stats.isDirectory())  {
+        await mkdir(destPath, { recursive: true }); 
+        await copyFolder(sourcePath, destPath,testId); 
+      } else {
+        await copyFile(sourcePath, destPath); 
+      }
+    }
+  } catch (err) {
+    console.error("Error copying folder:", err);
+    return await removeTestUpload(testId)
+  }
 }
