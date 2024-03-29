@@ -56,11 +56,9 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
-  console.log(req.file)
   let taskId = parseInt(req.params.taskId);
   let userId = parseInt(req.user.id);
   let userAnswer = await createAnswer(taskId, userId);
-  console.log(userAnswer);
   if (userAnswer instanceof Error) {
     return res.status(500).json("While sending an asnwer error has occured");
   }
@@ -72,16 +70,7 @@ export async function uploadSolution(req, res) {
     }
   );
   await addTaskToQueue(userAnswer);
-  res.redirect(`${req.baseUrl}/topic/${req.params.topicId}/task/${taskId}`);
-
-  //create answer record to db
-  //Needs:
-  //max size
-  //file type
-  //if file require needs set to queue
-
-  //rename file to uuid
-
+  res.redirect(`${req.baseUrl}`);
   //task user.id task.id answer.id
   /* decompress(path.join(JAVA_PATH + req.file.originalname), JAVA_PATH) */
   /* res.status(200).json("File was successfully uploaded"); */

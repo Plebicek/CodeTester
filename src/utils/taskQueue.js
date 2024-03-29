@@ -37,14 +37,6 @@ export async function initTaskQueue() {
       javaTestPath + job.data.answer_id + ".zip",
       (err) => {
         if (err) console.log(err); //ToDo set to delayed queue
-        try {
-          rmSync(userInputPath);
-        } catch (err) {
-          console.log(
-            `While removing the file ${job.data.answer_id} error has occured ` +
-              err
-          ); //ToDo set to delayed queue
-        }
       }
     );
 
@@ -61,16 +53,14 @@ export async function initTaskQueue() {
 
     decompress(javaTestPath + "main.zip", javaTestPath)
       .then((files) => {
-        console.log("decompressed");
+        rm(javaTestPath + "main.zip", (err) => {
+          if (err) console.log(err);
+        });
       })
       .catch((err) => {
         console.log("decompresd err " +err);
         return done();
       });
-
-    rm(javaTestPath + "main.zip", (err) => {
-      if (err) console.log(err);
-    });
 
     let test = exec("mvn -q test", { cwd: childPath });
     let data = "";
@@ -85,9 +75,9 @@ export async function initTaskQueue() {
     test.on("exit", async () => {
       let jsonData = JSON.parse(data);
       jsonData.answer_id = job.data.answer_id;
-      console.log(jsonData);
       await setAnswerStats(jsonData, parseInt(job.data.answer_id));
       rm(javaTestPath + "main", {recursive : true, force : true},(err) => {
+        console.log("removing files")
         if (err) console.log("while removing tested main file " + err)
         return done();
       })
