@@ -9,26 +9,10 @@ import {
   getTestsAndTopics,
   createTest,
 } from "../models/admin.js";
-import { JAVA_TEST, JAVA_UPLOAD } from "./taskController.js";
+import { JAVA_UPLOAD } from "./taskController.js";
 import { navigation } from "../utils/dashUtils.js";
-import multer from "multer"
 import { addTestToQueue } from "../utils/testQueue.js";
-import path from "path";
 import {rename} from "node:fs"
-
-/* export async function dashboard(req,res) {
-    let {dashId} = req.params
-    const URL = `${req.baseUrl}/`
-    console.log(URL)
-    switch (dashId) {
-        case "users":
-            return res.redirect(URL+"/users")
-        case "groups":
-            return res.redirect("/groups")
-        default:
-            return res.redirect(URL+"users")
-    }
-} */
 
 // === USERS ===
 export async function dashUsers(req, res) {
@@ -71,7 +55,7 @@ export async function dashGroup(req, res) {
 export async function dashGrade(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   console.log(path);
-  const current = "Grades";
+  const current = "Groups";
   let grades = await getGrades();
   grades.sort((a, b) => {
     let num1 = parseInt(a.grade_name.split(".")[0]);
@@ -91,7 +75,7 @@ export async function dashTopic(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   let { gradeId } = req.params;
   console.log(gradeId);
-  const current = "Topics";
+  const current = "Groups";
   let topics = await getTopics(parseInt(gradeId));
   console.log(topics);
   res.render("admin/topics", {
@@ -105,12 +89,12 @@ export async function dashTopic(req, res) {
 export async function dashTask(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   let { topicId } = req.params;
-  const current = "Tasks";
+  const current = "Groups";
   let tasks = await getTasks(parseInt(topicId));
   console.log(tasks);
   res.render("admin/tasks", {
     sideNav: navigation,
-    current: current,
+    current,
     tasks,
     path,
   });
@@ -120,7 +104,7 @@ export async function dashTask(req, res) {
 export async function dashTest(req, res) {
   const current = "Tests";
   let topics = await getTestsAndTopics();
-  res.render("admin/test", {
+  res.render("admin/tests", {
     sideNav: navigation,
     current: current,
     topics,
@@ -153,7 +137,7 @@ export async function dashTestUpload(req, res) {
 // === ANSWERS ===
 export async function dashAnswer(req, res) {
   let { taskId } = req.params;
-  const current = "Answers";
+  const current = "Groups";
   let answers = await getAnswers(parseInt(taskId));
   answers.forEach((answer) => {
     answer.percentage = Math.round((answer.pass / (answer.fails + answer.pass)) * 100);

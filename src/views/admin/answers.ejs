@@ -9,7 +9,7 @@
 <body class="<%- include('./../partials/body') %>">
     <%- include("./../partials/navbar.ejs") %>
     <main class="flex items-start lg:gap-11 mx-auto lg:w-88-12 lg:mt-36 min-h-96 bg-bg-second rounded-main relative after:bg-line after:rounded-main  after:block after:absolute after:left-56 after:w-1 after:h-95per ">
-        <%- include ("./../partials/scroll", {sideNav}) %>
+        <%- include ("./../partials/scroll", {sideNav, current}) %>
 
         <div class="flex flex-col items-center w-full lg:min-h-96 lg:mt-5 lg:mr-11">
             <p class="text-center text-main text-4xl font-semibold">Výsledky žáků</p>
@@ -26,6 +26,8 @@
                     <p class="text-delete text-xl font-bold">Smazat</p>
                 </div>
             </div>
+    
+            
             <% answers.forEach(user => { %>
             <div class="flex flex-col lg:gap-2 mt-2 w-full lg:mb-5">
                 <div class="w-full flex px-5 justify-between">
@@ -50,6 +52,8 @@
                 <% }) %>
             </div>
             </div>
+
+            
     </main>
 </body>
 </html> 
