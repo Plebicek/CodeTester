@@ -17,4 +17,10 @@ router.use("/", gradeRouter);
 router.use("/grade/:gradeId/",taskRouter);
 router.use("/admin/dashboard/", isAdmin, adminRouter);
 
+router.use(function (req, res) {
+  res.redirect("/")
+});
+
+
+
 export default router;

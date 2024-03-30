@@ -24,6 +24,7 @@
                     <p class="text-text-second text-xl font-bold text-center w-6">%</p>
                       <p class="text-text-second text-xl font-bold text-center">Odevzdal</p>
                     <p class="text-delete text-xl font-bold">Smazat</p>
+                    
                 </div>
             </div>
     
@@ -45,7 +46,10 @@
                         <% } else { %>
                             <p class="text-main-light text-xl font-semibold  text-center lg:w-24">Ano</p>
                         <% } %>
-                        <p class=" text-xl font-semibold text-center lg:w-16 text-delete">X</p>
+                        <form action="<%= path + `/delete-answer`%> " method="post" >
+                            <input type="hidden" name="answerId" value="<%= user.answer_id %>">
+                            <input type="submit" value="X" class="text-xl font-semibold text-center lg:w-16 text-delete" >
+                        </form>
                     </div>
                 </div>
                 <div class="w-full h-6px bg-gradient-to-r from-user-grad-from to-user-grad-to rounded-main "></div>

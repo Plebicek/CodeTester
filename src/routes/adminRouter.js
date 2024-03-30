@@ -9,8 +9,10 @@ import {
   dashAnswer,
   dashTest,
   dashTestUpload,
+  deleteUserAnswer,
 } from "../contollers/adminController.js";
 import {upload} from "../contollers/taskController.js";
+
 let router = Router();
 
 // === USERS ===
@@ -40,7 +42,8 @@ router
   .route("/groups/:groupId/grade/:gradeId/topic/:topicId/task/:taskId")
   .get(dashAnswer);
 
-/* router.route("/:dashId") Redirects if path does not exists
-  .get(dashboard) */
+router
+  .route("/groups/:groupId/grade/:gradeId/topic/:topicId/task/:taskId/delete-answer")
+  .post(deleteUserAnswer);
 
 export default router;

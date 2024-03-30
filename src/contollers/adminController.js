@@ -8,11 +8,13 @@ import {
   getAnswers,
   getTestsAndTopics,
   createTest,
+  deleteAnswer,
 } from "../models/admin.js";
 import { JAVA_UPLOAD } from "./taskController.js";
 import { navigation } from "../utils/dashUtils.js";
 import { addTestToQueue } from "../utils/testQueue.js";
-import {rename} from "node:fs"
+import {rename, rmSync} from "node:fs"
+import { Prisma } from "@prisma/client";
 
 // === USERS ===
 export async function dashUsers(req, res) {
@@ -144,13 +146,28 @@ export async function dashAnswer(req, res) {
   const current = "Groups";
   
   let answers = await getAnswers(parseInt(taskId));
+  console.log(answers)
+  
   
   answers.forEach((answer) => {
-    answer.percentage = Math.round((answer.pass / (answer.fails + answer.pass)) * 100);
+    answer.percentage = Math.ceil((answer.pass / (answer.fails + answer.pass)) * 100);
   });
   res.render("admin/answers", {
     sideNav: navigation,
     current: current,
     answers,
+    path : `${req.baseUrl}${req.path}`
   });
+}
+
+export async function deleteUserAnswer(req,res) {
+  const answerId = req.body.answerId 
+  try {
+    await deleteAnswer(answerId)
+    rmSync(JAVA_UPLOAD + `${answerId}.zip`)
+    console.log(`${req.baseUrl}${req.path.replace("/delete-user", "")}`)
+    return res.redirect(`${req.baseUrl}${req.path.replace("/delete-answer", "")}`)
+  } catch (err) {
+    return res.send("answer does not exists")
+  } 
 }

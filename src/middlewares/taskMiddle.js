@@ -33,10 +33,9 @@ export async function checkAnswerOvertime(req,res,next) {
             stats.pass = 0
             stats.fails = 0
             stats.total = stats.pass + stats.fails
-            stats.percentage = (stats.pass / stats.total)*100
+            stats.percentage = Math.ceil((stats.pass / stats.total)*100)
 
             if (isNaN(stats.percentage) || !isFinite(stats.percentage)) {
-                console.log("is nonoe")
                 stats.percentage = 0
             }
             req.stats = stats 
@@ -52,43 +51,4 @@ export async function checkAnswerOvertime(req,res,next) {
         }
         return next()
     }
-
-
-
-    /*
-    if (resultOvertime <= 0) {
-        if (req.method == "POST") {
-            await createOverTimeAnswer(req.user.id,taskId)
-            return res.redirect(`${req.baseUrl}/topic/${parseInt(topicId)}/task/${parseInt(taskId)}?msgUpload=`+encodeURIComponent("Přesčasové odevzdání"))
-            
-        } else if (req.method == "GET") {
-            if (task?.answers[0]) {
-                stats = task.answers[0]
-                stats.percentage = (stats.pass / (stats.pass + stats.fails))*100
-                if (isNaN(stats.percentage) || isFinite(stats.percentage)) {
-                    stats.percentage = 0
-                }
-                stats.total = stats.pass + stats.fails
-                req.stats = stats
-                return next() 
-
-            } else {
-                await createOverTimeAnswer(req.user.id,taskId)
-                stats.pass = 0
-                stats.fails = 0
-                stats.total = 0
-                stats.answer_overtime = 1
-                stats.percentage = 0
-                req.stats = stats 
-                return next()
-            }
-        }
-    }
-
-    next()
-    //check ovetime
-    //if post create overtime record, set overtiem
-    //if method post set answer to request
-    //
-    */
 }

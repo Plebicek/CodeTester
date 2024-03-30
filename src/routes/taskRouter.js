@@ -10,6 +10,7 @@ import { checkAnswerOvertime } from "../middlewares/taskMiddle.js";
 
 const router = Router();
 
+
 router.use("/topic/:topicId/task/:taskId", checkAnswerOvertime)
 
 router.get("/topic/:topicId/task/:taskId", viewTask);
@@ -21,12 +22,15 @@ router.post(
 );
 
 router.use((err, req, res, next) => {
+  let path = `${req.baseUrl}${req.path.replace("/upload", "")}`
     if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {
-            return res.status(400).send('File size is too large');
+            return res.redirect(path)
         }
     }
-    next(err)
+  
 });
+
+
 
 export default router;

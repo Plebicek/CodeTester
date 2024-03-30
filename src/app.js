@@ -30,9 +30,4 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(router);
 
-app.use(function (req, res) {
-  console.log(res.errorMessage);
-  res.status(404).send("page not found");
-});
-
 export default app;

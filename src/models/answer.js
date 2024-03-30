@@ -8,7 +8,7 @@ export async function setAnswerStats(stats, answerId) {
   try {
     return prisma.answers.update({
       where : {
-        answer_id : answerId
+        answer_id : parseInt(answerId)
       },
       data: {
         fails: parseInt(stats?.fail),
@@ -52,7 +52,6 @@ export async function createAnswer(taskId, userId) {
       data: {
         task_id: taskId,
         user_id: userId,
-
       },
     });
     return answer;
@@ -147,6 +146,20 @@ export async function getAnswerStatsByAnswerId(id) {
     return answer
   } catch (err) {
     console.log("get getAnswerStats error occured " + err)
+    return err
+  }
+}
+
+export async function removeAnswer(userId, answerId) {
+  try {
+    return await prisma.answers.delete({
+      where : {
+        user_id : parseInt(userId),
+        answer_id : parseInt(answerId)
+      }
+    })
+  } catch (err) {
+    console.log(err)
     return err
   }
 }

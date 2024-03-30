@@ -34,7 +34,11 @@
         <div class="flex relative justify-center items-center bg-bg-second lg:w-377 lg:h-491 lg:mr-20 rounded-main">
           <div class="flex items-center flex-col lg:w-350 lg:h-467  bg-bg-second border-main-border border-5 rounded-main">
               <p class="lg:text-4xl font-bold text-main lg:my-3">Výsledky testu</p>
+              <% if (stats.answer_overtime) { %>
+                  <p class="lg:text-4xl text-center lg:my-8 w-full font-bold text-red" >Úkol nebyl odevzdán</p>  
+              <% } else { %>
               <p class="relative lg:text-6xl font-black text-answer lg:my-5"><%= stats.percentage %><span class="absolute text-3xl top-6">%</span></p>
+              <% } %>
               <div class="flex flex-col items-center w-full lg:px-7 lg:mt-11">
                 <div class="flex justify-between lg:w-full">
                   <p class="lg:text-3xl text-task font-bold">Úspěšných</p>
@@ -47,8 +51,8 @@
                  <div class="flex justify-between lg:w-full lg:mt-8">
                   <p class="lg:text-3xl text-task font-bold">Celkem</p>
                   <p class="lg:text-4xl font-bold text-main"><%= stats.total %></p>
-
                 </div>
+                
               </div>
           </div>
         </div>

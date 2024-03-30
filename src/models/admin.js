@@ -216,6 +216,7 @@ export async function getAnswers(taskId) {
         task_id: taskId,
       },
       select: {
+        answer_id : true,
         pass: true,
         fails: true,
         answer_overtime : true,
@@ -231,5 +232,18 @@ export async function getAnswers(taskId) {
     return answers;
   } catch (error) {
     return error;
+  }
+}
+
+export async function deleteAnswer(answerId) {
+  try {
+    return await prisma.answers.delete({
+      where : {
+        answer_id : parseInt(answerId)
+      }
+    })      
+  } catch (err) {
+    console.log(" delet user answer err",err)
+    return  err
   }
 }

@@ -1,8 +1,8 @@
 import Bull from "bull";
 import { redisClient } from "./../../index.js";
 import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
-import { copyFile, rename, rmSync, rm } from "node:fs";
-import { remoteIdFromQueue, setAnswerStats } from "../models/answer.js";
+import { copyFile, rename, rmSync, rm, stat } from "node:fs";
+import { remoteIdFromQueue, removeAnswer, setAnswerStats } from "../models/answer.js";
 import getTest from "../models/test.js";
 import decompress from "decompress";
 import { exec } from "node:child_process";
@@ -32,7 +32,8 @@ export async function initTaskQueue() {
     let javaTestPath = `${JAVA_TEST + testId.test_id}/src/`;
     let childPath = process.cwd() + `/java/tests/${testId.test_id}/`;
 
-    copyFile(
+    try {
+     copyFile(
       userInputPath,
       javaTestPath + job.data.answer_id + ".zip",
       (err) => {
@@ -51,40 +52,52 @@ export async function initTaskQueue() {
       }
     );
 
-    decompress(javaTestPath + "main.zip", javaTestPath)
-      .then((files) => {
+    await decompress(javaTestPath + "main.zip", javaTestPath+"main")
+      .then(() => {
         rm(javaTestPath + "main.zip", (err) => {
           if (err) console.log(err);
         });
       })
-      .catch((err) => {
+      .catch(async (err) => {
         console.log("decompresd err " +err);
-        return done();
+        await removeAnswer(job.data.user_id, job.data.answer_id)
+        rmSync(javaTestPath + "main.zip", {force : true, recursive : true})
+        return done()
       });
 
-    let test = exec("mvn -q test", { cwd: childPath });
+    let test = exec("mvn clean -q test", { cwd: childPath });
     let data = "";
 
     test.stdout.on("data", (chunks) => {
       data += chunks;
     });
 
-    test.on("error", (err) => {
-      console.log("test.on error: " + err);
-    });
-    test.on("exit", async () => {
-      let jsonData = JSON.parse(data);
+    test.on("exit", async (code) => {
+      if (code !== 0) {
+        await removeAnswer(job.data.user_id, job.data.answer_id)
+        rmSync(javaTestPath + "main", {force : true, recursive : true})
+        return done()
+      }
+      let processedData = data.match(/\{"fail":\d+,"total":\d+,"pass":\d+\}/)
+      let jsonData = JSON.parse(processedData);
       jsonData.answer_id = job.data.answer_id;
-      await setAnswerStats(jsonData, parseInt(job.data.answer_id));
-      /*rm(javaTestPath + "main", {recursive : true, force : true},(err) => {
-        console.log("removing files")
-        if (err) console.log("while removing tested main file " + err)
-        return done();
-      })
-      */
-     return done()
+
+      let stats = await setAnswerStats(jsonData, parseInt(job.data.answer_id));
+      console.log(stats) 
+
+      rmSync(javaTestPath + "main", {force : true, recursive : true})
+
+      return done() 
     });
-  });
+    } catch(err) {
+      console.log("catch error in queue ", err)
+      await removeAnswer(job.data.user_id, job.data.answer_id)
+      rmSync(javaTestPath + "main", {force : true, recursive : true})
+      return done()
+    }
+
+    
+    });
 
   taskQueue.on("completed", async (job) => {
     let time = job.processedOn - job.timestamp;
