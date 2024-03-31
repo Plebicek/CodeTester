@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <%- include('./partials/head.ejs') %>  
 </head>
 <body class="<%- include('./partials/body') %> ">
     <%- include("./partials/navbar.ejs") %>
-    <main class="flex flex-col gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
+    <main class="flex flex-col gap-5 mx-auto lg:min-h-[500px] lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
         <h1 class="lg:mb-5 text-center font-black text-4xl text-white"><%- grade.grade_name  %></h1>
             <% if (grade.topics.length > 0) { %>
                 <% grade.topics.forEach(topic => { %>

@@ -74,6 +74,7 @@ export async function initTaskQueue() {
 
     test.on("exit", async (code) => {
       if (code !== 0) {
+        console.log(code)
         await removeAnswer(job.data.user_id, job.data.answer_id)
         rmSync(javaTestPath + "main", {force : true, recursive : true})
         return done()

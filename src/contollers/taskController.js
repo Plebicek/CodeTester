@@ -40,7 +40,6 @@ export async function viewTasks(req, res) {
 export async function viewTask(req, res) {
   try {
     let task = await getPureTask(req.params.taskId)
-
     task.task_due = dayjs(task.task_due).format("DD.MM. YYYY HH:mm:ss")
 
     res.render("task", {
@@ -58,7 +57,6 @@ export async function viewTask(req, res) {
 export async function uploadSolution(req, res) {
   let taskId = parseInt(req.params.taskId);
   let userId = parseInt(req.user.id);
-  
   let userAnswer = await createAnswer(taskId, userId);
   if (userAnswer instanceof Error) {
     return res.status(500).json("While sending an asnwer error has occured");
@@ -72,7 +70,4 @@ export async function uploadSolution(req, res) {
   );
   await addTaskToQueue(userAnswer);
   res.redirect(`${req.baseUrl}`);
-  //task user.id task.id answer.id
-  /* decompress(path.join(JAVA_PATH + req.file.originalname), JAVA_PATH) */
-  /* res.status(200).json("File was successfully uploaded"); */
 }

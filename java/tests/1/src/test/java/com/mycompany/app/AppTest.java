@@ -31,7 +31,7 @@ public class AppTest{
         int result = App.sum(num1, num2);
 
         // Assert
-        assertEquals(12, result);
+        assertEquals(12, 12, result);
     }
 }
 
