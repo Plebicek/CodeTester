@@ -9,18 +9,21 @@ export let redisClient;
 
 dotenv.config({ path: "./src/.env" });
 
-let redisServer = createClient();
+let redisServer = createClient({url : "redis://redis:6379"});
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 async function appInit() {
   try {
     redisClient = await redisServer.connect();
-    await initTaskQueue()
-    await initTestQueue()
-    console.log("queue init")
+    await initTaskQueue();
+    await initTestQueue();
+    console.log("queue init");
     if (redisClient) {
       console.log("redis connected");
+      redisClient.on("error", (error) => {
+        console.log("Redis client error: ", error);
+      });
     }
     server.listen(PORT, function () {
       console.log(`SERVER RUNNING... http://localhost:${PORT}/`);
