@@ -1,6 +1,6 @@
 import passport from "../utils/OAuthPasport.js"
-import {loginUser, logoutUser, registerUser, createOrFindByOAuth} from "../contollers/userController.js"
 import {Router} from 'express'
+import {loginUser, logoutUser, registerUser, createOrFindByOAuth} from "../contollers/userController.js"
 
 const router = Router()
 
@@ -12,5 +12,6 @@ router.get("/login", loginUser)
 router.post("/login", loginUser)
 router.get("/signup", registerUser)
 router.post("/signup", registerUser)
-router.get('/logout', logoutUser)
+router.get("/logout", logoutUser)
+
 export default router

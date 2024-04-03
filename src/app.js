@@ -1,15 +1,12 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import router from "./routes/index.js";
 import path from "path";
 import livereload from "livereload";
 import liveReloadServer from "connect-livereload";
 import serveFavicon from "serve-favicon";
-
-
+import router from "./routes/index.js";
 
 const __dirname = import.meta.dirname;
-
 const env = process.env.NODE_ENV || "development";
 
 const app = express();
