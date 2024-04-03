@@ -20,6 +20,6 @@ export async function isAdmin(req, res, next) {
   if (req.user.role == "admin") {
     return next();
   } else {
-    return res.redirect(req.header("Refer") || "/");
+    return res.redirect("/");
   }
 }
