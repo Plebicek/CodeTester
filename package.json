@@ -10,7 +10,7 @@
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "fetch-db": "cd src && npx prisma db pull && npx prisma generate"
   },
-  "author": "",
+  "author": "Vojtěch Farkas",
   "license": "ISC",
   "dependencies": {
     "@libsql/client": "^0.4.3",
