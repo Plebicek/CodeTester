@@ -34,7 +34,6 @@ export async function initTaskQueue() {
     let childPath = process.cwd() + `/java/tests/${testId.test_id}/`;
 
     try {
-      console.log("copy file")
      copyFile(
       userInputPath,
       javaTestPath + job.data.answer_id + ".zip",
@@ -43,7 +42,6 @@ export async function initTaskQueue() {
       }
     );
 
-    console.log("rename")
     rename(
       javaTestPath + job.data.answer_id + ".zip",
       javaTestPath + "main.zip",
@@ -54,7 +52,6 @@ export async function initTaskQueue() {
         }
       }
     );
-    console.log("decompose")
     await decompress(javaTestPath + "main.zip", javaTestPath+"main")
       .then(() => {
         rm(javaTestPath + "main.zip", (err) => {

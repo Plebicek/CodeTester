@@ -64,10 +64,7 @@ export async function uploadSolution(req, res) {
   rename(
     JAVA_UPLOAD + req.file.originalname,
     JAVA_UPLOAD + userAnswer.answer_id + ".zip",
-    (err) => {
-      if (err) console.log(err);
-    }
-  );
+    (err) => {if (err) console.log(err)});
   await addTaskToQueue(userAnswer);
   res.redirect(`${req.baseUrl}`);
 }
