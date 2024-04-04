@@ -11,7 +11,7 @@ export let testQueue;
 
 export async function initTestQueue() {
   try {
-    testQueue = new Bull("test", "redis://127.0.0.1:6379", {
+    testQueue = new Bull("test", "redis://redis:6379", {
       limiter: { max: 1, duration: 1000 },
     });
   } catch (err) {
