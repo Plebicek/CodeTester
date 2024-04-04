@@ -14,8 +14,6 @@ ENV PORT 3000
 
 EXPOSE $PORT
 
-RUN npm run fetch-db
-RUN ["java", "-version"]
-RUN ["mvn", "-v"]
+RUN npm run generate-db
 
 ENTRYPOINT ["node", "index.js"]
