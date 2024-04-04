@@ -11,7 +11,7 @@ export let taskQueue;
 
 export async function initTaskQueue() {
   try {
-    taskQueue = new Bull("task", "redis://127.0.0.1:6379", {
+    taskQueue = new Bull("task", "redis://redis:6379", {
       limiter: { max: 1, duration: 1000 },
     });
   } catch (err) {
@@ -19,6 +19,7 @@ export async function initTaskQueue() {
   }
 
   taskQueue.process(2, async (job, done) => {
+    console.log("job", job)
     let testId = await getTest(job.data.task_id);
     if (!testId) {
       console.log(
@@ -33,6 +34,7 @@ export async function initTaskQueue() {
     let childPath = process.cwd() + `/java/tests/${testId.test_id}/`;
 
     try {
+      console.log("copy file")
      copyFile(
       userInputPath,
       javaTestPath + job.data.answer_id + ".zip",
@@ -41,6 +43,7 @@ export async function initTaskQueue() {
       }
     );
 
+    console.log("rename")
     rename(
       javaTestPath + job.data.answer_id + ".zip",
       javaTestPath + "main.zip",
@@ -51,7 +54,7 @@ export async function initTaskQueue() {
         }
       }
     );
-
+    console.log("decompose")
     await decompress(javaTestPath + "main.zip", javaTestPath+"main")
       .then(() => {
         rm(javaTestPath + "main.zip", (err) => {
@@ -64,7 +67,7 @@ export async function initTaskQueue() {
         rmSync(javaTestPath + "main.zip", {force : true, recursive : true})
         return done()
       });
-
+      console.log("start test")
     let test = exec("mvn clean -q test", { cwd: childPath });
     let data = "";
 

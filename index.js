@@ -8,7 +8,7 @@ import { initTestQueue } from "./src/utils/testQueue.js";
 export let redisClient;
 
 dotenv.config({ path: "./src/.env" });
-console.log(process.env.REDIS_URL)
+console.log(process.env.redi  )
 let redisServer = createClient({url : process.env.REDIS_URL});
 
 const server = http.createServer(app);

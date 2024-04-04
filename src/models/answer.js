@@ -151,6 +151,10 @@ export async function getAnswerStatsByAnswerId(id) {
 }
 
 export async function removeAnswer(userId, answerId) {
+  console.log("users and tatsks",userId, answerId)
+  if (!userId || !answerId) {
+    return null
+  }
   try {
     return await prisma.answers.delete({
       where : {

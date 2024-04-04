@@ -1,15 +1,8 @@
-FROM node:18 AS base
+FROM node:20
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y openjdk-17-jdk
-RUN apt-get update && apt-get install -y maven
-
-
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
-ENV MAVEN_HOME /usr/share/maven
-
-RUN javac -version
+RUN apt-get update && apt-get install -y openjdk-17-jre openjdk-17-jdk maven
 
 COPY package*.json ./
 
@@ -22,5 +15,7 @@ ENV PORT 3000
 EXPOSE $PORT
 
 RUN npm run fetch-db
+RUN ["java", "-version"]
+RUN ["mvn", "-v"]
 
 ENTRYPOINT ["node", "index.js"]

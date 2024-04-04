@@ -2,9 +2,9 @@ version: "3.9"
 
 services:
   app:
-    image: node-app
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
+    image: codetester-node
+    stdin_open: true 
+    tty: true        
     environment:
       - REDIS_HOST=redis
     depends_on:
@@ -15,7 +15,7 @@ services:
     ports:
       - "3000:3000"
   redis:
-    image: redis:6.2.5-alpine
+    image: redis:7.2.4-alpine
     volumes:
       - redis-data:/data
     ports:
