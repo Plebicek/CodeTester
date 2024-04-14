@@ -69,5 +69,6 @@ export async function uploadSolution(req, res) {
     }
   );
   await addTaskToQueue(userAnswer);
+	console.log("added to queue")
   res.redirect(`${req.baseUrl}`);
 }
