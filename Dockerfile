@@ -3,6 +3,7 @@ FROM node:20
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y openjdk-17-jre openjdk-17-jdk maven
+RUN apt-get -y update; apt-get -y install curl
 
 COPY package*.json ./
 
@@ -16,4 +17,4 @@ EXPOSE $PORT
 
 RUN npm run generate-db
 
-ENTRYPOINT ["node", "index.js"]
+CMD ["node", "index.js"]

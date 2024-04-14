@@ -43,6 +43,7 @@ export async function findUserByOAuth(oauth_id) {
       select: {
         user_id: true,
         user_oauth: true,
+	user_role: true,
       },
     });
     return result;
