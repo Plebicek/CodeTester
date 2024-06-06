@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-29T09:50:58.494Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="CA73HJdaBxf_Oc7Uu2oN" version="24.2.0" type="device">
+<mxfile host="app.diagrams.net" modified="2024-04-05T03:27:14.168Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="Aoc_mCkxvVdlXGDk5dQd" version="24.2.1" type="device">
   <diagram name="Stránka-1" id="VhP_kH0qerUd58yar0W7">
-    <mxGraphModel dx="2899" dy="1123" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3119" dy="2260" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -526,68 +526,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-3" value="2023" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-530" y="50" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-4" value="1 rok" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-503" y="80" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-5" value="data typy" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-470" y="100" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-6" value="STring task" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-440" y="130" width="80" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-7" value="STring task" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-440" y="130" width="80" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-9" value="test" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-410" y="160" width="57" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-16" value="Pojmenovat tabulky v jednotném nebo množném čísle?" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-800" y="1020" width="320" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-31" value="Pojmenování atributů s nebo bez&amp;nbsp; názvu tabulky." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-800" y="1050" width="320" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-33" value="&lt;h1&gt;Otázky pro učitele&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-800" y="990" width="220" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-34" value="&lt;h1&gt;Úkoly pro mě&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-430" y="990" width="220" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-35" value="Přidat PK a FK k atributům" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-400" y="1020" width="170" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="xTFzKZC2Kl4OXiuUglSC-36" value="Přiřadit answer stats do answers" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-400" y="1050" width="170" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-5" value="2023" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-190" y="230" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-7" value="2022" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-190" y="170" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-8" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="300" y="140" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-9" value="database 1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="680" y="110" width="90" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-10" value="2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="250" y="200" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="5GyXTN0XXceDEC7rrLju-11" value="3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="250" y="240" width="60" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="5GyXTN0XXceDEC7rrLju-12" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="780" y="420" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="5GyXTN0XXceDEC7rrLju-13" value="2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="780" y="390" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="a5eePOQnZzZrpzty8ey7-1" value="database 1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="680" y="130" width="90" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

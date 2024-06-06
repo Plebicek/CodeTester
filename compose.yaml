@@ -1,21 +1,20 @@
+version: "3.9"
 
 services:
-  app:
-    image: codetester-node
-    stdin_open: true 
-    tty: true        
+  app:    
+    build: .
     environment:
       - REDIS_HOST=redis
-    network_mode: "host"
     depends_on:
       - redis
-    build: .
-    volumes:  
-    - ./java:/app/java
+    volumes:
+      - type: bind
+        source: ./src
+        target: /app/src/
     ports:
       - "3000:3000"
+
   redis:
-    network_mode: "host"
     image: redis:7.2.4-alpine
     volumes:
       - redis-data:/data
@@ -24,5 +23,3 @@ services:
 
 volumes:
   redis-data:
-
-
