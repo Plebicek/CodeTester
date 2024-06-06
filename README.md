@@ -1,6 +1,7 @@
 ToDo list:
 Error Handler
 Tests
+Class Queue
 Accept only *.zip
 FIX: Socket closed unexpectedly Redis
 ADD: logging 
