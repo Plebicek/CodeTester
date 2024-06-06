@@ -118,12 +118,15 @@ export async function dashTest(req, res) {
 }
 
 export async function dashTestUpload(req, res) {
+	console.log(req.file)
   const path = `${req.baseUrl}${req.path}`
   const current = "Tests";
+  console.log("req params",req.params)
   const taskId = req.params.taskId;
   
   if (req.method == "POST") {
-    let test = await createTest()
+    let test = await createTest(taskId)
+    console.log("created test",test)
     rename(
       JAVA_UPLOAD + req.file.originalname,
       JAVA_UPLOAD + "test_"+test.test_id + ".zip",

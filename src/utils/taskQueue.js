@@ -11,7 +11,7 @@ export let taskQueue;
 
 export async function initTaskQueue() {
   try {
-    taskQueue = new Bull("task", "redis://redis:6379", {
+    taskQueue = new Bull("task", "redis://localhost:6379", {
       limiter: { max: 1, duration: 1000 },
     });
   } catch (err) {

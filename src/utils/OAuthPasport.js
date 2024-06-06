@@ -6,7 +6,7 @@ dotenv.config({ path: process.cwd() + "/src/.env"  });
 export default passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret : process.env.CLIENT_SECRET,
-    callbackURL : "http://localhost:3000/login/OAuth/callback",
+    callbackURL : "https://odevzdani.workspace-sosceskybrod.cz/login/OAuth/callback",
     scope: ['user.read'],
     tenant: process.env.TENANT,
     }, 

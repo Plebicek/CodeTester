@@ -153,11 +153,12 @@ export async function removeTestUpload(testId){
   }
 }
 
-export async function createTest() {
+export async function createTest(taskId) {
   try {
     return await prisma.tests.create({
       data : {
         test_path : "path",
+	task_id : parseInt(taskId)
       }
     })
   } catch (err) {

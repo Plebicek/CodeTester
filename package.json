@@ -9,14 +9,14 @@
     "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
-    "generate-db" : "cd src && npx prisma generate",
-    "push-db" : "cd src && npx prisma db push"
+    "generate-db": "cd src && npx prisma generate",
+    "push-db": "cd src && npx prisma db push"
   },
   "author": "Vojtěch Farkas",
   "license": "ISC",
   "dependencies": {
     "@libsql/client": "^0.4.3",
-    "@prisma/client": "^5.11.0",
+    "@prisma/client": "^5.12.1",
     "bcrypt": "^5.1.1",
     "bull": "^4.12.2",
     "cookie-parser": "^1.4.6",
@@ -46,7 +46,7 @@
     "nodemon": "^3.1.0",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
-    "prisma": "^5.11.0",
+    "prisma": "^5.12.1",
     "tailwindcss": "^3.4.1"
   }
 }
