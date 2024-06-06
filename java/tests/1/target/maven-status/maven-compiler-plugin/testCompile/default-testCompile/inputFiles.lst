@@ -1,0 +1,5 @@
+/app/java/tests/1/src/test/java/com/mycompany/app/TestResultWatcher.java
+/app/java/tests/1/src/test/java/com/mycompany/app/TestFailure.java
+/app/java/tests/1/src/test/java/com/mycompany/app/TestResultContainer.java
+/app/java/tests/1/src/test/java/com/mycompany/app/CustomTestExecutionListener.java
+/app/java/tests/1/src/test/java/com/mycompany/app/AppTest.java
