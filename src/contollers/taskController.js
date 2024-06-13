@@ -30,7 +30,7 @@ export async function viewTasks(req, res) {
     res.render("tasks", {
       topic: topic.topic_name,
       tasks: topic.tasks,
-      path: req.originalUrl,
+      path: req.originalUrl,  
     });
   } catch (err) {
     res.status(500).redirect("/");

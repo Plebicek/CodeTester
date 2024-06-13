@@ -1,6 +1,7 @@
-
+import { ErrorMessage } from "../utils/errorHandler.js";
 import { Router } from "express";
 import morgan from "morgan"
+import errorMiddleware from "../utils/errorHandler.js";
 import userRouter from "./userRouter.js";
 import indexRouter from "./indexRouter.js";
 import gradeRouter from "./gradeRouter.js";
@@ -22,8 +23,10 @@ router.use("/", gradeRouter);
 router.use("/grade/:gradeId/",taskRouter);
 router.use("/admin/dashboard/", isAdmin, adminRouter);
 
-router.use(function (req, res) {
-  res.redirect("/")
+router.use(function (req, res,next) {
+  next(new ErrorMessage("page not found", 404))
 });
+
+router.use(errorMiddleware)
 
 export default router;

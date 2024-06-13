@@ -1,7 +1,8 @@
 import { getGrades } from "../models/grade.js";
 import { getGroupByUser } from "../models/user.js";
+import { ErrorMessage } from "../utils/errorHandler.js";
 
-export async function homepage(req, res) {
+export async function homepage(req, res,next) {
   let groups = await getGroupByUser(req.user.id);
   let filter = []
   if (groups.length > 0) {

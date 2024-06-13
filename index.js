@@ -4,10 +4,10 @@ import app from "./src/app.js";
 import { createClient } from "redis";
 import { initTaskQueue } from "./src/utils/taskQueue.js";
 import { initTestQueue } from "./src/utils/testQueue.js";
+dotenv.config({ path: "./src/.env" });
 
 export let redisClient;
 
-dotenv.config({ path: "./src/.env" });
 let redisServer = createClient({url : process.env.REDIS_URL});
 
 const server = http.createServer(app);
