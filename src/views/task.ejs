@@ -8,6 +8,16 @@
   </head>
   <body class="<%- include('./partials/body') %>">
     <%- include("./partials/navbar.ejs") %>
+    <% if (msg?.errUpload) { %>
+    <div class="flex z-50 absolute lg:w-33 lg:h-14 lg:top-40 right-0 bg-red rou" id="error-pop">
+      <p class="text-white text-xl "><%= msg.errUpload  %></p>
+    </div>
+    <% } %>
+    <% if (msg?.badType) { %>
+    <div class="flex items-center justify-center z-50 absolute lg:w-33 lg:h-14 lg:top-60 right-0 bg-[#] rounded-l-lg bg-red" id="error-pop">
+      <p class="text-white text-xl "><%= msg.badType  %></p>
+    </div>
+    <% } %>
     <main class="flex justify-between items-center lg:mx-5-68 lg:mt-36">
       <div class="lg:w-793 lg:h-788  bg-bg-second rounded-main">
         <div class="flex flex-col w-full h-full lg:px-8 lg:py-7">

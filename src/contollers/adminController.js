@@ -118,10 +118,8 @@ export async function dashTest(req, res) {
 }
 
 export async function dashTestUpload(req, res) {
-	console.log(req.file)
   const path = `${req.baseUrl}${req.path}`
   const current = "Tests";
-  console.log("req params",req.params)
   const taskId = req.params.taskId;
   
   if (req.method == "POST") {

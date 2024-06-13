@@ -18,7 +18,15 @@ let storage = multer.diskStorage({
   },
 });
 
-export let upload = multer({ storage: storage , limits : {fileSize : 1024 * 1024 * 5 }});
+const multerFileFilter = function(req,file, cb) {
+  if (file.mimetype != 'application/x-zip-compressed') {
+    return cb(new Error("This file type is not supported, use .zip"))
+  }
+  return cb(null, true)
+}
+
+
+export const upload = multer({ storage: storage , fileFilter : multerFileFilter , limits : {fileSize : 1024 * 1024 * 5 }})
 
 export async function viewTasks(req, res) {
   let topicId = parseInt(req.params.topicId);
@@ -38,6 +46,7 @@ export async function viewTasks(req, res) {
 }
 
 export async function viewTask(req, res) {
+  const errorMessageBadType = decodeURIComponent(req.query?.error || "")
   try {
     let task = await getPureTask(req.params.taskId)
     task.task_due = dayjs(task.task_due).format("DD.MM. YYYY HH:mm:ss")
@@ -46,7 +55,7 @@ export async function viewTask(req, res) {
       stats : req.stats,
       task: task,
       path: `${req.baseUrl}${req.path}`,
-      msg: { errUpload: req.query.msgUpload },
+      msg: { errUpload: req.query.msgUpload, badType : errorMessageBadType},
     });
   } catch (err) {
     console.log("View task contoller ", err)
@@ -55,6 +64,7 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
+  console.log("solution uploaded")
   let taskId = parseInt(req.params.taskId);
   let userId = parseInt(req.user.id);
   let userAnswer = await createAnswer(taskId, userId);

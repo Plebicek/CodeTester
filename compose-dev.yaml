@@ -10,10 +10,10 @@ services:
     depends_on:
       - redis
     volumes:
-      - java:/java/
+      - ./java:/java/
       - type: bind
-        source: ./src
-        target: /app/src/
+        source: .
+        target: /app/
     ports:
       - "3000:3000" 
 

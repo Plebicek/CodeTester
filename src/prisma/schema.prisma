@@ -77,10 +77,9 @@ model tasks {
 }
 
 model tests {
-  test_id   Int    @id @default(autoincrement())
-  test_path String @db.Text
-  task_id   Int?
-  tasks     tasks? @relation(fields: [task_id], references: [task_id], onDelete: Restrict, onUpdate: Restrict, map: "tests_ibfk_1")
+  test_id Int    @id @default(autoincrement())
+  task_id Int?
+  tasks   tasks? @relation(fields: [task_id], references: [task_id], onDelete: Restrict, onUpdate: Restrict, map: "tests_ibfk_1")
 
   @@index([task_id], map: "task_id")
 }
@@ -101,7 +100,7 @@ model users {
   user_hash      String?         @db.VarChar(255)
   user_oauth     String          @db.Text
   user_email     String          @db.Text
-  user_job_title String          @db.Text
+  user_job_title String?         @db.Text
   user_role      String          @default("user") @db.Text
   answers        answers[]
   group_bridges  group_bridges[]

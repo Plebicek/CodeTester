@@ -6,12 +6,14 @@ import { remoteIdFromQueue, removeAnswer, setAnswerStats } from "../models/answe
 import getTest from "../models/test.js";
 import decompress from "decompress";
 import { exec } from "node:child_process";
+import dotenv from "dotenv";
+dotenv.config({ path: process.env.PWD+"./src/.env" });
 
 export let taskQueue;
 
 export async function initTaskQueue() {
   try {
-    taskQueue = new Bull("task", "redis://localhost:6379", {
+    taskQueue = new Bull("task", process.env.REDIS_URL, {
       limiter: { max: 1, duration: 1000 },
     });
   } catch (err) {
@@ -34,7 +36,7 @@ export async function initTaskQueue() {
     let childPath = process.cwd() + `/java/tests/${testId.test_id}/`;
 
     try {
-     copyFile(
+      await copyFile(
       userInputPath,
       javaTestPath + job.data.answer_id + ".zip",
       (err) => {
@@ -42,7 +44,7 @@ export async function initTaskQueue() {
       }
     );
 
-    rename(
+    await rename(
       javaTestPath + job.data.answer_id + ".zip",
       javaTestPath + "main.zip",
       (err) => {
@@ -53,8 +55,8 @@ export async function initTaskQueue() {
       }
     );
     await decompress(javaTestPath + "main.zip", javaTestPath+"main")
-      .then(() => {
-        rm(javaTestPath + "main.zip", (err) => {
+      .then(async () => {
+        await rm(javaTestPath + "main.zip", (err) => {
           if (err) console.log(err);
         });
       })

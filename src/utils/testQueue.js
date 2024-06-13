@@ -6,12 +6,13 @@ import { removeTestUpload, updateTest } from "../models/admin.js";
 import path from "path"
 import { copyFileSync, rmSync } from "fs";
 import { copyFile, mkdir, readdir, stat } from "fs/promises";
-
+import dotenv from "dotenv";
+dotenv.config({ path: process.env.PWD+"./src/.env" });
 export let testQueue;
 
 export async function initTestQueue() {
   try {
-    testQueue = new Bull("test", "redis://localhost:6379", {
+    testQueue = new Bull("test", process.env.REDIS_URL, {
       limiter: { max: 1, duration: 1000 },
     });
   } catch (err) {
@@ -40,7 +41,7 @@ export async function initTestQueue() {
 
     copyFileSync(JAVA_UPLOAD + `test_${testId}.zip`, JAVA_TEST + `${testId}/src/test.zip`)
 
-    decompress(JAVA_TEST + `${testId}/src/test.zip`, JAVA_TEST + `${testId}/src/test`)
+    await decompress(JAVA_TEST + `${testId}/src/test.zip`, JAVA_TEST + `${testId}/src/test`)
 
     rmSync(JAVA_TEST + `${testId}/src/test.zip`)
     rmSync(JAVA_UPLOAD + `test_${testId}.zip`)
