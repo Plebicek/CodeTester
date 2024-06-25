@@ -66,7 +66,7 @@ export async function initTaskQueue() {
         rmSync(javaTestPath + "main.zip", {force : true, recursive : true})
         return done()
       });
-      console.log("start test")
+    console.log("start test")
     let test = exec("mvn clean -q test", { cwd: childPath });
     let data = "";
 
@@ -82,7 +82,7 @@ export async function initTaskQueue() {
         return done()
       }
       let processedData = data.match(/\{"fail":\d+,"total":\d+,"pass":\d+\}/)
-      let jsonData = JSON.parse(processedData);
+      let jsonData = await JSON.parse(processedData);
       jsonData.answer_id = job.data.answer_id;
 
       let stats = await setAnswerStats(jsonData, parseInt(job.data.answer_id));

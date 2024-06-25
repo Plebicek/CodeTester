@@ -64,7 +64,6 @@ export async function viewTask(req, res) {
 }
 
 export async function uploadSolution(req, res) {
-  console.log("solution uploaded")
   let taskId = parseInt(req.params.taskId);
   let userId = parseInt(req.user.id);
   let userAnswer = await createAnswer(taskId, userId);
