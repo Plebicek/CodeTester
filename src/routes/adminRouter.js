@@ -11,7 +11,7 @@ import {
   dashTestUpload,
   deleteUserAnswer,
 } from "../contollers/adminController.js";
-import {upload} from "../contollers/taskController.js";
+import upload from "../utils/upload.js";
 
 let router = Router();
 

@@ -1,7 +1,10 @@
 import Bull from "bull";
 import { redisClient } from "./../../index.js";
-import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
-import { copyFile, rename, rmSync, rm, stat } from "node:fs";
+import runProcess from "../helper/process.js"
+
+
+/* import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
+import { copyFile, rename, rmSync, rm, } from "node:fs";
 import { remoteIdFromQueue, removeAnswer, setAnswerStats } from "../models/answer.js";
 import getTest from "../models/test.js";
 import decompress from "decompress";
@@ -104,12 +107,12 @@ export async function initTaskQueue() {
 
   taskQueue.on("completed", async (job) => {
     let time = job.processedOn - job.timestamp;
-    /* remove answer queue id */
+     remove answer queue id 
     await remoteIdFromQueue(job.data.answer_id);
     await redisClient.del("bull:task:" + job.id);
     console.log(`The proccess id: ${job.data.answer_id} took ${time}s`);
   });
-}
+} */
 
 export async function addTaskToQueue(object) {
   await taskQueue.add(object);

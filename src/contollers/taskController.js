@@ -1,32 +1,10 @@
 import { getPureTask,  getTopicsTasks } from "../models/task.js";
-import multer from "multer";
 import path from "path";
-import { createAnswer } from "../models/answer.js";
-import { rename } from "node:fs";
-import { addTaskToQueue } from "../utils/taskQueue.js";
 import dayjs from "dayjs";
-
+import {setTaskToQueue } from "../helper/queue.js";
+import getTest from "../models/test.js";
 export const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
 export const JAVA_TEST = path.join(process.cwd(), "/java/tests/");
-
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, JAVA_UPLOAD);
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const multerFileFilter = function(req,file, cb) {
-  if (file.mimetype != 'application/x-zip-compressed') {
-    return cb(new Error("This file type is not supported, use .zip"))
-  }
-  return cb(null, true)
-}
-
-
-export const upload = multer({ storage: storage , fileFilter : multerFileFilter , limits : {fileSize : 1024 * 1024 * 5 }})
 
 export async function viewTasks(req, res) {
   let topicId = parseInt(req.params.topicId);
@@ -63,9 +41,40 @@ export async function viewTask(req, res) {
   }
 }
 
+export async function uploadSolution(req, res,next) {
+  const fileId = req.locals.answerId 
+  const userId = req.user.id
+  const testId = await getTest(req.params.taskId) 
+  console.log(testId)
+  try {
+    setTaskToQueue({fileId,userId,testId})
+    res.send("upload")
+  } catch (error) {
+    next(error) 
+  }
+  /*
+  const taskId = parseInt(req.params.taskId);
+  const userId = parseInt(req.user.id);
+  let userAnswer = await createAnswer(taskId, userId);
+  if (userAnswer instanceof Error) {
+    return res.status(500).json("While sending an asnwer error has occured");
+    }
+  rename(
+    JAVA_UPLOAD + req.file.originalname,
+    JAVA_UPLOAD + userAnswer.answer_id + ".zip",
+    (err) => {if (err) console.log(err)});
+  await addTaskToQueue(userAnswer);
+	console.log("added to queue")
+  res.redirect(`${req.baseUrl}`); */
+}
+/*
 export async function uploadSolution(req, res) {
-  let taskId = parseInt(req.params.taskId);
-  let userId = parseInt(req.user.id);
+  
+  3. upload querz id, send it to request next
+  4. this func, add to queue
+  5. res.send("added to queue")??
+  
+  
   let userAnswer = await createAnswer(taskId, userId);
   if (userAnswer instanceof Error) {
     return res.status(500).json("While sending an asnwer error has occured");
@@ -78,3 +87,6 @@ export async function uploadSolution(req, res) {
 	console.log("added to queue")
   res.redirect(`${req.baseUrl}`);
 }
+*/
+
+

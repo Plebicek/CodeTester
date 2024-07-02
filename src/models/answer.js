@@ -23,41 +23,36 @@ export async function setAnswerStats(stats, answerId) {
 
 export async function checkExistingAnswer(taskId, userId) {
   try {
-    let isAnswer = await prisma.answers.findFirst({
+    const isAnswer = await prisma.answers.findFirst({
       where: {
-        user_id: userId,
-        task_id: taskId,
+        user_id: parseInt(userId),
+        task_id: parseInt(taskId),
       },
       select: {
         answer_id: true,
       },
     });
     if (isAnswer) {
-      isAnswer.exists = true;
       return isAnswer;
-    } else {
-      return 0;
-    }
+    } 
+    return false
   } catch (err) {
     return new Error("Error occured in CheckExistsingAnswer");
   }
 }
 
 export async function createAnswer(taskId, userId) {
-  let isAnswer = await checkExistingAnswer(taskId, userId);
-  if (isAnswer) return isAnswer;
-
   try {
-    let answer = await prisma.answers.create({
+    const answer = await prisma.answers.create({
       data: {
-        task_id: taskId,
-        user_id: userId,
+        task_id: parseInt(taskId),
+        user_id: parseInt(userId),
       },
     });
     return answer;
   } catch (err) {
-    console.log(err)
-    return new Error("Error occured in createAnswer");
+    console.log("Error occured in createAnswer",err)
+    return false
   }
 }
 

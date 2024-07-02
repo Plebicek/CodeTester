@@ -14,6 +14,7 @@ const logger = morgan("tiny")
 const router = Router();
 
 router.use(logger)
+router.use((req,res,next)=>{req.locals = {};next()})
 
 router.use("/", userRouter);
 router.use("/", jwtAuth);

@@ -2,8 +2,7 @@ import http from "http";
 import dotenv from "dotenv";
 import app from "./src/app.js";
 import { createClient } from "redis";
-import { initTaskQueue } from "./src/utils/taskQueue.js";
-import { initTestQueue } from "./src/utils/testQueue.js";
+import taskQueueInit from "./src/helper/queue.js";
 dotenv.config({ path: "./src/.env" });
 
 export let redisClient;
@@ -16,8 +15,7 @@ const PORT = process.env.PORT || 3000;
 async function appInit() {
   try {
     redisClient = await redisServer.connect();
-    await initTaskQueue();
-    await initTestQueue();
+    taskQueueInit()
     if (redisClient) {
       redisClient.on("error", (error) => {
         console.log("Redis client error: ", error);
