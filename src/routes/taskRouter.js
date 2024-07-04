@@ -8,9 +8,11 @@ import upload from "../utils/upload.js";
 import checkOrCreateAnswer from "../middlewares/fileSaver.js";
 import { checkAnswerOvertime } from "../middlewares/taskMiddle.js";
 
+
 const router = Router();
 
 router.use("/topic/:topicId/task/:taskId", checkAnswerOvertime)
+
 
 router.get("/topic/:topicId/task/:taskId", viewTask);
 
@@ -30,6 +32,7 @@ router.use((err, req, res) => {
             return res.redirect(path)
         }
     }
+    console.log(err)
     return res.redirect(req.get("referer")+`?error=${encodeURIComponent(err.message)}`)
 });
 

@@ -3,28 +3,25 @@ import path  from "path"
 
 const runJavaTest = function(testFolderId) {
     return new Promise((resolve,reject)=>{
-        const java = exec("mvn clean test", {cwd : javaPathCwd(testFolderId)})
-        console.log(java)
-        let result = ""
-        let error = ""
+        const java = exec("mvn clean test"/* , {cwd : javaPathCwd(testFolderId)} */)
         let data = ""
 
         java.stdout.on("data", (parts)=> {
-        data += parts
+            data += parts
         })
-
-        java.stderr.on("data", (parts)=> {
+        /* 
+        java.stderr.on("data", (parts) =>{
             error += parts
-        })
+        }) */
+
+       /*  java.stderr.on("data", (parts)=> {
+            console.log("error parts", parts, " ", parts.toString())
+            error += parts
+        }) */
 
         java.on("close", (code) => {
-            console.log(error)
-            reject(error)
-            if (error) {return error}
-            console.log(data)
-            result = switchCodeStatement(code) 
-            console.log(result)
-            resolve(result) 
+            let result = switchCodeStatement(code) 
+            return resolve(result) 
         })
             
         function switchCodeStatement(code) {
@@ -73,6 +70,14 @@ export const rawJsonParser = function (data) {
 }
 
 const testFailResult = function(data) {
+    /* 
+        odkomentovat processcsdfsdfsdf
+        1. regext build errror
+        parse errror
+        return error 
+    */
+    console.log(data)
+    return new Error("BUILD FAILURE", data)
     let result = {}
     result.symbol = data.match(/symbol:\s+(.*)/)
     result.location = data.match(/location:\s+(.*)/)

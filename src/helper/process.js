@@ -73,8 +73,8 @@ const runProcess = async function({filename, testFolder}) {
         await rm(testFolderPath(testFolder), {force : true})
         return await runJavaTest(testFolder)
     } catch( error) {
-        console.log("error while processing test ", error)
-        throw error
+        console.log("error while processing test ")
+        return error
     }
 }
 

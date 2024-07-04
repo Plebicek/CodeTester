@@ -50,6 +50,7 @@ export async function uploadSolution(req, res,next) {
     setTaskToQueue({fileId,userId,testId})
     res.send("upload")
   } catch (error) {
+    res.json({error})
     next(error) 
   }
   /*
