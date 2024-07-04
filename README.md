@@ -16,4 +16,4 @@ The right way to run CodeTester in docker.
 //ToDo
 ## Run dev mode
 Be in projects root folder <br/>
-`docker compose -d -f compose-dev.yaml up`
+`docker compose -f compose-dev.yaml up -d`
