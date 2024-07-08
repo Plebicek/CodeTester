@@ -23,8 +23,22 @@ Be in projects root folder <br/>
 total: 14 days 
 
 ## CODE
-1. finish queue system (based on code status update/remove/retry code)
-2. Docker add Healthcheck (autorestart)
+
+1. - [x] Check if its not too late
+2. - [ ] Check or create new answer
+3. - [x] Creates new answer
+4. - [ ] Displays if answer already exists
+5. - [x] Save file if its .zip
+6. - [ ] Dont save if its not zip and send back message
+7. - [x] Add to queue
+8. - [x] Run java test
+9. - [x] Parse results
+10. - [x] Save results to the db
+11. - [ ] Remove main
+12. - [x] Child executes when everything is correct
+13. - [ ] Child handle wrong settings
+
+14. - [ ] Docker add Healthcheck (autorestart)
 
 ## Word
 1. Describe program Architecture (main app, queue system + childprocess)
