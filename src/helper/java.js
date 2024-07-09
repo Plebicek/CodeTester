@@ -1,87 +1,76 @@
-import {exec} from "child_process"
-import path  from "path"
+import { exec } from "child_process";
+import path from "path";
+import { setAnswerStats, removeAnswer } from "../models/answer.js";
 
-const runJavaTest = function(testFolderId) {
-    return new Promise((resolve,reject)=>{
-        const java = exec("mvn clean test"/* , {cwd : javaPathCwd(testFolderId)} */)
-        let data = ""
+const runJavaTest = function (testFolderId, fileId, userId) {
+  return new Promise((resolve, reject) => {
+    const java = exec("mvn clean test", { cwd: javaPathCwd(testFolderId) });
+    let data = "";
 
-        java.stdout.on("data", (parts)=> {
-            data += parts
-        })
-        /* 
-        java.stderr.on("data", (parts) =>{
-            error += parts
-        }) */
+    java.stdout.on("data", (parts) => {
+      data += parts;
+    });
 
-       /*  java.stderr.on("data", (parts)=> {
-            console.log("error parts", parts, " ", parts.toString())
-            error += parts
-        }) */
+    java.on("close", async (code) => {
+      await switchCodeStatement(code);
+      return resolve();
+    });
 
-        java.on("close", (code) => {
-            let result = switchCodeStatement(code) 
-            return resolve(result) 
-        })
-            
-        function switchCodeStatement(code) {
-            switch (code) {
-                case 0:
-                    return rawJsonParser(data) //save to db
-                
-                case 1:
-                    return testFailResult(data) //sends the output to the user || outputs fail json object
+    async function switchCodeStatement(code) {
+      switch (code) {
+        case 0:
+          return await setPassingResult(data, fileId);
 
-                default:
-                    return defaultTestResult()//sends the output to the user || function returns "test did not run"
-            }
-        }
-    })
-}
+        case 1:
+          return await testFailResult(fileId, userId); //sends the output to the user || outputs fail json object
 
-const defaultTestResult = function () {
-    return {"test": "failed", "message" : "unknown reason"}
-}
+        default:
+          return await testFailResult(fileId, userId); //sends the output to the user || function returns "test did not run"
+      }
+    }
+  });
+};
 
-/** //DONE
- * @param {(string|number)} input - representation of test folder name 
- * @returns {string} - path of test project folder where is pom.xml
+/**
+ *
+ * @param {string} data - raw data from child process
+ * @returns {object}
  */
-export const javaPathCwd = function (input) {
-    return path.join(process.cwd(), `/java/tests/${input}/`)
-}
+export const rawJsonParser = function (data) {
+  const rawJson = rawData(data);
+  try {
+    return JSON.parse(rawJson);
+  } catch (error) {
+    console.log("Error while testing a task, task id: ");
+    throw new Error("Incorrect JSON format");
+  }
+};
 
 /**
  * Regex for mesh data
- * @returns {object} - representing test result 
  */
 export const rawData = function (data) {
-    return data.match(/\{"fail":\d+,"total":\d+,"pass":\d+\}/)[0]
-}
+  return data.match(/\{"fail":\d+,"total":\d+,"pass":\d+\}/)[0];
+};
 
-export const rawJsonParser = function (data) {
-    const rawJson = rawData(data)
-    try {
-        return JSON.parse(rawJson)
-    } catch (error) {
-        console.log("Error while testing a task, task id: ")
-        throw new Error("Incorrect JSON format") 
-    }
-}
+/**
+ * Runs when zero passed from child process
+ */
+const setPassingResult = async function (data, answerId) {
+  const result = rawJsonParser(data);
+  return await setAnswerStats(result, answerId);
+};
 
-const testFailResult = function(data) {
-    /* 
-        odkomentovat processcsdfsdfsdf
-        1. regext build errror
-        parse errror
-        return error 
-    */
-    console.log(data)
-    return new Error("BUILD FAILURE", data)
-    let result = {}
-    result.symbol = data.match(/symbol:\s+(.*)/)
-    result.location = data.match(/location:\s+(.*)/)
-    return result
-}
+/** //DONE
+ * @param {(string|number)} input - representation of test folder name
+ * @returns {string} - path of test project folder where is pom.xml
+ */
+export const javaPathCwd = function (input) {
+  return path.join(process.cwd(), `/java/tests/${input}/`);
+};
 
-export default runJavaTest
+const testFailResult = async function (answerId, userId) {
+  return await removeAnswer(userId, answerId);
+};
+
+export default runJavaTest;

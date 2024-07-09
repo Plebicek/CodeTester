@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev-server": "nodemon --inspect-brk=0.0.0.0 index.js",
-    "test" : "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",

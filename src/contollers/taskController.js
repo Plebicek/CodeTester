@@ -1,7 +1,7 @@
-import { getPureTask,  getTopicsTasks } from "../models/task.js";
+import { getPureTask, getTopicsTasks } from "../models/task.js";
 import path from "path";
 import dayjs from "dayjs";
-import {setTaskToQueue } from "../helper/queue.js";
+import { setTaskToQueue } from "../helper/queue.js";
 import getTest from "../models/test.js";
 export const JAVA_UPLOAD = path.join(process.cwd(), "/java/uploads/");
 export const JAVA_TEST = path.join(process.cwd(), "/java/tests/");
@@ -16,7 +16,7 @@ export async function viewTasks(req, res) {
     res.render("tasks", {
       topic: topic.topic_name,
       tasks: topic.tasks,
-      path: req.originalUrl,  
+      path: req.originalUrl,
     });
   } catch (err) {
     res.status(500).redirect("/");
@@ -24,34 +24,33 @@ export async function viewTasks(req, res) {
 }
 
 export async function viewTask(req, res) {
-  const errorMessageBadType = decodeURIComponent(req.query?.error || "")
+  const errorMessageBadType = decodeURIComponent(req.query?.error || "");
   try {
-    let task = await getPureTask(req.params.taskId)
-    task.task_due = dayjs(task.task_due).format("DD.MM. YYYY HH:mm:ss")
+    let task = await getPureTask(req.params.taskId);
+    task.task_due = dayjs(task.task_due).format("DD.MM. YYYY HH:mm:ss");
 
     res.render("task", {
-      stats : req.stats,
+      stats: req.stats,
       task: task,
       path: `${req.baseUrl}${req.path}`,
-      msg: { errUpload: req.query.msgUpload, badType : errorMessageBadType},
+      msg: { errUpload: req.query.msgUpload, badType: errorMessageBadType },
     });
   } catch (err) {
-    console.log("View task contoller ", err)
+    console.log("View task contoller ", err);
     res.status(500).redirect("/");
   }
 }
 
-export async function uploadSolution(req, res,next) {
-  const fileId = req.locals.answerId 
-  const userId = req.user.id
-  const testId = await getTest(req.params.taskId) 
-  console.log(testId)
+export async function uploadSolution(req, res, next) {
+  const fileId = req.locals.answerId;
+  const userId = req.user.id;
+  const testId = await getTest(req.params.taskId);
   try {
-    setTaskToQueue({fileId,userId,testId})
-    res.send("upload")
+    setTaskToQueue({ fileId, testId, userId });
+    res.send("upload");
   } catch (error) {
-    res.json({error})
-    next(error) 
+    res.json({ error });
+    next(error);
   }
   /*
   const taskId = parseInt(req.params.taskId);
@@ -89,5 +88,3 @@ export async function uploadSolution(req, res) {
   res.redirect(`${req.baseUrl}`);
 }
 */
-
-
