@@ -25,15 +25,14 @@ router.post(
   ]
 )
 
-router.use((err, req, res) => {
+router.use((err, req, res, next) => {
   let path = `${req.baseUrl}${req.path.replace("/upload", "")}`
     if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {
             return res.redirect(path)
         }
     }
-    console.log(err)
-    return res.redirect(req.get("referer")+`?error=${encodeURIComponent(err.message)}`)
+    return next()
 });
 
 

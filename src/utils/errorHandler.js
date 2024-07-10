@@ -9,7 +9,7 @@ export class ErrorMessage extends Error {
 
 
 
-export default function errorMiddleware(err,req,res, next) {
+export default function errorMiddleware(err,req,res, ) {
     switch (err.status) {
         case 404:
             log.info("page not existing")
