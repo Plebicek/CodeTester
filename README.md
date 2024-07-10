@@ -34,9 +34,9 @@ total: 14 days
 ## CODE
 
 1. - [x] Check if its not too late
-2. - [ ] Check or create new answer
+2. - [x] Check or create new answer
 3. - [x] Creates new answer
-4. - [ ] Displays if answer already exists
+4. - [x] Displays if answer already exists
 5. - [x] Save file if its .zip
 6. - [ ] Dont save if its not zip and send back message
 7. - [x] Add to queue

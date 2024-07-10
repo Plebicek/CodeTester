@@ -36,7 +36,7 @@ router.route("/groups/:groupId/grade/:gradeId/topic/:topicId").get(dashTask);
 router.route("/tests").get(dashTest);
 
 router.route("/tests/:taskId").get(dashTestUpload)
-  .post(upload.single("file"), dashTestUpload); 
+  .post(upload, dashTestUpload); 
 // === ANSWERS ===
 router
   .route("/groups/:groupId/grade/:gradeId/topic/:topicId/task/:taskId")

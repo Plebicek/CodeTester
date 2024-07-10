@@ -1,6 +1,8 @@
 import multer from "multer"
 import path from "node:path";
 import { configDotenv } from "dotenv";
+import util from "util"
+
 configDotenv({path : "../.env"})
 
 const fileDest = () => (path.join(process.cwd(), "/java/uploads"))
@@ -42,6 +44,6 @@ const createStorage = function () {
 }
 
 const storage = createStorage() 
-const upload = multer({storage, fileFilter:multerFileFilter, limits : setFileLimit()})
-
-export default upload
+const upload = multer({storage, fileFilter : multerFileFilter, limits : { fileSize : setFileLimit()}}).single("file")
+const uploadAsync = util.promisify(upload)
+export default uploadAsync 
