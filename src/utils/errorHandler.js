@@ -1,13 +1,11 @@
 import log from "./logger.js";
 export class ErrorMessage extends Error {
-    constructor(message = "", status = 500, fatal = 0) {
-        super(message)
-        this.status = status;
-        this.fatal = fatal
-    }
+  constructor(message = "", status = 500, fatal = 0) {
+    super(message);
+    this.status = status;
+    this.fatal = fatal;
+  }
 }
-
-
 
 export default function errorMiddleware(err,req,res, ) {
     switch (err.status) {
@@ -21,3 +19,4 @@ export default function errorMiddleware(err,req,res, ) {
     res.end(err.message)
 
 }
+

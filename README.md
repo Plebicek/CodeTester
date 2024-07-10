@@ -1,26 +1,35 @@
 ### ToDo list: Error Handler Tests
-- [ ] Accept only *.zip
+
+- [ ] Accept only \*.zip
 - [ ] Class Queue
 - [ ] FIX: Socket closed unexpectedly Redis
-- [ ] ADD: logging 
+- [ ] ADD: logging
 - [ ] ADD: log file
 - [ ] Docker add nonroot user
 - [ ] Docker network
 - [x] Docker compose dev mode
 
-# Install 
+# Install
+
 //ToDo: prod + dev setup
+
 # Run
+
 The right way to run CodeTester in docker.
+
 ## Run prod
+
 //ToDo
+
 ## Run dev mode
+
 Be in projects root folder <br/>
 `docker compose -f compose-dev.yaml up -d`
 
 # DEADLINES
+
 29.7 12:00
-total: 14 days 
+total: 14 days
 
 ## CODE
 
@@ -41,9 +50,11 @@ total: 14 days
 14. - [ ] Docker add Healthcheck (autorestart)
 
 ## Word
+
 1. Describe program Architecture (main app, queue system + childprocess)
-2. Describe code that process testing function (multer, queue system, childprocess) 
+2. Describe code that process testing function (multer, queue system, childprocess)
 3. Step by step installing and running the via Docker
 
 ## Prezentation
+
 ## Poster

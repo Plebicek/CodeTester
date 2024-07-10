@@ -3,12 +3,12 @@ const prisma = new PrismaClient();
 
 export async function setAnswerStats(stats, answerId) {
   if (!stats) {
-    return; //
+    return null;
   }
   try {
     return prisma.answers.update({
-      where : {
-        answer_id : parseInt(answerId)
+      where: {
+        answer_id: parseInt(answerId),
       },
       data: {
         fails: parseInt(stats?.fail),
@@ -34,8 +34,8 @@ export async function checkExistingAnswer(taskId, userId) {
     });
     if (isAnswer) {
       return isAnswer;
-    } 
-    return false
+    }
+    return false;
   } catch (err) {
     return new Error("Error occured in CheckExistsingAnswer");
   }
@@ -51,25 +51,25 @@ export async function createAnswer(taskId, userId) {
     });
     return answer;
   } catch (err) {
-    console.log("Error occured in createAnswer",err)
-    return false
+    console.log("Error occured in createAnswer", err);
+    return false;
   }
 }
 
 export async function createOverTimeAnswer(userId, taskId) {
   try {
     return await prisma.answers.create({
-      data : {
-        task_id : parseInt(taskId),
-        user_id : parseInt(userId),
-        pass : 0,
-        fails : 1,
-        answer_overtime : true,
-      }
-    })  
+      data: {
+        task_id: parseInt(taskId),
+        user_id: parseInt(userId),
+        pass: 0,
+        fails: 1,
+        answer_overtime: true,
+      },
+    });
   } catch (err) {
-    console.log(err)
-    return err
+    console.log(err);
+    return err;
   }
 }
 
@@ -120,45 +120,45 @@ export async function remoteIdFromQueue(answerId) {
   }
 }
 
-export async function getAnswerStatsByAnswerId(id) { 
+export async function getAnswerStatsByAnswerId(id) {
   if (!id) {
-    return null
+    return null;
   }
-  let answerId = parseInt(id)
+  let answerId = parseInt(id);
   try {
     let answer = await prisma.answer_stats.findFirst({
-      where : {
-        answer_id : answerId
+      where: {
+        answer_id: answerId,
       },
-      select : {
-        pass : true,
-        fails : true,
-        answer_id : true,
-        answer_stat_id : true,
-        answer_overtime : true,
-      }
-    })
-    return answer
+      select: {
+        pass: true,
+        fails: true,
+        answer_id: true,
+        answer_stat_id: true,
+        answer_overtime: true,
+      },
+    });
+    return answer;
   } catch (err) {
-    console.log("get getAnswerStats error occured " + err)
-    return err
+    console.log("get getAnswerStats error occured " + err);
+    return err;
   }
 }
 
 export async function removeAnswer(userId, answerId) {
-  console.log("users and tatsks",userId, answerId)
+  console.log("users and tatsks", userId, answerId);
   if (!userId || !answerId) {
-    return null
+    return null;
   }
   try {
     return await prisma.answers.delete({
-      where : {
-        user_id : parseInt(userId),
-        answer_id : parseInt(answerId)
-      }
-    })
+      where: {
+        user_id: parseInt(userId),
+        answer_id: parseInt(answerId),
+      },
+    });
   } catch (err) {
-    console.log(err)
-    return err
+    console.log(err);
+    return err;
   }
 }
