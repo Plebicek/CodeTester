@@ -40,14 +40,17 @@ total: 14 days
 5. - [x] Save file if its .zip
 6. - [x] Dont save if its not zip and send back message
 7. - [x] Add to queue
-8. - [x] Run java test
-9. - [x] Parse results
-10. - [x] Save results to the db
-11. - [ ] Remove main
-12. - [x] Child executes when everything is correct
-13. - [ ] Child handle wrong settings
+8. - [x] Render responose 
+9. - [x] Run java test
+10. - [x] Parse results
+11. - [x] Save results to the db
+12. - [ ] Remove main
+13. - [x] Child executes when everything is correct
+14. - [ ] Child handle wrong settings
+- [ ] remove answer when error in process occure 
+- [ ] Add logger when tests starts (who and when) 
 
-14. - [ ] Docker add Healthcheck (autorestart)
+15. - [ ] Docker add Healthcheck (autorestart)
 
 ## Word
 
