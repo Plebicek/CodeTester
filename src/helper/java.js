@@ -22,10 +22,10 @@ const runJavaTest = function (testFolderId, fileId, userId) {
           return await setPassingResult(data, fileId);
 
         case 1:
-          return await testFailResult(fileId, userId); //sends the output to the user || outputs fail json object
+          return await testFailResult(fileId, userId); 
 
         default:
-          return await testFailResult(fileId, userId); //sends the output to the user || function returns "test did not run"
+          return await testFailResult(fileId, userId); 
       }
     }
   });
