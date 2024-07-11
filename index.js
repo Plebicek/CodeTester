@@ -5,11 +5,10 @@ import { createClient } from "redis";
 import taskQueueInit from "./src/helper/queue.js";
 dotenv.config({ path: "./src/.env" });
 
-export let redisClient;
-
+let redisClient
 let redisServer = createClient({url : process.env.REDIS_URL});
 
-const server = http.createServer(app);
+export const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 async function appInit() {
@@ -30,3 +29,5 @@ async function appInit() {
 }
 
 appInit();
+
+export default redisClient;
