@@ -55,7 +55,6 @@ const removeTestMainFolder = async function (input) {
  * @param testFolder - folder indicator of the test project
  */
 export const moveZipToTestFolder = async function (filename, testFolder) {
-  //move from uploads to folder /test/${1}/src/here.zip
   try {
     await copyFile(uploadFolderPath(filename), testFolderPath(testFolder));
     return `${testFolderPath(testFolder)}`;

@@ -43,13 +43,12 @@ export async function checkExistingAnswer(taskId, userId) {
 
 export async function createAnswer(taskId, userId) {
   try {
-    const answer = await prisma.answers.create({
+    return await prisma.answers.create({
       data: {
         task_id: parseInt(taskId),
         user_id: parseInt(userId),
       },
     });
-    return answer;
   } catch (err) {
     console.log("Error occured in createAnswer", err);
     return false;
