@@ -38,7 +38,7 @@ total: 14 days
 3. - [x] Creates new answer
 4. - [x] Displays if answer already exists
 5. - [x] Save file if its .zip
-6. - [ ] Dont save if its not zip and send back message
+6. - [x] Dont save if its not zip and send back message
 7. - [x] Add to queue
 8. - [x] Run java test
 9. - [x] Parse results
