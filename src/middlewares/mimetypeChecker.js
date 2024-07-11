@@ -1,7 +1,7 @@
 import { removeAnswer } from "../models/answer.js"
 import upload from "../utils/upload.js"
 
-async function onlyZipMiddleware (req,res,next) {
+async function multerHandler (req,res,next) {
     const redirect = function (url,topic,task) {
         return res.redirect(
             `${url}/topic/${topic}/task/${task}?error=` +
@@ -20,4 +20,4 @@ async function onlyZipMiddleware (req,res,next) {
     }
 }
 
-export default onlyZipMiddleware 
+export default multerHandler 

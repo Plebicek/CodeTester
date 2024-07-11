@@ -5,7 +5,7 @@ import {
 } from "../contollers/taskController.js";
 import checkOrCreateAnswer from "../middlewares/fileSaver.js";
 import { checkAnswerOvertime } from "../middlewares/taskMiddle.js";
-import onlyZipMiddleware from "../middlewares/mimetypeChecker.js";
+import multerHandler from "../middlewares/mimetypeChecker.js";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.post(
   "/topic/:topicId/task/:taskId/upload",
   [
     checkOrCreateAnswer, 
-    onlyZipMiddleware, 
+    multerHandler, 
     uploadSolution
   ]
 )
