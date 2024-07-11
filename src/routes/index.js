@@ -8,12 +8,14 @@ import gradeRouter from "./gradeRouter.js";
 import taskRouter from "./taskRouter.js";
 import jwtAuth, { isAdmin } from "../middlewares/jwtAuth.js";
 import adminRouter from "./adminRouter.js";
+import sysRouter from "./systemRoute.js";
 
 const logger = morgan("tiny")
 
 const router = Router();
 
 router.use(logger)
+router.use("/sys/",sysRouter)
 router.use((req,res,next)=>{req.locals = {};next()})
 
 router.use("/", userRouter);
