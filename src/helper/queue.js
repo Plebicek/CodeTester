@@ -26,9 +26,9 @@ const taskQueueProcess = async function (job, done) {
   const { fileId, testId, userId } = job.data;
   try {
     await runProcess({
-      filename: fileId,
-      testFolder: testId,
-      userId: userId,
+      fileId,
+      testId,
+      userId,
     });
     return done();
   } catch (err) {

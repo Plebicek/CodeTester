@@ -37,6 +37,20 @@ export const testFolderPath = function (input) {
 };
 
 /**
+ * Removes main folder after runned tests 
+ * @param {(string,number)} input - id of the test folder 
+ */
+const removeTestMainFolder = async function (input) {
+  const folderPath = `${testPath() + input}/main` 
+  try {
+    await rm(folderPath, {force : true, recursive : true})
+  } catch (error) {
+    console.log("Error when removing main folder after runned tests")
+    throw error 
+  } 
+}
+
+/**
  * @param filename - name of the file to be moved
  * @param testFolder - folder indicator of the test project
  */
@@ -64,19 +78,18 @@ export const unzipFolder = async function (testFolder) {
 };
 
 /**
- * @param {string} filename - id.zip name of the file
- * @param {(string|number)} - id of the test folder
- * @returns {object} - results of the test
+ * @param {string} fileId - id.zip name of the file
+ * @param {(string|number)} testId - id of the test folder
  */
-const runProcess = async function ({ filename, testFolder, userId }) {
+const runProcess = async function ({ fileId, testId, userId }) {
   try {
-    await moveZipToTestFolder(`${filename}.zip`, testFolder);
-    await unzipFolder(testFolder);
-    await rm(testFolderPath(testFolder), { force: true });
-    return await runJavaTest(testFolder, filename, userId);
+    await moveZipToTestFolder(`${fileId}.zip`, testId);
+    await unzipFolder(testId);
+    await rm(testFolderPath(testId), { force: true });
+    await runJavaTest(testId, fileId, userId);
+    await removeTestMainFolder(testId) 
   } catch (error) {
-    console.log("error while processing test ");
-    return error;
+    console.log("error while processing test ", error);
   }
 };
 
