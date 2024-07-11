@@ -47,44 +47,9 @@ export async function uploadSolution(req, res, next) {
   const testId = await getTest(req.params.taskId);
   try {
     setTaskToQueue({ fileId, testId, userId });
-    res.send("upload");
+    res.status(200).redirect(req.baseUrl) 
   } catch (error) {
-    res.json({ error });
     next(error);
   }
-  /*
-  const taskId = parseInt(req.params.taskId);
-  const userId = parseInt(req.user.id);
-  let userAnswer = await createAnswer(taskId, userId);
-  if (userAnswer instanceof Error) {
-    return res.status(500).json("While sending an asnwer error has occured");
-    }
-  rename(
-    JAVA_UPLOAD + req.file.originalname,
-    JAVA_UPLOAD + userAnswer.answer_id + ".zip",
-    (err) => {if (err) console.log(err)});
-  await addTaskToQueue(userAnswer);
-	console.log("added to queue")
-  res.redirect(`${req.baseUrl}`); */
 }
-/*
-export async function uploadSolution(req, res) {
-  
-  3. upload querz id, send it to request next
-  4. this func, add to queue
-  5. res.send("added to queue")??
-  
-  
-  let userAnswer = await createAnswer(taskId, userId);
-  if (userAnswer instanceof Error) {
-    return res.status(500).json("While sending an asnwer error has occured");
-  }
-  rename(
-    JAVA_UPLOAD + req.file.originalname,
-    JAVA_UPLOAD + userAnswer.answer_id + ".zip",
-    (err) => {if (err) console.log(err)});
-  await addTaskToQueue(userAnswer);
-	console.log("added to queue")
-  res.redirect(`${req.baseUrl}`);
-}
-*/
+

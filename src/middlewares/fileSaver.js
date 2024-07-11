@@ -33,7 +33,7 @@ export default async function checkOrCreateAnswer(req, res, next) {
    * @returns {string} url of redirect
    */
   function redirectExistingAnswer(url,topic,task) {
-    return res.redirect(
+    return res.status(403).redirect(
       `${url}/topic/${topic}/task/${task}?msgUpload=` +
         encodeURIComponent("File uz byl odevzdan")
     );

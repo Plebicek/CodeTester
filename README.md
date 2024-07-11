@@ -48,7 +48,6 @@ total: 14 days
 13. - [x] Child executes when everything is correct
 14. - [x] Child handle wrong settings
 - [x] remove answer when error in process occure 
-- [ ] Add logger when tests starts (who and when) 
 
 15. - [ ] Docker add Healthcheck (autorestart)
 

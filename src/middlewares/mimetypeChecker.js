@@ -3,7 +3,7 @@ import upload from "../utils/upload.js"
 
 async function multerHandler (req,res,next) {
     const redirect = function (url,topic,task) {
-        return res.redirect(
+        return res.status(406).redirect(
             `${url}/topic/${topic}/task/${task}?error=` +
             encodeURIComponent("Nepodporovaný formát souboru, pouze .zip")
         );
