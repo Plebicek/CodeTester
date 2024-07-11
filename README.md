@@ -44,7 +44,7 @@ total: 14 days
 9. - [x] Run java test
 10. - [x] Parse results
 11. - [x] Save results to the db
-12. - [ ] Remove main
+12. - [x] Remove main
 13. - [x] Child executes when everything is correct
 14. - [ ] Child handle wrong settings
 - [ ] remove answer when error in process occure 
