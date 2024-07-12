@@ -35,6 +35,7 @@ const createStorage =function () {
         filename : async function (req,file,cb) {
             const taskId = req.params.taskId
             const {test_id} = await createTest(taskId)
+            req.locals.testId = test_id
             return cb(null,defineFileName(test_id))
         }
     })
