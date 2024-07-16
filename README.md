@@ -49,7 +49,7 @@ total: 14 days
 14. - [x] Child handle wrong settings
 - [x] remove answer when error in process occure 
 
-15. - [ ] Docker add Healthcheck (autorestart)
+15. - [x] Docker add Healthcheck (autorestart)
 
 ## Word
 
