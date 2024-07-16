@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  app:    
+    build:
+      context: .
+      target: prod
+    environment:
+      - REDIS_HOST=redis
+    labels:
+      health-app: true
+    healthcheck:
+      test: "curl -f http://localhost:3000/sys/health"
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      - redis
+    volumes:
+      - ./java:/java/
+    ports:
+      - "3000:3000"
+
+  redis:
+    image: redis:7.2.4-alpine
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: health-app
+      AUTOHEAL_INTERVAL: 15
+      AUTOHEAL_START_PERIOD: 20
+      CURL_TIMEOUT: 15 
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  redis-data:
+  java:
+  autoheal:
