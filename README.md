@@ -9,7 +9,7 @@ Is important to have docker installed.
 git clone https://github.com/Plebicek/CodeTester.git
 ```
 #### 2. Set production enviroments
-_Create '.env' file in 'src' folder._
+_Create `.env` file in `src` folder._
 ```env
 PORT=3000 #HTTP server port
 DATABASE_URL= #"mysql://DB_USER:DB_PASSWORD@DB_HOST:3306/DB_NAME" 
@@ -27,7 +27,7 @@ _Be in the root of the project folder._
 docker compose build 
 ```
 #### 4. Run the application 
-_Check if redis, app and autoheal are running._
+_Be in the root of the project folder._
 ```sh
 docker compose up -d  
 ```
