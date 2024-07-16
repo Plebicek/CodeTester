@@ -94,7 +94,7 @@ export async function loginUser(req, res) {
         return res.redirect("/");
       }
     }
-    res.status(301).json("wrong credentials");
+    res.status(301).redirect("/")
   } catch (err) {
     console.log(err);
     res.status(500).json("internal Server error");
