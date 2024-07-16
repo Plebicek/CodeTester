@@ -44,7 +44,6 @@ export async function checkAnswerOvertime(req,res,next) {
             stats.total = stats.pass + stats.fails
             stats.percentage = (stats.pass / stats.total)*100
             if (isNaN(stats.percentage) || !isFinite(stats.percentage)) {
-                console.log("is nonoe")
                 stats.percentage = 0
             }
             req.stats = stats 
