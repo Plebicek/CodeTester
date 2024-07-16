@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import app from "./src/app.js";
 import { createClient } from "redis";
 import taskQueueInit from "./src/helper/queue.js";
+import testQueueInit from "./src/helper/test_queue.js";
 dotenv.config({ path: "./src/.env" });
 
 let redisClient
@@ -15,6 +16,7 @@ async function appInit() {
   try {
     redisClient = await redisServer.connect();
     taskQueueInit()
+    testQueueInit()
     if (redisClient) {
       redisClient.on("error", (error) => {
         console.log("Redis client error: ", error);

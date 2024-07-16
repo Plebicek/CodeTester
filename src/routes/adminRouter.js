@@ -11,7 +11,7 @@ import {
   dashTestUpload,
   deleteUserAnswer,
 } from "../contollers/adminController.js";
-import upload from "../utils/upload.js";
+import upload from "../helper/test_upload.js";
 
 let router = Router();
 
@@ -35,9 +35,11 @@ router.route("/groups/:groupId/grade/:gradeId/topic/:topicId").get(dashTask);
 // === TESTS ===
 router.route("/tests").get(dashTest);
 
-router.route("/tests/:taskId").get(dashTestUpload)
-  .post(upload, dashTestUpload); 
-// === ANSWERS ===
+router.route("/tests/:taskId")
+  .get(dashTestUpload)
+  .post(upload,dashTestUpload); 
+
+  // === ANSWERS ===
 router
   .route("/groups/:groupId/grade/:gradeId/topic/:topicId/task/:taskId")
   .get(dashAnswer);

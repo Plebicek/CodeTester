@@ -7,14 +7,12 @@ import {
   getTasks,
   getAnswers,
   getTestsAndTopics,
-  createTest,
   deleteAnswer,
 } from "../models/admin.js";
 import { JAVA_UPLOAD } from "./taskController.js";
 import { navigation } from "../utils/dashUtils.js";
-import { addTestToQueue } from "../utils/testQueue.js";
-import {rename, rmSync} from "node:fs"
-import { Prisma } from "@prisma/client";
+import {setTaskToTestQueue} from "../helper/test_queue.js";
+import {rmSync} from "node:fs"
 
 // === USERS ===
 export async function dashUsers(req, res) {
@@ -120,27 +118,19 @@ export async function dashTest(req, res) {
 export async function dashTestUpload(req, res) {
   const path = `${req.baseUrl}${req.path}`
   const current = "Tests";
-  const taskId = req.params.taskId;
   
   if (req.method == "POST") {
-    let test = await createTest(taskId)
-    console.log("created test",test)
-    rename(
-      JAVA_UPLOAD + req.file.originalname,
-      JAVA_UPLOAD + "test_"+test.test_id + ".zip",
-      (err) => {
-        if (err) console.log(err);
-      }
-    ); 
-    await addTestToQueue({test_id : test.test_id, task_id : parseInt(taskId) })
+    setTaskToTestQueue({testId : req.locals.testId}) 
     return res.redirect(`${req.baseUrl}/tests`)
   }
+
   res.render("admin/pre-upload", {
     sideNav: navigation,
     current: current,
     path
   });
 }
+
 // === ANSWERS ===
 export async function dashAnswer(req, res) {
   let { taskId } = req.params;
@@ -149,10 +139,10 @@ export async function dashAnswer(req, res) {
   let answers = await getAnswers(parseInt(taskId));
   console.log(answers)
   
-  
   answers.forEach((answer) => {
     answer.percentage = Math.ceil((answer.pass / (answer.fails + answer.pass)) * 100);
   });
+
   res.render("admin/answers", {
     sideNav: navigation,
     current: current,
