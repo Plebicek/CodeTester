@@ -1,5 +1,5 @@
 import Bull from "bull";
-import { redisClient } from "./../../index.js";
+import redisClient from "./../../index.js";
 import { JAVA_TEST, JAVA_UPLOAD } from "../contollers/taskController.js";
 import decompress from "decompress";
 import { removeTestUpload, updateTest } from "../models/admin.js";

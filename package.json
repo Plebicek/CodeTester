@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-server": "nodemon index",
+    "dev-server": "nodemon --inspect-brk=0.0.0.0 index.js",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
@@ -26,6 +27,7 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.18.0",
+    "fs-extra": "^11.2.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
@@ -43,11 +45,14 @@
     "concurrently": "^8.2.2",
     "connect-livereload": "^0.6.1",
     "eslint": "^8.56.0",
+    "jest": "^29.7.0",
     "livereload": "^0.9.3",
     "nodemon": "^3.1.0",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
     "prisma": "^5.12.1",
+    "superagent": "^9.0.2",
+    "supertest": "^7.0.0",
     "tailwindcss": "^3.4.1"
   }
 }

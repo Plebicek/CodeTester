@@ -1,15 +1,13 @@
 import log from "./logger.js";
 export class ErrorMessage extends Error {
-    constructor(message = "", status = 500, fatal = 0) {
-        super(message)
-        this.status = status;
-        this.fatal = fatal
-    }
+  constructor(message = "", status = 500, fatal = 0) {
+    super(message);
+    this.status = status;
+    this.fatal = fatal;
+  }
 }
 
-
-
-export default function errorMiddleware(err,req,res, next) {
+export default function errorMiddleware(err,req,res, ) {
     switch (err.status) {
         case 404:
             log.info("page not existing")
@@ -21,3 +19,4 @@ export default function errorMiddleware(err,req,res, next) {
     res.end(err.message)
 
 }
+

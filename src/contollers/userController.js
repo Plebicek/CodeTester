@@ -12,7 +12,6 @@ export async function createOrFindByOAuth(req, res) {
   if (req.isAuthenticated()) {
     let isUser = await findUserByOAuth(id);
     if (isUser) {
-	console.log(isUser)
       let jwt_token = jwt.sign(
         { id: isUser.user_id, role: isUser.user_role },
         process.env.JWT_TOKEN,
@@ -30,12 +29,12 @@ export async function createOrFindByOAuth(req, res) {
         console.log("while creating user in oauth error occured");
         return res.redirect("/login/oauth");
       }
-      if (user_job_title) {
+      /* if (user_job_title) {
       	let checkGroup = await checkGroup(createUser.user_id, jobTitle);
       	if (!checkGroup) {
         	console.log("err createing group" + checkGroup);
       	}
-      }
+      } */
       let jwt_token = jwt.sign(
         { id: createUser.user_id, role: createUser.user_role },
         process.env.JWT_TOKEN,
@@ -95,7 +94,7 @@ export async function loginUser(req, res) {
         return res.redirect("/");
       }
     }
-    res.status(301).json("wrong credentials");
+    res.status(301).redirect("/")
   } catch (err) {
     console.log(err);
     res.status(500).json("internal Server error");
