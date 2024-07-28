@@ -5,6 +5,7 @@ services:
     build:
       context: .
       target: prod
+    network_mode: "host"
     environment:
       - REDIS_HOST=redis
     labels:
