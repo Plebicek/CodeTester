@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+/**
+ * @param {object} stats - pass, fail, error, total
+ * @param {Number} answerId
+ */
 export async function setAnswerStats(stats, answerId) {
   if (!stats) {
     return null;
@@ -13,6 +17,7 @@ export async function setAnswerStats(stats, answerId) {
       data: {
         fails: parseInt(stats?.fail),
         pass: parseInt(stats?.pass),
+        answer_total: parseInt(stats?.total)
       },
     });
   } catch (err) {
@@ -63,6 +68,7 @@ export async function createOverTimeAnswer(userId, taskId) {
         user_id: parseInt(userId),
         pass: 0,
         fails: 1,
+        answer_total: 0,
         answer_overtime: true,
       },
     });

@@ -1,67 +1,51 @@
 import { exec } from "child_process";
 import path from "path";
-import { setAnswerStats, removeAnswer } from "../models/answer.js";
+import { setAnswerStats } from "../models/answer.js";
 
-const runJavaTest = function (testFolderId, fileId, userId) {
-  return new Promise((resolve, reject) => {
-    const java = exec("mvn clean test", { cwd: javaPathCwd(testFolderId) });
-    let data = "";
-
-    java.stdout.on("data", (parts) => {
-      data += parts;
+const runJavaTest = function (testFolderId, fileId) {
+  return new Promise((res, rej) => {
+    let result = '';
+    const java = exec("mvn clean test", { //run test
+      cwd: javaPathCwd(testFolderId)
     });
 
-    java.on("close", async (code) => {
-      await switchCodeStatement(code);
-      return resolve();
+    java.stdout.on("data", (data) => {
+      result += data; //fetch data
     });
 
-    async function switchCodeStatement(code) {
-      switch (code) {
-        case 0:
-          return await setPassingResult(data, fileId);
+    java.on("close", () => {
+      let match;
 
-        case 1:
-          return await testFailResult(fileId, userId); 
-
-        default:
-          return await testFailResult(fileId, userId); 
+      try {
+        match = result.match(/Tests run: \d+, Failures: \d+, Errors: \d+/).pop(); //last regex match
+      } catch (err) {
+        return rej(new Error("unknown zero match err " + err));
       }
-    }
-  });
-};
 
-/**
- *
- * @param {string} data - raw data from child process
- * @returns {object}
- */
-export const rawJsonParser = function (data) {
-  const rawJson = rawData(data);
-  try {
-    return JSON.parse(rawJson);
-  } catch (error) {
-    console.log("Error while testing a task, task id: ");
-    throw new Error("Incorrect JSON format");
-  }
-};
+      let errMatch = result.match(/Errors: \d+/).pop()
+      if (errMatch > 0) {
+        return rej(new Error("test ran error with value more than 0"))
+      }
 
-/**
- * Regex for mesh data
- */
-export const rawData = function (data) {
-  return data.match(/\{"fail":\d+,"total":\d+,"pass":\d+\}/)[0];
-};
+      return res(match); //return match
+    });
+  })
 
-/**
- * Runs when zero passed from child process
- */
-const setPassingResult = async function (data, answerId) {
-  const result = rawJsonParser(data);
-  return await setAnswerStats(result, answerId);
-};
+    .then(async (value) => {
+      const stats = prepareStats(value)
+      return await setAnswerStats(stats, fileId)
+    });
 
-/** //DONE
+}
+
+function prepareStats(data) {
+  const numbers = data.match(/\d+/g);
+  const [total, fail, error] = numbers.map(Number); //depands on order
+  const stats = { total, fail, error, pass: (total - fail - error) };
+  return stats
+}
+
+/** 
  * @param {(string|number)} input - representation of test folder name
  * @returns {string} - path of test project folder where is pom.xml
  */
@@ -69,8 +53,5 @@ export const javaPathCwd = function (input) {
   return path.join(process.cwd(), `/java/tests/${input}/`);
 };
 
-const testFailResult = async function (answerId, userId) {
-  return await removeAnswer(userId, answerId);
-};
 
 export default runJavaTest;

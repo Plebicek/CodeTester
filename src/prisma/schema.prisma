@@ -17,6 +17,7 @@ model answers {
   fails           Int?      @default(0)
   pass            Int?      @default(0)
   answer_overtime Boolean?
+  answer_total    Int?
   tasks           tasks     @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
   users           users     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
 
