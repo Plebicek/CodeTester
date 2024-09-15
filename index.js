@@ -7,7 +7,7 @@ import testQueueInit from "./src/helper/test_queue.js";
 dotenv.config({ path: "./src/.env" });
 
 let redisClient
-let redisServer = createClient({url : process.env.REDIS_URL});
+let redisServer = createClient({ url: process.env.REDIS_URL, socket: { keepAlive: true }, pingInterval: 5000 });
 
 export const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
@@ -15,13 +15,11 @@ const PORT = process.env.PORT || 3000;
 async function appInit() {
   try {
     redisClient = await redisServer.connect();
+    redisClient.on("error", (err) => {
+      console.log(`Redis error occurs: ${err}`)
+    })
     taskQueueInit()
     testQueueInit()
-    if (redisClient) {
-      redisClient.on("error", (error) => {
-        console.log("Redis client error: ", error);
-      });
-    }
     server.listen(PORT, function () {
       console.log(`SERVER RUNNING... http://localhost:${PORT}/`);
     });
