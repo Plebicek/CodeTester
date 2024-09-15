@@ -90,6 +90,7 @@ const runProcess = async function ({ fileId, testId, userId }) {
     await removeTestMainFolder(testId)
   } catch (error) {
     console.log("error while processing test ", error);
+    await removeTestMainFolder(testId)
     await removeAnswer(userId, fileId)
   }
 };
