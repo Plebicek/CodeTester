@@ -20,7 +20,6 @@ const defineFileName = function (req) {
  * Checks if file is compressed 
  */
 const multerFileFilter = function (req, file, cb) {
-    console.log(file)
     if (file.mimetype != 'application/x-zip-compressed') {
         return cb(new Error("This file type is not supported, use .zip"))
     }
