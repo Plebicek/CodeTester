@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "name": "codetester-error",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "dependencies": {
+    "codetester-logger": "file:../logger"
+  }
+}
