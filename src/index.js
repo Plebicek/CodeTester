@@ -1,14 +1,17 @@
 import { createServer } from "http"
-import RedisService from "./queue/index.js"
-import config from "./config.js"
-import logger from "codetester-logger"
-import App from "./web/app.js"
-import AppError from "codetester-error"
+import Config from "./config.js"
+import WebService from "./web/app.js"
 
-let redisService = undefined
 
 async function main() {
-    const server = createServer(App)
+
+
+    const web = new WebService(Config.web)
+    const server = createServer(web.getApp())
+    server.listen(Config.web.port)
+
+
+    /* const server = createServer(App)
     logger.info("============= APP INIT ============")
     if (process.env.NODE_ENV === "development") {
         logger.warn("=============          ============")
@@ -34,9 +37,9 @@ async function main() {
         server.listen(config.prod.web.port, () => {
             logger.info(`[WEB] LISTENNING PORT ${config.prod.web.port}`)
         })
-    }
+    } */
 }
 
-export default redisService
+/* export default redisService */
 
 main()

@@ -1,7 +1,6 @@
 import { createClient } from "redis"
-import logger from "codetester-logger"
-
-export default class RedisService {
+import Bull from "bull"
+/* export default class QueueService {
     constructor(url) {
         if (!url) throw new Error("RedisService parameter URL is not specified")
         try {
@@ -32,5 +31,21 @@ export default class RedisService {
         throw new Error()
     }
 }
+ */
+
+class QueueService {
+    constructor(config) {
+        this.queue
+        this.config = config
+        this.client
+    }
+
+    async _init() {
+        this.client = createClient({ url: this.config.url, socket: { keepAlive: true } })
+        await this.client.connect()
+        this.queue = new Bull("task", this.config.url, { limiter: { max: this.config.bull.processLimit, duration: this.config.bull.maxDuration } })
+
+    }
 
 
+}

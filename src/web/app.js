@@ -1,20 +1,44 @@
 import express from "express"
-import logginHandler from "./helper/loggingHandler.js"
 import helmet from "helmet"
-import { join } from "path"
 
-const app = express()
+export default class WebService {
+    constructor(config) {
+        this.app = express()
+        this.config = config
+        this._init()
+    }
 
-app.use(helmet())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+    _init() {
+        if (!this.config) throw new Error("WebService Configure is not defined")
+        this._initMiddlewares()
+        this._initRoutes()
 
-app.use(logginHandler)
+    }
+
+    _initRoutes() {
+        this.app.get("/", (_, res) => {
+            res.send("hello")
+        })
+        this.app.use("/", (_, res) => res.send("wrong url"))
+    }
+
+    _initMiddlewares() {
+        this.app.use(helmet())
+        this.app.use(express.urlencoded({ extended: true }))
+        this.app.use(express.json())
+    }
+
+    getApp() {
+        return this.app
+    }
+}
+
+
+/* app.use(logginHandler)
 
 
 app.set("views", join(process.cwd(), "./../public/sites/"))
 app.set("view engine", "ejs")
 
 app.use("/", (req, res) => { res.render("index") })
-
-export default app
+ */
