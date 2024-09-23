@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   app:    
     build: 
@@ -16,7 +14,6 @@ services:
         target: /app/
     ports:
       - "3000:3000" 
-      - "9229:9229"  
 
   redis:
     image: redis:7.2.4-alpine
