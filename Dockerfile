@@ -16,4 +16,4 @@ COPY package*.json /app/
 RUN npm install
 COPY . .
 RUN npm run generate-db
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "dev-server" ]
