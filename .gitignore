@@ -1,5 +1,7 @@
 node_modules
 .env
+.env.production
+db_data/*
 java/uploads/*.zip
 java/tests/
 
