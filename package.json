@@ -5,13 +5,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-server": "nodemon --inspect-brk=0.0.0.0 index.js",
+    "debug": "DEBUG=express:* node ./src/index.js",
+    "dev-server": "npx dotenv -e .env.development nodemon  ./src/index.js",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "dev-ui": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
     "generate-db": "cd src && npx prisma generate",
-    "push-db": "cd src && npx prisma db push"
+    "push-db": "cd src && npx prisma db push",
+    "db-push-dev" : "npx dotenv -e .env.development npx prisma db push "
   },
   "author": "Vojtěch Farkas",
   "license": "ISC",
@@ -24,7 +26,8 @@
     "dayjs": "^1.11.10",
     "decompress": "^4.2.1",
     "dotenv": "^16.4.1",
-    "ejs": "^3.1.9",
+    "dotenv-cli": "^7.4.2",
+    "ejs": "^3.1.10",
     "express": "^4.18.2",
     "express-session": "^1.18.0",
     "fs-extra": "^11.2.0",

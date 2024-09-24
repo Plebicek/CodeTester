@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./partials/head.ejs') %>
+</head>
+<body class="<%- include('./partials/body') %>">
+    <%- include("./partials/navbar.ejs") %>
+    <main class="flex flex-col items-center lg:min-h-467 gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:py-50px lg:mt-36 bg-bg-second rounded-main">
+        <% if (grades.length > 0) { %>
+            <% grades.forEach(function(grade) { %>
+                <% if(grade.grades.grade_show) { %>
+                    <a href="/grade/<%= grade.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-light rounded-main ">
+                        <div class="mx-5 w-full flex justify-between items-center">
+                            <p class="font-black text-32px text-center text-main">Programování a  vývoj aplikací <%- grade.grades.grade_name %></p>
+                            <img src="/images/input-arrow.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                        </div> 
+                    </a>    
+                <% } else { %>
+                    <a href="/grade/<%= grade.grade_id %>" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-dark rounded-main ">
+                        <div class="mx-5 w-full flex justify-between items-center">
+                            <p class="font-black text-32px text-center text-main">Programování a vývoj aplikací <%- grade.grades.grade_name %></p>
+                            <img src="/images/input-lock.svg" class="lg:h-2/3" alt="Šipka znázorňující směr">
+                        </div> 
+                    </a>
+                <% } %> 
+            <% }) %>
+        <% } else { %>
+            <a href="/" class="flex items-center lg:h-75px w-full mx-5 bg-bg-third-dark rounded-main ">
+               <div class="mx-5 w-full flex justify-between items-center">
+                    <p class="font-black text-32px text-center text-main">Žádný ročník vám zatím nebyl přidělen</p>
+               </div> 
+            </a> 
+        <% } %>
+    </main>
+</body>
+</html>
