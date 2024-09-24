@@ -1,17 +1,21 @@
-import http from "http";
+import http, { createServer } from "http";
 import dotenv from "dotenv";
-import app from "./src/app.js";
+import WebService from "./app.js";
 import { createClient } from "redis";
-import taskQueueInit from "./src/helper/queue.js";
-import testQueueInit from "./src/helper/test_queue.js";
-dotenv.config({ path: "./src/.env" });
+
+import path from "path"
+/* import taskQueueInit from "./helper/queue.js";
+import testQueueInit from "./helper/test_queue.js"; */
+import Config from "./config.js"
+/* dotenv.config({ path: "./src/.env" });
 
 let redisClient
-let redisServer = createClient({url : process.env.REDIS_URL});
+let redisServer = createClient({ url: process.env.REDIS_URL });
 
 export const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
+ */
 async function appInit() {
   try {
     redisClient = await redisServer.connect();
@@ -30,6 +34,13 @@ async function appInit() {
   }
 }
 
-appInit();
+/* appInit(); */
 
-export default redisClient;
+async function main() {
+  const webService = new WebService(Config.web).getApp()
+  createServer(webService).listen(Config.web.port, () => console.log("server running"))
+}
+
+main()
+
+/* export default redisClient; */

@@ -5,18 +5,18 @@ const prisma = new PrismaClient();
 export async function checkGrade(gradeId) {
   try {
     return await prisma.grades.findFirst({
-      where : {
-        grade_id : parseInt(gradeId)
+      where: {
+        grade_id: parseInt(gradeId)
       },
-      select : {
-        grade_id : true,
-        grade_show : true
+      select: {
+        grade_id: true,
+        grade_show: true
       }
     })
-  } catch (err) { 
+  } catch (err) {
     console.log(err)
     return err
-    
+
   }
 }
 
@@ -70,7 +70,7 @@ export async function getGrades(groupId) {
       grades: {
         select: {
           grade_name: true,
-          grade_show : true
+          grade_show: true
         },
       },
     },
