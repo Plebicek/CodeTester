@@ -24,7 +24,7 @@ const runJavaTest = function (testFolderId, fileId) {
 
       let errMatch = result.match(/Errors: \d+/).pop()
       if (errMatch > 0) {
-        return rej(new Error("test ran error with value more than 0"))
+        return rej(new Error(`test id: ${testFolderId} answer id: ${fileId} ran error with value more than 0`))
       }
 
       return res(match); //return match
