@@ -11,14 +11,14 @@ import {
 } from "../models/admin.js";
 import { JAVA_UPLOAD } from "./taskController.js";
 import { navigation } from "../utils/dashUtils.js";
-import {setTaskToTestQueue} from "../helper/test_queue.js";
-import {rmSync} from "node:fs"
+import { setTaskToTestQueue } from "../helper/test_queue.js";
+import { rmSync } from "node:fs"
 
 // === USERS ===
 export async function dashUsers(req, res) {
   let users = await getAllUsers();
   const current = "Users";
-  
+
   res.render("admin/users", {
     sideNav: navigation,
     current: current,
@@ -47,7 +47,7 @@ export async function searchUser(req, res) {
 export async function dashGroup(req, res) {
   const current = "Groups";
   let groups = await getGroups();
-  
+
   res.render("admin/groups", { sideNav: navigation, current, groups });
 }
 
@@ -55,15 +55,15 @@ export async function dashGroup(req, res) {
 export async function dashGrade(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   const current = "Groups";
-  
+
   let grades = await getGrades();
-  
+
   grades.sort((a, b) => {
     let num1 = parseInt(a.grade_name.split(".")[0]);
     let num2 = parseInt(b.grade_name.split(".")[0]);
     return num2 - num1;
   });
-  
+
   res.render("admin/grades", {
     sideNav: navigation,
     current: current,
@@ -77,9 +77,9 @@ export async function dashTopic(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   const { gradeId } = req.params
   const current = "Groups";
-  
+
   let topics = await getTopics(parseInt(gradeId));
-  
+
   res.render("admin/topics", {
     sideNav: navigation,
     current: current,
@@ -92,9 +92,9 @@ export async function dashTask(req, res) {
   const path = `${req.baseUrl}${req.path}`;
   const { topicId } = req.params;
   const current = "Groups";
-  
+
   let tasks = await getTasks(parseInt(topicId));
-  
+
   res.render("admin/tasks", {
     sideNav: navigation,
     current,
@@ -107,7 +107,7 @@ export async function dashTask(req, res) {
 export async function dashTest(req, res) {
   const current = "Tests";
   let topics = await getTestsAndTopics();
-  
+
   res.render("admin/tests", {
     sideNav: navigation,
     current: current,
@@ -118,9 +118,9 @@ export async function dashTest(req, res) {
 export async function dashTestUpload(req, res) {
   const path = `${req.baseUrl}${req.path}`
   const current = "Tests";
-  
+
   if (req.method == "POST") {
-    setTaskToTestQueue({testId : req.locals.testId}) 
+    setTaskToTestQueue({ testId: req.locals.testId })
     return res.redirect(`${req.baseUrl}/tests`)
   }
 
@@ -135,10 +135,9 @@ export async function dashTestUpload(req, res) {
 export async function dashAnswer(req, res) {
   let { taskId } = req.params;
   const current = "Groups";
-  
+
   let answers = await getAnswers(parseInt(taskId));
-  console.log(answers)
-  
+
   answers.forEach((answer) => {
     answer.percentage = Math.ceil((answer.pass / (answer.fails + answer.pass)) * 100);
   });
@@ -147,12 +146,12 @@ export async function dashAnswer(req, res) {
     sideNav: navigation,
     current: current,
     answers,
-    path : `${req.baseUrl}${req.path}`
+    path: `${req.baseUrl}${req.path}`
   });
 }
 
-export async function deleteUserAnswer(req,res) {
-  const answerId = req.body.answerId 
+export async function deleteUserAnswer(req, res) {
+  const answerId = req.body.answerId
   try {
     await deleteAnswer(answerId)
     rmSync(JAVA_UPLOAD + `${answerId}.zip`)
@@ -160,5 +159,5 @@ export async function deleteUserAnswer(req,res) {
     return res.redirect(`${req.baseUrl}${req.path.replace("/delete-answer", "")}`)
   } catch (err) {
     return res.send("answer does not exists")
-  } 
+  }
 }
