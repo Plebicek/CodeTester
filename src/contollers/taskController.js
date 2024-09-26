@@ -45,9 +45,10 @@ export async function uploadSolution(req, res, next) {
   const fileId = req.locals.answerId;
   const userId = req.user.id;
   const testId = await getTest(req.params.taskId);
+  console.log(`User id: ${userId} uploaded file: ${fileId}`)
   try {
     setTaskToQueue({ fileId, testId, userId });
-    res.status(200).redirect(req.baseUrl) 
+    res.status(200).redirect(req.baseUrl)
   } catch (error) {
     next(error);
   }
