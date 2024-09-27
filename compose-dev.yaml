@@ -3,6 +3,7 @@ services:
     build: 
       context: .
       target: dev
+    container_name: app_dev
     volumes:
       - ./java:/java/
       - type: bind
@@ -10,7 +11,16 @@ services:
         target: /app/
     ports:
       - "3000:3000" 
-      - "9229:9229"  
+      - "9229:9229"
+
+  queue:
+    image: redis:7.4.0-alpine
+    container_name: queue_dev
+    volumes:
+      - queue_dev:/data
+    ports: 
+      - "6379:6739"
 
 volumes:
   java:
+  queue_dev:

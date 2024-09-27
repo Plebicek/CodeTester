@@ -2,15 +2,11 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import serveFavicon from "serve-favicon";
-/* import router from "./routes/index.js"; */
-/* import UserRouter from "./user/entry.js"*/
 import coreRouter from "./core/entry.js"
 
 export default class WebService {
   constructor(config) {
     this.app = express()
-    console.log(this.app.get("view engine"))
-    /* this.app.set("views", process.cwd() + "/views"); */
     this.config = config
     this._init()
   }
@@ -30,8 +26,6 @@ export default class WebService {
 
   _setEngine() {
     this.app.set("view engine", "ejs")
-    /*  this.app.set("view engine", "ejs");
-     this.app.set("views", process.cwd() + "/views"); */
   }
 
   _setStatic() {
@@ -42,8 +36,6 @@ export default class WebService {
 
   _setRoutes() {
     this.app.use(coreRouter)
-    /* this.app.use(UserRouter) */
-    /* this.app.use(router); */
   }
 
   getApp() {
