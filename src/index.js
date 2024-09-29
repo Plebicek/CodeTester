@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import WebService from "./WebApp/index.js";
+import WebService from "./WebApp/app.js";
 import config from "./config.js"
 
 async function main() {

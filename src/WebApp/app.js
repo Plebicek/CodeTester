@@ -2,7 +2,8 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import serveFavicon from "serve-favicon";
-import coreRouter from "./core/entry.js"
+import userServiceRouter from "./UserService/index.js"
+
 
 export default class WebService {
   constructor(config) {
@@ -21,7 +22,7 @@ export default class WebService {
   _setMiddlewares() {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cookieParser(process.env.COOKIE_SECRET));
+    this._setCookie()
   }
 
   _setEngine() {
@@ -31,11 +32,17 @@ export default class WebService {
   _setStatic() {
     this.app.use(express.static(path.join(process.cwd(), "public")));
     this.app.use(serveFavicon(path.join(process.cwd(), "public/images/", "favicon.ico")))
-    this.app.set("view engine", "ejs");
   }
 
   _setRoutes() {
-    this.app.use(coreRouter)
+    this.app.use(userServiceRouter)
+    this.app.use((_, res) => {
+      res.send("invalid url: 404")
+    })
+  }
+
+  _setCookie() {
+    this.app.use(cookieParser(this.config.cookie))
   }
 
   getApp() {

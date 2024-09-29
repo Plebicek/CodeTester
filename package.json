@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "concurrently --kill-others \"npm run server_dev\" \"npm run ui_dev\"",
     "ui_dev": "npx postcss ./src/global.css -o ./src/public/styles/style.css --watch",
-    "server_dev": "DEBUG=express:* npx dotenv -e .env.development nodemon  ./src/index.js",
-    "debug": "DEBUG=express:* npx dotenv -e .env.development node ./src/index.js",
+    "server_dev": "DEBUG=express:* npx dotenv -e .env.development nodemon ./src/index.js",
+    "debug": "DEBUG=express:* npx dotenv -e .env.development nodemon ./src/index.js",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
     "generate-db": "cd src && npx prisma generate",

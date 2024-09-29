@@ -11,7 +11,8 @@ const appConfig = {
         }
     },
     web: {
-        port: Number(process.env.WEB_PORT)
+        port: Number(process.env.WEB_PORT),
+        cookie: process.env.WEB_COOKIE
     },
 
 }

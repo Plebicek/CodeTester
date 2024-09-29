@@ -1,15 +1,14 @@
 import { Router } from "express";
-import User from "./domain.js"
 
 const router = Router()
 
-/* router.get("/login", User.getLogin/* loginUser ) 
-router.get("/login/OAuth", passport.authenticate("microsoft"))
-router.get("/login/OAuth/failure", (req, res) => res.send("wrong oauth"))
-router.get("/login/OAuth/callback", passport.authenticate("microsoft", { session: false, failureRedirect: "/login/OAuth/failure" }), createOrFindByOAuth)
+router.use("/", (req, res, next) => {
+    console.log("user", req.user.isAuth);
+    console.log("path core", req.baseUrl)
+    if (req.user.isAuth) return next();
+    return res.redirect("/user/login")
+})
 
-router.post("/login", loginUser)
-router.get("/signup", registerUser)
-router.post("/signup", registerUser)
-router.get("/logout", logoutUser) */
+router.get("/", (_, res) => res.render("index", { grades: 0 }))
+
 export default router

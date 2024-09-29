@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.16" pages="2">
   <diagram name="Stránka-1" id="clIVeN8P9I1BDvycUYKJ">
-    <mxGraphModel dx="1429" dy="1949" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1854" dy="1622" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -116,6 +116,12 @@
         </mxCell>
         <mxCell id="nUffSMOp4lwZVSTlQ1fh-36" value="assigment" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1058.79" y="-110" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iuz2kPZFQFlgsafaOYqp-1" value="app.js" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="438.79" y="40" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iuz2kPZFQFlgsafaOYqp-2" value="index.js (router)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="413.79" y="60" width="110" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
