@@ -6,7 +6,7 @@
     <%- include('./partials/head.ejs') %>
 </head>
 <body class="<%- include('./partials/body') %>">
-     <%#- include("./partials/navbar.ejs") %> 
+     <%- include("./partials/navbar.ejs") %> 
     <main class="flex flex-col items-center lg:min-h-467 gap-5 mx-auto lg:w-88-12 lg:px-3rem lg:py-50px lg:mt-36 bg-bg-second rounded-main">
         <%  if (grades.length > 0) { %> 
             <% grades.forEach(function(grade) { %>
