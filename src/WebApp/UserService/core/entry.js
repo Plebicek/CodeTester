@@ -3,8 +3,6 @@ import { Router } from "express";
 const router = Router()
 
 router.use("/", (req, res, next) => {
-    console.log("user", req.user.isAuth);
-    console.log("path core", req.baseUrl)
     if (req.user.isAuth) return next();
     return res.redirect("/user/login")
 })

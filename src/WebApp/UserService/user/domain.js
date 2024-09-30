@@ -28,7 +28,6 @@ export default class Client {
      * @returns render login page
      */
     static login(req, res) {
-        console.log(req.baseUrl)
         return res.render("auth/login")
     }
 
