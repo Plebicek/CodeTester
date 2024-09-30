@@ -10,10 +10,9 @@
     "server_dev": "DEBUG=express:* npx dotenv -e .env.development nodemon ./src/index.js",
     "debug": "DEBUG=express:* npx dotenv -e .env.development nodemon ./src/index.js",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
-    "pull-db": "cd src && npx prisma db pull && npx prisma generate",
-    "generate-db": "cd src && npx prisma generate",
-    "push-db": "cd src && npx prisma db push",
-    "db-push-dev" : "npx dotenv -e .env.development npx prisma db push "
+    "db-generate": "npx prisma generate",
+    "db-push-dev": "npx dotenv -e .env.development npx prisma db push ",
+    "db-pull-dev": "npx dotenv -e .env.development npx prisma db pull "
   },
   "author": "Vojtěch Farkas",
   "license": "ISC",
@@ -39,6 +38,8 @@
     "qs": "^6.11.2",
     "redis": "^4.6.13",
     "serve-favicon": "^2.5.0",
+    "superagent-absolute": "^1.0.1",
+    "superagent-prefix": "^0.0.2",
     "unzipper": "^0.10.14",
     "uuid": "^9.0.1",
     "winston": "^3.13.0"
