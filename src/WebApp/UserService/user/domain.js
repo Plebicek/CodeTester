@@ -1,17 +1,22 @@
+import UserModel from "./data.js"
+
 /**
  * Logged user object 
  * @class User
  */
 export class User {
-    isAuth;
-    username;
-    permision
-    id;
-    email;
+    user_isAuth;
+    user_username;
+    user_role;
+    user_id;
+    user_email;
 
     constructor(cookie) {
+        console.log(cookie)
         this.cookie = cookie //ToDo: map cookie data to the user object
         this.isAuth = true
+        this.user_id = cookie.user_id
+        this.user_role = cookie.user_role
     }
 }
 
@@ -50,8 +55,10 @@ export default class Client {
      * @param {*} res 
      * @returns 
      */
-    static auth(req, res) {
-        res.cookie("auth", { "user": true }, { maxAge: 900000, onlyHttp: true })
+    static async auth(req, res) {
+        const user = await UserModel.getUserById(1)
+        if (!user) return res.redirect("/user/login")
+        res.cookie("auth", { "user": { user_id: 1, user_role: "student" } }, { maxAge: 900000, onlyHttp: true })
         return res.redirect("/")
     }
 }

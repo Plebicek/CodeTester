@@ -1,12 +1,11 @@
 import { Router } from "express";
+import Index from "./domain.js"
+import ClassEntry from "./class/entry.js"
 
 const router = Router()
 
-router.use("/", (req, res, next) => {
-    if (req.user.isAuth) return next();
-    return res.redirect("/user/login")
-})
+router.use("/", Index.isAuth)
 
-router.get("/", (_, res) => res.render("index", { grades: 0 }))
+router.use("/", ClassEntry)
 
 export default router

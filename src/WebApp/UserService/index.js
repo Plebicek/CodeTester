@@ -12,10 +12,10 @@ class Annonymus {
 }
 
 const setUser = function (req, res, next) {
-    console.log("set user coookies", req.cookies)
     const authCookie = req.cookies.auth
     if (authCookie?.user) {
-        req.user = new User(authCookie)
+        req.user = new User(authCookie.user)
+        console.log("setUser user_id", req.user.user_id)
         return next()
     }
     req.user = Annonymus
