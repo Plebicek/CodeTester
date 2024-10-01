@@ -4,105 +4,103 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql" 
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model answers {
-  answer_id       Int       @id @default(autoincrement())
-  task_id         Int
+model Answer {
+  answer_id            Int  @id @default(autoincrement())
+  answer_pass          Int
+  answer_assignment_id Int
+  answer_user          Int
+  User                 User @relation(fields: [answer_user], references: [user_id], onUpdate: Restrict, map: "Answer_ibfk_1")
+
+  @@index([answer_assignment_id], map: "assignmentId")
+  @@index([answer_user], map: "user")
+}
+
+model Assigment {
+  assignment_id       Int    @id @default(autoincrement())
+  assignment_topic_id Int
+  assignment_title    String @db.Text
+  Topic               Topic  @relation(fields: [assignment_topic_id], references: [topic_id], onUpdate: Restrict, map: "Assigment_ibfk_1")
+  Test                Test[]
+
+  @@index([assignment_topic_id], map: "topic")
+  @@index([assignment_topic_id], map: "topic_2")
+}
+
+model Grade {
+  grade_id     Int            @id @default(autoincrement())
+  grade_name   String         @db.Text
+  Grade_bridge Grade_bridge[]
+  Topic_bridge Topic_bridge[]
+}
+
+model Grade_bridge {
+  grade_bridge_id   Int     @id @default(autoincrement())
+  class_id          Int
+  grade_id          Int
+  grade_bridge_show Boolean @default(false)
+  Class             Class   @relation(fields: [class_id], references: [class_id], onUpdate: Restrict, map: "Grade_bridge_ibfk_1")
+  Grade             Grade   @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "Grade_bridge_ibfk_2")
+
+  @@index([grade_id], map: "gradeId")
+  @@index([class_id, grade_id], map: "groupId")
+}
+
+model Test {
+  id          Int       @id @default(autoincrement())
+  assigmentId Int
+  Assigment   Assigment @relation(fields: [assigmentId], references: [assignment_id], onUpdate: Restrict, map: "Test_ibfk_1")
+
+  @@index([assigmentId], map: "assigmentId")
+}
+
+model Topic {
+  topic_id     Int            @id @default(autoincrement())
+  topic_name   String         @db.Text
+  Assigment    Assigment[]
+  Topic_bridge Topic_bridge[]
+}
+
+model Topic_bridge {
+  topic_grade_id    Int     @id @default(autoincrement())
+  topic_id          Int
+  grade_id          Int
+  topic_bridge_lock Boolean
+  class_id          Int
+  Topic             Topic   @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "Topic_bridge_ibfk_1")
+  Grade             Grade   @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "Topic_bridge_ibfk_2")
+  Class             Class   @relation(fields: [class_id], references: [class_id], onUpdate: Restrict, map: "Topic_bridge_ibfk_3")
+
+  @@index([grade_id], map: "gradeId")
+  @@index([class_id], map: "group_id")
+  @@index([topic_id, grade_id], map: "topicId")
+}
+
+model User {
+  user_id       Int            @id @default(autoincrement())
+  user_username String         @db.Text
+  Answer        Answer[]
+  Class_bridge  Class_bridge[]
+}
+
+model Class {
+  class_id     Int            @id @default(autoincrement())
+  class_name   String         @db.Text
+  Class_bridge Class_bridge[]
+  Grade_bridge Grade_bridge[]
+  Topic_bridge Topic_bridge[]
+}
+
+model Class_bridge {
+  class_bridge_id Int   @id @default(autoincrement())
+  class_id        Int
   user_id         Int
-  answer_inQueue  Boolean   @default(false)
-  answer_tested   DateTime? @db.Date
-  fails           Int?      @default(0)
-  pass            Int?      @default(0)
-  answer_overtime Boolean?
-  answer_total    Int?
-  tasks           tasks     @relation(fields: [task_id], references: [task_id], onUpdate: Restrict, map: "answers_ibfk_1")
-  users           users     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "answers_ibfk_2")
+  User            User  @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "Class_bridge_ibfk_1")
+  Class           Class @relation(fields: [class_id], references: [class_id], onUpdate: Restrict, map: "Class_bridge_ibfk_2")
 
-  @@index([task_id], map: "task_id")
-  @@index([user_id], map: "user_id")
-}
-
-model grade_bridges {
-  grade_bridge_id Int    @id @default(autoincrement())
-  grade_id        Int
-  group_id        Int
-  grades          grades @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "grade_bridges_ibfk_1")
-  groups          groups @relation(fields: [group_id], references: [group_id], onUpdate: Restrict, map: "grade_bridges_ibfk_2")
-
-  @@index([grade_id], map: "grade_id")
-  @@index([group_id], map: "group_id")
-}
-
-model grades {
-  grade_id      Int             @id @default(autoincrement())
-  grade_name    String          @db.VarChar(64)
-  grade_show    Boolean         @default(false)
-  grade_bridges grade_bridges[]
-  topics        topics[]
-}
-
-model group_bridges {
-  group_bridge_id Int    @id @default(autoincrement())
-  user_id         Int
-  group_id        Int
-  users           users  @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "group_bridges_ibfk_1")
-  groups          groups @relation(fields: [group_id], references: [group_id], onUpdate: Restrict, map: "group_bridges_ibfk_2")
-
-  @@index([group_id], map: "group_id")
-  @@index([user_id], map: "user_id")
-}
-
-model groups {
-  group_id      Int             @id @default(autoincrement())
-  group_name    String          @db.VarChar(32)
-  grade_bridges grade_bridges[]
-  group_bridges group_bridges[]
-}
-
-model tasks {
-  task_id          Int       @id @default(autoincrement())
-  topic_id         Int
-  task_description String    @db.Text
-  task_due         DateTime  @db.DateTime(0)
-  task_title       String    @db.VarChar(64)
-  task_lock        Boolean   @default(true)
-  task_begin_date  DateTime? @db.DateTime(0)
-  answers          answers[]
-  topics           topics    @relation(fields: [topic_id], references: [topic_id], onUpdate: Restrict, map: "tasks_ibfk_1")
-  tests            tests[]
-
-  @@index([topic_id], map: "topic_id")
-}
-
-model tests {
-  test_id Int    @id @default(autoincrement())
-  task_id Int?
-  tasks   tasks? @relation(fields: [task_id], references: [task_id], onDelete: Restrict, onUpdate: Restrict, map: "tests_ibfk_1")
-
-  @@index([task_id], map: "task_id")
-}
-
-model topics {
-  topic_id   Int     @id @default(autoincrement())
-  topic_name String  @db.VarChar(64)
-  grade_id   Int
-  tasks      tasks[]
-  grades     grades  @relation(fields: [grade_id], references: [grade_id], onUpdate: Restrict, map: "topics_ibfk_1")
-
-  @@index([grade_id], map: "grade_id")
-}
-
-model users {
-  user_id        Int             @id @default(autoincrement())
-  user_name      String          @unique(map: "user_name") @db.VarChar(255)
-  user_hash      String?         @db.VarChar(255)
-  user_oauth     String          @db.Text
-  user_email     String          @db.Text
-  user_job_title String?         @db.Text
-  user_role      String          @default("user") @db.Text
-  answers        answers[]
-  group_bridges  group_bridges[]
+  @@index([class_id], map: "groupId")
+  @@index([user_id], map: "userId")
 }
