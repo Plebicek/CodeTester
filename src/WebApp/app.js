@@ -39,6 +39,10 @@ export default class WebService {
     this.app.use((_, res) => {
       res.send("invalid url: 404")
     })
+    this.app.use((err, req, res) => {
+      console.log(err.statusMessage)
+      res.send(err.statusMessage)
+    })
   }
 
   _setCookie() {
