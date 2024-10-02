@@ -19,17 +19,6 @@ model Answer {
   @@index([answer_user], map: "user")
 }
 
-model Assigment {
-  assignment_id       Int    @id @default(autoincrement())
-  assignment_topic_id Int
-  assignment_title    String @db.Text
-  Topic               Topic  @relation(fields: [assignment_topic_id], references: [topic_id], onUpdate: Restrict, map: "Assigment_ibfk_1")
-  Test                Test[]
-
-  @@index([assignment_topic_id], map: "topic")
-  @@index([assignment_topic_id], map: "topic_2")
-}
-
 model Grade {
   grade_id     Int            @id @default(autoincrement())
   grade_name   String         @db.Text
@@ -50,9 +39,9 @@ model Grade_bridge {
 }
 
 model Test {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   assigmentId Int
-  Assigment   Assigment @relation(fields: [assigmentId], references: [assignment_id], onUpdate: Restrict, map: "Test_ibfk_1")
+  Assigment   Assignment @relation(fields: [assigmentId], references: [assignment_id], onUpdate: Restrict, map: "Test_ibfk_1")
 
   @@index([assigmentId], map: "assigmentId")
 }
@@ -60,7 +49,7 @@ model Test {
 model Topic {
   topic_id     Int            @id @default(autoincrement())
   topic_name   String         @db.Text
-  Assigment    Assigment[]
+  Assignment   Assignment[]
   Topic_bridge Topic_bridge[]
 }
 
@@ -103,4 +92,15 @@ model Class_bridge {
 
   @@index([class_id], map: "groupId")
   @@index([user_id], map: "userId")
+}
+
+model Assignment {
+  assignment_id       Int    @id @default(autoincrement())
+  assignment_topic_id Int
+  assignment_title    String @db.Text
+  Topic               Topic  @relation(fields: [assignment_topic_id], references: [topic_id], onUpdate: Restrict, map: "Assignment_ibfk_1")
+  Test                Test[]
+
+  @@index([assignment_topic_id], map: "topic")
+  @@index([assignment_topic_id], map: "topic_2")
 }
