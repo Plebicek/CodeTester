@@ -1,11 +1,13 @@
 import { Router } from "express";
-import Index from "./domain.js"
-import ClassEntry from "./class/entry.js"
+import { IndexDomain, ClassDomain, TopicDomain } from "./domain.js"
 
 const router = Router()
 
-router.use("/", Index.isAuth)
+router.use("/", IndexDomain.isAuth)
 
-router.use("/", ClassEntry)
+// Class
+router.get("/", ClassDomain.index)
+router.get("/class/:classId/grade/:gradeId", TopicDomain.index)
+
 
 export default router

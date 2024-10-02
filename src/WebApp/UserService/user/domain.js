@@ -10,13 +10,15 @@ export class User {
     user_role;
     user_id;
     user_email;
+    user_class_id;
 
     constructor(cookie) {
-        console.log(cookie)
+        console.log("Users cookie request in User class", cookie)
         this.cookie = cookie //ToDo: map cookie data to the user object
         this.isAuth = true
-        this.user_id = cookie.user_id
+        this.user_id = Number(cookie.user_id)
         this.user_role = cookie.user_role
+        this.user_class_id = Number(cookie.user_class_id)
     }
 }
 
@@ -58,7 +60,7 @@ export default class Client {
     static async auth(req, res) {
         const user = await UserModel.getUserById(1)
         if (!user) return res.redirect("/user/login")
-        res.cookie("auth", { "user": { user_id: 1, user_role: "student" } }, { maxAge: 900000, onlyHttp: true })
+        res.cookie("auth", { "user": { user_id: 1, user_role: "student", user_class_id: "1" } }, { maxAge: 900000, onlyHttp: true })
         return res.redirect("/")
     }
 }
