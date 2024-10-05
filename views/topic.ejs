@@ -9,28 +9,29 @@
     <%- include("./partials/navbar.ejs") %>
     <main class="flex flex-col gap-5 mx-auto lg:min-h-[500px] lg:w-88-12 lg:px-3rem lg:pb-10 lg:pt-5 lg:mt-36 bg-bg-second rounded-main">
         <h1 class="lg:mb-5 text-center font-black text-4xl text-white"><%- grade.grade_name  %></h1>
-            <% if (grade.topics.length > 0) { %>
-                <% grade.topics.forEach(topic => { %>
+            <% if (topicData.length > 0) { %>
+                <% topicData.forEach(topic => { %>
                     <a href="">
                         <div class="flex items-center justify-between relative after:block after:absolute after:bottom-0  after:inset-x-0 after:w-full after:h-6px after:bg-gradient-to-r after:from-bg-grad-text after:to-bg-grad-gray after:rounded lg:w-full lg:h-5rem lg:px-22px lg:py-4">
                             <p class="font-black text-32px text-center text-white"><%- topic.topic_name %></p>
                         </div>
                     </a>
-                    <% topic.tasks.forEach(task => { %>
-                        <% if (task.answers.length > 0) { %>
-                            <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
+                    <% topic.assignments.forEach(assignment > { %>
+                        <% if (assignment > 0) { %>
+                            <div>test</div>
+                            <!-- <a href="<%#= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
                                 <div class="rounded-main border-main-dark border-6">
                                     <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                                        <p class="lg:text-2xl text-main-dark font-black"><%= task.task_title  %></p>
+                                        <p class="lg:text-2xl text-main-dark font-black"><%#= task.task_title  %></p>
                                         <img src="/images/checkmark.svg" class="" alt="">
                                     </div>
                                 </div>
-                            </a> 
+                            </a> --> 
                         <% } else { %>
-                            <a href="<%= path + `/topic/${topic.topic_id}/task/` + task.task_id %>" class="mx-5 mt-3 flex gap-4 flex-col">
+                            <a href="<%= path + `/topic/${topic.topic_id}/task/` + assignment.assignment_id %>" class="mx-5 mt-3 flex gap-4 flex-col"> <!-- http://localhost:4000/class/1/grade/1 -->
                                 <div class="rounded-main border-main border-6">
                                     <div class="flex lg:px-10px lg:py-4 justify-between items-center">
-                                        <p class="lg:text-2xl text-main font-black"><%= task.task_title %></p>
+                                        <p class="lg:text-2xl text-main font-black"><%= assignment.assignment_title %></p>
                                     </div>
                                 </div>
                             </a> 
@@ -45,6 +46,5 @@
                 </a>
             <% } %>
     </main>
-    
 </body>
 </html>

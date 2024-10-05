@@ -52,13 +52,14 @@ export class ClassDomain {
  */
 export class TopicDomain {
     static async index(req, res, next) {
-        const class_id = req.user.user_class_id
-        const grade_id = req.params.gradeId
+        const { user_class_id: class_id } = req.user;
+        const { gradeId: grade_id } = req.params;
         const topicsWithAssignments = await TopicModel.getTopicsWithAssignments(class_id, grade_id)
-        console.log(topicsWithAssignments)
         if (!topicsWithAssignments) return next(new Error("404 Resource not found"))
-        return res.json({ data: topicsWithAssignments })
+        return res.render("topic", { topicData: topicsWithAssignments, path: "test"/* `/class/${class_id}/grade/${grade_id}` */ })
+        //return res.json({ topicData: topicsWithAssignments, path: "test"/* `/class/${class_id}/grade/${grade_id}` */ })
     }
+
 }
 
 /**

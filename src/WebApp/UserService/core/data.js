@@ -60,7 +60,7 @@ export class TopicModel {
     static async getTopicsWithAssignments(class_id, grade_id) {
         if (!class_id || !grade_id) throw new Error("getTopicsAndAssignments does not specified group_id or grade_id")
         try {
-            return await prisma.Topic_bridge.findMany({
+            const result = await prisma.Topic_bridge.findMany({
                 where: {
                     grade_id: Number(grade_id),
                     class_id: Number(class_id)
@@ -80,9 +80,19 @@ export class TopicModel {
                     },
                 }
             })
+            return this._destructTopics(result)
         } catch (error) {
             console.log("New Error : ", error.message)
             return null
         }
+    }
+
+    static _destructTopics(data) {
+        if (!data) throw new Error("Cannot destruct any undefined data")
+        data = data.map(item => {
+            const { topic_name, topic_id, Assignment: assignments } = item.Topic
+            return { topic_name, topic_id, assignments }
+        })
+        return data
     }
 }
