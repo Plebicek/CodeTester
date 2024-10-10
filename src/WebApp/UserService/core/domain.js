@@ -56,7 +56,7 @@ export class TopicDomain {
         const { gradeId: grade_id } = req.params;
         const topicsWithAssignments = await TopicModel.getTopicsWithAssignments(class_id, grade_id)
         if (!topicsWithAssignments) return next(new Error("404 Resource not found"))
-        return res.render("topic", { topicData: topicsWithAssignments, path: "test"/* `/class/${class_id}/grade/${grade_id}` */ })
+        return res.render("topic", { topicData: topicsWithAssignments, path: `/class/${class_id}/grade/${grade_id}`, user: { role: "user" } })
         //return res.json({ topicData: topicsWithAssignments, path: "test"/* `/class/${class_id}/grade/${grade_id}` */ })
     }
 
