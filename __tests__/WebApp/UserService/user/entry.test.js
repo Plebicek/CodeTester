@@ -1,5 +1,6 @@
 import agent from "superagent"
 import prefix from "superagent-prefix"
+
 const baseURL = "http://localhost:4000/"
 const superagent = agent.agent().use(prefix(baseURL))
 
