@@ -96,3 +96,18 @@ export class TopicModel {
         return data
     }
 }
+
+export class AssignmentModel {
+    static async getAssignmentById(assignment_id) {
+        if (!assignment_id) throw new Error("getAssighnmentById has not specified assignment_id")
+        try {
+            return prisma.Assignment.findFirst({
+                where: {
+                    assignment_id: Number(assignment_id)
+                }
+            })
+        } catch (error) {
+
+        }
+    }
+}

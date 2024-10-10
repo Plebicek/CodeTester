@@ -1,4 +1,4 @@
-import { ClassModel, TopicModel } from "./data.js"
+import { ClassModel, TopicModel, AssignmentModel } from "./data.js"
 
 /**
  * Abstract class domain for logic
@@ -68,7 +68,8 @@ export class TopicDomain {
  */
 export class AssignmentDomain {
     static async page(req, res) {
-        return res.send("assignment not yet finished")
+        const assignment = await AssignmentModel.getAssignmentById(req.params.assignmentId)
+        return res.render("assignment", { user: { role: "user" }, msg: "", assignment, stats: "", path: req.originalUrl })
     }
 
 }

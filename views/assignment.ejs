@@ -21,18 +21,18 @@
     <main class="flex justify-between items-center lg:mx-5-68 lg:mt-36">
       <div class="lg:w-793 lg:h-788  bg-bg-second rounded-main">
         <div class="flex flex-col w-full h-full lg:px-8 lg:py-7">
-          <p class="text-main font-black text-3xl"><%= task.task_title %></p>
+          <p class="text-main font-black text-3xl"><%= assignment.assignment_title%></p>
           <div class="flex flex-col lg:gap-9 lg:mt-9">
             <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
               <p class="lg:mb-1 text-lg font-black text-main">Termíny</p>
               <div>
-                <p class="font-bold text-lg text-white">Otevřené do : <span class="text-main"><%= task.task_due %></span></p>
+                <p class="font-bold text-lg text-white">Otevřené do : <span class="text-main">1.1.2025</span></p>
               </div>
             </div>
             <div class="lg:px-4 lg:py-3 bg-bg-third-dark rounded-main">
               <p class="text-2xl lg:mb-2 font-black text-main">Zadání</p>
               <div>
-                <p class="font-bold text-xl text-white"><%= task.task_description  %></p> 
+                <p class="font-bold text-xl text-white">assignment_description</p> 
               </div>
             </div>
             
@@ -68,7 +68,7 @@
       <% } else { %>
       <form class="flex relative justify-center items-center bg-task-submit lg:w-377 lg:h-491 lg:mr-20 rounded-main" action="<%= path %>/upload" method="POST" enctype="multipart/form-data">
         <label for="drag-input" class="absolute z-50 w-full h-full">
-          <% if (!task.task_lock) { %>
+          <% if (assignment) { %>
           <input type="file" id="drag-input" name="file" onchange="form.submit()" accept=".zip" class="hidden">
           <% } %>
         </label>
