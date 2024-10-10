@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import serveFavicon from "serve-favicon";
 import userServiceRouter from "./UserService/index.js"
-
+import Page from "./utils/error.page.js"
 
 export default class WebService {
   constructor(config) {
@@ -36,13 +36,8 @@ export default class WebService {
 
   _setRoutes() {
     this.app.use(userServiceRouter)
-    this.app.use((_, res) => {
-      res.send("invalid url: 404")
-    })
-    this.app.use((err, req, res) => {
-      console.log(err.statusMessage)
-      res.send(err.statusMessage)
-    })
+    this.app.use(Page.notFound)
+    this.app.use(Page.errorPage)
   }
 
   _setCookie() {
