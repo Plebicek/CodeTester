@@ -1,10 +1,12 @@
 import Bull from "bull";
-//import { redisClient } from "./../../index.js";
 import runProcess from "./process.js";
 
 let taskQueue;
 
 /**
+ * ToDo: Reimplement this function to put all files to queue. Add priority level 
+ * on admin uploaded tests files. 
+ * 
  * Task queue init function
  * Needs to be runned at the start of the app
  */
