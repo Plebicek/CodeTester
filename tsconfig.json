@@ -111,5 +111,5 @@
   "include": [
     "./**/*"
   ], 
-  "exclude": ["dist", "node_modules", "src/public"]
+  "exclude": ["dist", "node_modules", "src/app/public", ]
 }
