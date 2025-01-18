@@ -12,7 +12,7 @@
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
     "generate-db": "cd src && npx prisma generate",
     "push-db": "cd src && npx prisma db push",
-    "build" : "npx tsc && npx copyfiles -u 1 \"src/public/**\" dist/src && npx copyfiles -u 1 \"src/views/**\" dist/src"
+    "build": "npx tsc && npx copyfiles -u 1 \"src/public/**\" dist/src && npx copyfiles -u 1 \"src/views/**\" dist/src"
   },
   "author": "Vojtěch Farkas",
   "license": "ISC",
@@ -42,7 +42,10 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.10.7",
+    "@types/serve-favicon": "^2.5.7",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
     "connect-livereload": "^0.6.1",

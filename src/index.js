@@ -4,6 +4,7 @@ import app from "./app/app.js";
 import { createClient } from "redis";
 import taskQueueInit from "./app/helper/queue.js";
 import testQueueInit from "./app/helper/test_queue.js";
+
 dotenv.config({ path: "./src/.env" });
 
 let redisClient

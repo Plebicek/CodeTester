@@ -1,9 +1,12 @@
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-/**
- * Returns project root path for cross-platforms
- */
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-export default __dirname
+/**
+* Returns project root path for cross-platforms
+ */
+const rootDir = join(__dirname, "../../")
+
+export default rootDir
