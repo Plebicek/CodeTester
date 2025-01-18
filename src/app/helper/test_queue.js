@@ -1,6 +1,8 @@
 import Bull from "bull";
 //import { redisClient } from "./../../index.js";
 import testProcess from "./test.js";
+import { config } from "dotenv";
+config()
 
 let testQueue;
 
@@ -23,10 +25,10 @@ const testQueueInit = function () {
  * Process function for queue stack
  */
 const testQueueProcess = async function (job, done) {
-  const {testId} = job.data;
+  const { testId } = job.data;
   try {
     await testProcess({
-     testId,
+      testId,
     });
     return done();
   } catch (err) {
