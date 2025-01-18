@@ -1,10 +1,8 @@
-version: "3.9"
-
 services:
   app:    
     build:
       context: .
-      target: prod
+      target: build
     network_mode: "host"
     environment:
       - REDIS_HOST=redis
@@ -19,9 +17,13 @@ services:
     depends_on:
       - redis
     volumes:
-      - ./java:/app/java/
+      - java:/app/java/
     ports:
       - "3000:3000"
+  maven: 
+    image: maven:3.9.9-amazoncorretto-23-alpine
+    volumes:
+      - java:/app/java/
 
   redis:
     image: redis:7.2.4-alpine
