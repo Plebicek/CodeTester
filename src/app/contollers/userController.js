@@ -30,10 +30,10 @@ export async function createOrFindByOAuth(req, res) {
         return res.redirect("/login/oauth");
       }
       /* if (user_job_title) {
-      	let checkGroup = await checkGroup(createUser.user_id, jobTitle);
-      	if (!checkGroup) {
-        	console.log("err createing group" + checkGroup);
-      	}
+        let checkGroup = await checkGroup(createUser.user_id, jobTitle);
+        if (!checkGroup) {
+          console.log("err createing group" + checkGroup);
+        }
       } */
       let jwt_token = jwt.sign(
         { id: createUser.user_id, role: createUser.user_role },

@@ -5,8 +5,8 @@ import livereload from "livereload";
 import liveReloadServer from "connect-livereload";
 import serveFavicon from "serve-favicon";
 import router from "./routes/index.js";
+import __dirname from "./utils/paths.js"
 
-const __dirname = import.meta.dirname;
 const env = process.env.NODE_ENV || "development";
 
 const app = express();
@@ -27,9 +27,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
-
+console.log(__dirname);
 app.use(express.static(path.join(__dirname, "public")));
-app.use(serveFavicon(path.join(__dirname,"public/images/","favicon.ico")))
+app.use(serveFavicon(path.join(__dirname, "public/images/", "favicon.ico")))
 app.use(router);
 
 export default app;

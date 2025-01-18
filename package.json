@@ -11,7 +11,8 @@
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",
     "pull-db": "cd src && npx prisma db pull && npx prisma generate",
     "generate-db": "cd src && npx prisma generate",
-    "push-db": "cd src && npx prisma db push"
+    "push-db": "cd src && npx prisma db push",
+    "build" : "npx tsc && npx copyfiles -u 1 \"src/public/**\" dist/src && npx copyfiles -u 1 \"src/views/**\" dist/src"
   },
   "author": "Vojtěch Farkas",
   "license": "ISC",
@@ -45,6 +46,7 @@
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
     "connect-livereload": "^0.6.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "livereload": "^0.9.3",
