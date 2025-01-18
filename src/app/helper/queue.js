@@ -1,6 +1,7 @@
 import Bull from "bull";
 import runProcess from "./process.js";
-
+import { config } from "dotenv";
+config()
 let taskQueue;
 
 /**

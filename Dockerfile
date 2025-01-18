@@ -1,19 +1,15 @@
-# syntax=docker/dockerfile:1
-
-FROM node:20 as prod
+FROM node:23 AS build
 WORKDIR /app
-RUN apt-get update && apt-get install -y openjdk-17-jre openjdk-17-jdk maven
-COPY package*.json /app/
-RUN npm install
-COPY . .
-RUN npm run generate-db
-CMD ["node", "index.js"]
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY src/ ./src/
+RUN npm install 
+RUN npm run build
 
-FROM node:20 as dev
+FROM node:23 As production 
 WORKDIR /app
-RUN apt-get update && apt-get install -y openjdk-17-jre openjdk-17-jdk maven
 COPY package*.json /app/
-RUN npm install
-COPY . .
+RUN npm ci --only=production
+COPY --from=build /app/dist ./dist
 RUN npm run generate-db
-CMD [ "npm", "run", "dev" ]
+CMD [ "node", "dist/src/index.js"]
