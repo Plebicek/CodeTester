@@ -3,7 +3,7 @@
   "name": "codetester",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "dev-server": "nodemon --inspect-brk=0.0.0.0 index.js",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
@@ -41,6 +41,7 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "@types/node": "^22.10.7",
     "autoprefixer": "^10.4.17",
     "concurrently": "^8.2.2",
     "connect-livereload": "^0.6.1",
@@ -53,6 +54,7 @@
     "prisma": "^5.12.1",
     "superagent": "^9.0.2",
     "supertest": "^7.0.0",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.7.3"
   }
 }

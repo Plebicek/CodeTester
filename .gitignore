@@ -2,4 +2,5 @@ node_modules
 .env
 java/uploads/*.zip
 java/tests/
+dist/
 
