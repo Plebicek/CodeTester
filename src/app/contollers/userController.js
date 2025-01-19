@@ -3,8 +3,10 @@ import { getUserByName, createUser, findUserByOAuth } from "../models/user.js";
 import { createUserByOAuth as user } from "../models/user.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import { join } from "path";
+import rootDir from "../utils/paths.js";
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: join(rootDir, ".env.local.dev") });
 
 export async function createOrFindByOAuth(req, res) {
   let { id, displayName } = req.user;

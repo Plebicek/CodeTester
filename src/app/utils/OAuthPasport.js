@@ -1,7 +1,8 @@
+import { loadConfig } from "../../index.js";
 import passport from "passport"
 import { Strategy } from "passport-microsoft"
-import dotenv from "dotenv"
-dotenv.config();
+
+loadConfig(process.env.NODE_ENV)
 
 export default passport.use(new Strategy({
     clientID: process.env.CLIENT_ID,

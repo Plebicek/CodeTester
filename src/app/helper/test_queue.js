@@ -1,5 +1,4 @@
 import Bull from "bull";
-//import { redisClient } from "./../../index.js";
 import testProcess from "./test.js";
 import { config } from "dotenv";
 config()
@@ -10,9 +9,9 @@ let testQueue;
  * Task queue init function
  * Needs to be runned at the start of the app
  */
-const testQueueInit = function () {
+const testQueueInit = function (redisUrl) {
   try {
-    testQueue = new Bull("test", process.env.REDIS_URL, {
+    testQueue = new Bull("test", redisUrl, {
       limiter: { max: 1, duration: 3000 },
     });
     testQueue.process(testQueueProcess);

@@ -5,7 +5,7 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "dev-server": "nodemon ./src/index.js",
+    "dev-server": "NODE_ENV='development' nodemon ./src/index.js",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest --watch",
     "dev-ui": "npx postcss ./src/public/global.css -o ./src/public/styles/style.css --watch",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run dev-ui\"",

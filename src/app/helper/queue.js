@@ -11,9 +11,9 @@ let taskQueue;
  * Task queue init function
  * Needs to be runned at the start of the app
  */
-const taskQueueInit = function () {
+const taskQueueInit = function (redisUrl) {
   try {
-    taskQueue = new Bull("task", process.env.REDIS_URL, {
+    taskQueue = new Bull("task", redisUrl, {
       limiter: { max: 1, duration: 3000 },
     });
     taskQueue.process(taskQueueProcess);
